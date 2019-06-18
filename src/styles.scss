@@ -1,0 +1,13 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body {
+  margin: 0px;
+}
+
+.bg-img {
+    height: 100vh;
+    min-height: 100%;
+    width: 100vw;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('src/assets/images/bgimg.jpg');
+    background-size: cover
+  }
