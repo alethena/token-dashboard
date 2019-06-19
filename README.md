@@ -1,2 +1,29 @@
 # Token Dashboard
 This is the token dashboard that let clients manage in a user-friendly way their equity token and share dispenser.
+## Get Started on Windows
+### Clone the Repository
+```
+git clone https://github.com/Alethena/token-dashboard.git
+cd token-dashboard
+```
+### Required Tools and Configurations (Run as Administrator)
+```
+npm install --global --production windows-build-tools
+npm config set python /path/to/executable/python2.7
+```
+### Required npm Packages
+```
+npm install
+npm install --save web3@1.0.0-beta.37
+npm i node-sass --save
+```
+Note: Probably you need to delete the `websocket` folder after the first `npm install`.
+### Fixes
+```
+cd helpers
+node replacer.js
+```
+### Serve the Environment
+```
+ng serve
+```
