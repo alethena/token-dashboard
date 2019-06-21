@@ -6,11 +6,15 @@ import { DataService } from '../services/data/data.service';
 @Component({
   selector: 'app-equity',
   templateUrl: './equity.component.html',
-  styleUrls: ['./equity.component.scss']
+  styleUrls: ['./equity.component.scss'],
 })
 
 export class EquityComponent implements OnInit {
-  public pauseStatus = 'FUUUUUUCK';
+  public pauseStatus = 'N/A';
+  public nameStatus = 'N/A';
+  public symbolStatus = 'N/A';
+  public totalSupplyStatus = 'N/A';
+  public totalSharesStatus = 'N/A';
 
   constructor(private infuraService: InfuraService, private aleqService: AleqService, private dataService: DataService) { }
 
@@ -19,6 +23,18 @@ export class EquityComponent implements OnInit {
     await this.aleqService.bootstrapALEQ();
     this.dataService.pauseStatusObservable.subscribe((newPauseStatus) => {
       this.pauseStatus = newPauseStatus;
+    });
+    this.dataService.nameStatusObservable.subscribe((newNameStatus) => {
+      this.nameStatus = newNameStatus;
+    });
+    this.dataService.symbolStatusObservable.subscribe((newSymbolStatus) => {
+      this.symbolStatus = newSymbolStatus;
+    });
+    this.dataService.totalSupplyStatusObservable.subscribe((newTotalSupplyStatus) => {
+      this.totalSupplyStatus = newTotalSupplyStatus;
+    });
+    this.dataService.totalSharesStatusObservable.subscribe((newTotalSharesStatus) => {
+      this.totalSharesStatus = newTotalSharesStatus;
     });
   }
 

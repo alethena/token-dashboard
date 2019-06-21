@@ -1,13 +1,42 @@
-/* You can add global styles to this file, and also import other style files */
+/* -------------------------------- */
+/* BASIC SETUP */
+/* -------------------------------- */
 
 html, body {
   margin: 0px;
+  padding: 0px;
+  border: 0px;
+  height: 100%;
 }
 
 .bg-img {
     height: 100vh;
     min-height: 100%;
     width: 100vw;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.8)), to(rgba(255, 255, 255, 0.8))), url('src/assets/images/bgimg.jpg');
     background-image: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('src/assets/images/bgimg.jpg');
-    background-size: cover
+    background-size: cover;
   }
+
+h1,
+h2,
+h3 {
+  font-weight: 300;
+  color: #333;
+  font-family: "Saira Semi Condensed";
+  text-transform: uppercase;
+  text-align: center;
+  padding-top: 100px;
+}
+
+h1 {
+  font-size: 250%;
+}
+
+.logo {
+  width: 160px;
+  height: auto;
+  float: left;
+  margin-top: 30px;
+  margin-left: 30px;
+}

@@ -1,7 +1,18 @@
+@import '../../styles-material.scss';
+
 .data-container {
     margin-top: 2vh;
 }
 
 .data-card {
     height: 200px;
+}
+
+.material-icons {
+    font-size: 38px;
+    color: mat-color($alethena-app-primary);
+}
+
+.names {
+    font-size: 20px;
 }

@@ -17,6 +17,7 @@ export class AleqService {
   async bootstrapALEQ() {
     const ALEQAbstraction = await this.infuraService.artifactsToContract(ALEQData);
     this.ALEQInstance = await ALEQAbstraction.at(ALEQAddress);
+    console.log(this.ALEQInstance);
     this.refreshVariables();
   }
 
@@ -24,6 +25,18 @@ export class AleqService {
     setInterval(async () => {
       const pauseStatus = await this.ALEQInstance.isPaused.call();
       this.dataService.pauseStatusObservable.next(pauseStatus);
+
+      const nameStatus = await this.ALEQInstance.name.call();
+      this.dataService.nameStatusObservable.next(nameStatus);
+
+      const symbolStatus = await this.ALEQInstance.symbol.call();
+      this.dataService.symbolStatusObservable.next(symbolStatus);
+
+      const totalSupplyStatus = await this.ALEQInstance.totalSupply.call();
+      this.dataService.totalSupplyStatusObservable.next(totalSupplyStatus);
+
+      const totalSharesStatus = await this.ALEQInstance.totalShares.call();
+      this.dataService.totalSharesStatusObservable.next(totalSharesStatus);
     }, 1000);
   }
 }

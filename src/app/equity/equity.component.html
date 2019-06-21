@@ -1,31 +1,33 @@
 <div class="row data-container">
   <div class="col-4">
-    <mat-card class="mat-elevation-z6 data-card">
+    <mat-card class="mat-elevation-z8 data-card">
       <mat-card-title>
-        A title
+        <i class="material-icons"> looks_one </i>
       </mat-card-title>
       <mat-card-content>
-        A nice content for ya biatches out there!
+        <p class="names"> <b>Name:</b> {{ nameStatus }}</p>
+        <p class="names"> <b>Symbol:</b> {{ symbolStatus }}</p>
+        <p class="names"> <b>Is Paused:</b> {{ pauseStatus }}</p>
       </mat-card-content>
     </mat-card>
   </div>
   <div class="col-4 ">
-    <mat-card class="mat-elevation-z6 data-card">
+    <mat-card class="mat-elevation-z8 data-card">
       <mat-card-title>
-        A title
+        <i class="material-icons"> looks_two </i>
       </mat-card-title>
       <mat-card-content>
-        A nice content for ya biatches out there!
+        <p class="names"> <b>{{ totalSupplyStatus }} Tokenized Shares </b></p>
       </mat-card-content>
     </mat-card>
   </div>
   <div class="col-4">
-    <mat-card class="mat-elevation-z6 data-card">
+    <mat-card class="mat-elevation-z8 data-card">
       <mat-card-title>
-        A title
+        <i class="material-icons"> looks_3 </i>
       </mat-card-title>
       <mat-card-content>
-        A nice content for ya biatches out there!
+        <p class="names"> <b>{{ totalSharesStatus }} Total Shares </b></p>
       </mat-card-content>
     </mat-card>
   </div>
@@ -36,9 +38,9 @@
 
 <div class="row data-container">
     <div class="col-4">
-      <mat-card class="mat-elevation-z6 data-card">
+      <mat-card class="mat-elevation-z8 data-card">
         <mat-card-title>
-          Pause status
+          <i class="material-icons"> looks_4 </i>
         </mat-card-title>
         <mat-card-content>
          Your pause status is {{ pauseStatus }}
@@ -46,9 +48,9 @@
       </mat-card>
     </div>
     <div class="col-4">
-      <mat-card class="mat-elevation-z6 data-card">
+      <mat-card class="mat-elevation-z8 data-card">
         <mat-card-title>
-          A title
+          <i class="material-icons"> looks_5 </i>
         </mat-card-title>
         <mat-card-content>
           A nice content for ya biatches out there!
@@ -56,9 +58,9 @@
       </mat-card>
     </div>
     <div class="col-4">
-      <mat-card class="mat-elevation-z6 data-card">
+      <mat-card class="mat-elevation-z8 data-card">
         <mat-card-title>
-          A title
+          <i class="material-icons"> looks_6 </i>
         </mat-card-title>
         <mat-card-content>
           A nice content for ya biatches out there!
