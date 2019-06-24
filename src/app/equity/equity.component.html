@@ -7,7 +7,12 @@
       <mat-card-content>
         <p class="names"> <b>Name:</b> {{ nameStatus }}</p>
         <p class="names"> <b>Symbol:</b> {{ symbolStatus }}</p>
-        <p class="names"> <b>Is Paused:</b> {{ pauseStatus }}</p>
+        <p></p>
+        <div *ngIf="pauseStatus; then thenBlock else elseBlock"></div>
+        <ng-template #thenBlock><em>Contract currently paused. Slide me to unpause the contract.</em></ng-template>
+        <ng-template #elseBlock><em>Contract currently running. Slide me to pause the contract.</em></ng-template>
+        <mat-slide-toggle [checked]="pauseStatus" color="accent" class="example-slider">
+        </mat-slide-toggle>
       </mat-card-content>
     </mat-card>
   </div>
@@ -17,7 +22,12 @@
         <i class="material-icons"> looks_two </i>
       </mat-card-title>
       <mat-card-content>
-        <p class="names"> <b>{{ totalSupplyStatus }} Tokenized Shares </b></p>
+        <p class="names" style="text-align:center"> <b>{{ totalSupplyStatus | number }} Tokenized Shares </b></p>
+        <p style="text-align:center">
+          <button mat-raised-button>Mint</button>
+          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+          <button mat-raised-button>Unmint</button>
+        </p>
       </mat-card-content>
     </mat-card>
   </div>
@@ -27,7 +37,10 @@
         <i class="material-icons"> looks_3 </i>
       </mat-card-title>
       <mat-card-content>
-        <p class="names"> <b>{{ totalSharesStatus }} Total Shares </b></p>
+        <p class="names" style="text-align:center"> <b>{{ totalSharesStatus | number}} Total Shares </b></p>
+        <p style="text-align:center">
+          <button mat-raised-button>Set Total Shares</button>
+        </p>
       </mat-card-content>
     </mat-card>
   </div>
@@ -37,34 +50,55 @@
 <!-- SECOND ROW -->
 
 <div class="row data-container">
-    <div class="col-4">
-      <mat-card class="mat-elevation-z8 data-card">
-        <mat-card-title>
-          <i class="material-icons"> looks_4 </i>
-        </mat-card-title>
-        <mat-card-content>
-         Your pause status is {{ pauseStatus }}
-        </mat-card-content>
-      </mat-card>
-    </div>
-    <div class="col-4">
-      <mat-card class="mat-elevation-z8 data-card">
-        <mat-card-title>
-          <i class="material-icons"> looks_5 </i>
-        </mat-card-title>
-        <mat-card-content>
-          A nice content for ya biatches out there!
-        </mat-card-content>
-      </mat-card>
-    </div>
-    <div class="col-4">
-      <mat-card class="mat-elevation-z8 data-card">
-        <mat-card-title>
-          <i class="material-icons"> looks_6 </i>
-        </mat-card-title>
-        <mat-card-content>
-          A nice content for ya biatches out there!
-        </mat-card-content>
-      </mat-card>
-    </div>
+  <div class="col-4">
+    <mat-card class="mat-elevation-z8 data-card">
+      <mat-card-title>
+        <i class="material-icons"> looks_4 </i> <i class="material-icons float-right"> settings </i>
+      </mat-card-title>
+      <mat-card-content>
+        <p class="names"> <b>T&C URL:</b>&nbsp; <a href="https://{{ termsandconditions }}"
+            target="_blank">{{ termsandconditions }}</a></p>
+        <p class="names"> <b>ENS:</b> &nbsp; <a href="https://etherscan.io/address/alethena.eth"
+            target="_blank">alethena.eth</a></p>
+      </mat-card-content>
+    </mat-card>
   </div>
+  <div class="col-4">
+    <mat-card class="mat-elevation-z8 data-card">
+      <mat-card-title>
+        <i class="material-icons"> looks_5 </i> <span class="vertical-align">Claim Details</span> <i
+          class="material-icons float-right"> settings </i>
+      </mat-card-title>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item> <b>Collateral Rate:</b> &nbsp; {{ collateralRate/1000000000000000000 }} Ether</mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item> <b>Pre-Claim Period:</b> &nbsp; {{ preClaimPeriod/3600 }}h</mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item> <b>Claim Period:</b> &nbsp; {{ claimPeriod/86400 }} Days</mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-4">
+    <mat-card class="mat-elevation-z8 data-card">
+      <mat-card-title>
+        <i class="material-icons"> looks_6 </i> <span class="vertical-align">Contract Details</span> <i
+          class="material-icons float-right"> settings </i>
+      </mat-card-title>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item><b>Contract Address:</b> &nbsp; <a
+              href="https://rinkeby.etherscan.io/address/{{contractAddress}}" target="_blank"> {{ contractAddress }}
+            </a></mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item><b>Owner Address:</b> &nbsp; <a href="https://rinkeby.etherscan.io/address/{{ownerAddress}}"
+              target="_blank"> {{ ownerAddress }} </a></mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item><b>Master Address:</b> &nbsp; <a href="https://rinkeby.etherscan.io/address/{{masterAddress}}"
+              target="_blank"> {{ masterAddress }} </a></mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

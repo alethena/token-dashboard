@@ -11,6 +11,7 @@ const ALEQAddress = '0x18a4251cd23a4e235987a11d2d36c0138e95fa7c';
 })
 export class AleqService {
   ALEQInstance: any;
+  contractAddress: any;
 
   constructor(private infuraService: InfuraService, private dataService: DataService) { }
 
@@ -37,6 +38,27 @@ export class AleqService {
 
       const totalSharesStatus = await this.ALEQInstance.totalShares.call();
       this.dataService.totalSharesStatusObservable.next(totalSharesStatus);
+
+      const termsandconditions = await this.ALEQInstance.termsAndConditions.call();
+      this.dataService.termsandconditionsObservable.next(termsandconditions);
+
+      const collateralRate = await this.ALEQInstance.collateralRate.call();
+      this.dataService.collateralRateObservable.next(collateralRate);
+
+      const preClaimPeriod = await this.ALEQInstance.preClaimPeriod.call();
+      this.dataService.preClaimPeriodObservable.next(preClaimPeriod);
+
+      const claimPeriod = await this.ALEQInstance.claimPeriod.call();
+      this.dataService.claimPeriodObservable.next(claimPeriod);
+
+      const contractAddress = await this.ALEQInstance.address;
+      this.dataService.contractAddressObservable.next(contractAddress);
+
+      const ownerAddress = await this.ALEQInstance.owner.call();
+      this.dataService.ownerAddressObservable.next(ownerAddress);
+
+      const masterAddress = await this.ALEQInstance.master.call();
+      this.dataService.masterAddressObservable.next(masterAddress);
     }, 1000);
   }
 }

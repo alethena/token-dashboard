@@ -1,18 +1,70 @@
 @import '../../styles-material.scss';
 
 .data-container {
-    margin-top: 2vh;
+  margin-top: 2vh;
 }
 
 .data-card {
-    height: 200px;
+  height: 200px;
 }
 
 .material-icons {
-    font-size: 38px;
-    color: mat-color($alethena-app-primary);
+  font-size: 38px;
+  color: mat-color($alethena-app-primary);
+  margin-left: -4px;
+}
+
+.float-right {
+  float: right;
+  color: rgb(197, 196, 196);
+  font-size: 26px;
+}
+
+.vertical-align {
+  vertical-align: 10px;
+  margin-left: 15px;
 }
 
 .names {
-    font-size: 20px;
+  font-size: 20px;
+
+  a {
+    text-decoration: none;
+    color: #333;
+  }
+
+  a:hover {
+    border-bottom: solid 2px #155c72;
+    color: #155c72;
+  }
+}
+
+.mat-list-item {
+  a {
+    text-decoration: none;
+    color: #333;
+    word-break: break-all;
+  }
+
+  a:hover {
+    border-bottom: solid 2px #155c72;
+    color: #155c72;
+  }
+}
+
+.mat-raised-button {
+  background-color: mat-color($alethena-app-primary);
+  color: white;
+  margin-right: 0px;
+  margin-top: 10px;
+}
+
+.example-slider {
+  margin-left: 10px;
+}
+
+.details {
+  padding: 0;
+  margin: 0;
+  font-size: 20px;
 }

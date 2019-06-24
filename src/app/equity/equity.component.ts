@@ -10,11 +10,19 @@ import { DataService } from '../services/data/data.service';
 })
 
 export class EquityComponent implements OnInit {
-  public pauseStatus = 'N/A';
-  public nameStatus = 'N/A';
-  public symbolStatus = 'N/A';
-  public totalSupplyStatus = 'N/A';
-  public totalSharesStatus = 'N/A';
+  public pauseStatus = '';
+  public nameStatus = '';
+  public symbolStatus = '';
+  public totalSupplyStatus: number;
+  public totalSharesStatus: number;
+  public termsandconditions = '';
+  public collateralRate = '';
+  public preClaimPeriod = '';
+  public claimPeriod = '';
+  public contractAddress = '';
+  public ownerAddress = '';
+  public masterAddress = '';
+
 
   constructor(private infuraService: InfuraService, private aleqService: AleqService, private dataService: DataService) { }
 
@@ -31,10 +39,31 @@ export class EquityComponent implements OnInit {
       this.symbolStatus = newSymbolStatus;
     });
     this.dataService.totalSupplyStatusObservable.subscribe((newTotalSupplyStatus) => {
-      this.totalSupplyStatus = newTotalSupplyStatus;
+      this.totalSupplyStatus = parseFloat(newTotalSupplyStatus);
     });
     this.dataService.totalSharesStatusObservable.subscribe((newTotalSharesStatus) => {
-      this.totalSharesStatus = newTotalSharesStatus;
+      this.totalSharesStatus = parseFloat(newTotalSharesStatus);
+    });
+    this.dataService.termsandconditionsObservable.subscribe((newTermsandConditions) => {
+      this.termsandconditions = newTermsandConditions;
+    });
+    this.dataService.collateralRateObservable.subscribe((newCollateralRate) => {
+      this.collateralRate = newCollateralRate;
+    });
+    this.dataService.preClaimPeriodObservable.subscribe((newPreClaimPeriod) => {
+      this.preClaimPeriod = newPreClaimPeriod;
+    });
+    this.dataService.claimPeriodObservable.subscribe((newClaimPeriod) => {
+      this.claimPeriod = newClaimPeriod;
+    });
+    this.dataService.contractAddressObservable.subscribe((newContractAddress) => {
+      this.contractAddress = newContractAddress;
+    });
+    this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
+      this.ownerAddress = newOwnerAddress;
+    });
+    this.dataService.masterAddressObservable.subscribe((newMasterAddress) => {
+      this.masterAddress = newMasterAddress;
     });
   }
 
