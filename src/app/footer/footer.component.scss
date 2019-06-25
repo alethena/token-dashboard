@@ -1,0 +1,42 @@
+.address {
+    height: 100%;
+    li {
+        list-style: none;
+    }
+    padding-left: 0px;
+} 
+
+.footer-nav {
+    float: right;
+    text-align: right;
+    a {
+        color: #fff;
+    }
+    li {
+        list-style: none;
+    }
+}
+
+.copyright {
+    text-align: center;
+}
+
+.social {
+    text-align: center;
+    font-size: 150%;
+    color: #fff;
+    
+    a {
+        padding: 12px;
+        color: #fff;
+    }
+
+    a:hover {
+        background-color: rgba(255, 255, 255, 0.062);
+        border-radius: 10%;
+    }
+}
+
+.no-margin {
+    margin-top: 0;
+}

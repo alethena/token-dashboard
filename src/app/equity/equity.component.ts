@@ -10,18 +10,18 @@ import { DataService } from '../services/data/data.service';
 })
 
 export class EquityComponent implements OnInit {
-  public pauseStatus = '';
-  public nameStatus = '';
-  public symbolStatus = '';
+  public pauseStatus = false;
+  public nameStatus = 'Loading';
+  public symbolStatus = 'Loading';
   public totalSupplyStatus: number;
   public totalSharesStatus: number;
-  public termsandconditions = '';
-  public collateralRate = '';
-  public preClaimPeriod = '';
-  public claimPeriod = '';
-  public contractAddress = '';
-  public ownerAddress = '';
-  public masterAddress = '';
+  public termsandconditions = 'Loading';
+  public collateralRate = 'Loading';
+  public preClaimPeriod = 'Loading';
+  public claimPeriod = 'Loading';
+  public contractAddress = 'Loading';
+  public ownerAddress = 'Loading';
+  public masterAddress = 'Loading';
 
 
   constructor(private infuraService: InfuraService, private aleqService: AleqService, private dataService: DataService) { }
