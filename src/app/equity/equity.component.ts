@@ -16,9 +16,9 @@ export class EquityComponent implements OnInit {
   public totalSupplyStatus: number;
   public totalSharesStatus: number;
   public termsandconditions = 'Loading';
-  public collateralRate = 'Loading';
-  public preClaimPeriod = 'Loading';
-  public claimPeriod = 'Loading';
+  public collateralRate: number;
+  public preClaimPeriod: number;
+  public claimPeriod: number;
   public contractAddress = 'Loading';
   public ownerAddress = 'Loading';
   public masterAddress = 'Loading';
@@ -48,13 +48,13 @@ export class EquityComponent implements OnInit {
       this.termsandconditions = newTermsandConditions;
     });
     this.dataService.collateralRateObservable.subscribe((newCollateralRate) => {
-      this.collateralRate = newCollateralRate;
+      this.collateralRate = parseFloat(newCollateralRate);
     });
     this.dataService.preClaimPeriodObservable.subscribe((newPreClaimPeriod) => {
-      this.preClaimPeriod = newPreClaimPeriod;
+      this.preClaimPeriod = parseFloat(newPreClaimPeriod);
     });
     this.dataService.claimPeriodObservable.subscribe((newClaimPeriod) => {
-      this.claimPeriod = newClaimPeriod;
+      this.claimPeriod = parseFloat(newClaimPeriod);
     });
     this.dataService.contractAddressObservable.subscribe((newContractAddress) => {
       this.contractAddress = newContractAddress;
