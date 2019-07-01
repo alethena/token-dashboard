@@ -1,0 +1,19 @@
+{
+  "Network": "Rinkeby",
+
+  "Mainnet": {
+    "InfuraWS": "wss://mainnet.infura.io/v3/506b137aa0d543268e847d6affb7963c"
+  },
+  "Rinkeby": {
+    "InfuraWS": "wss://rinkeby.infura.io/v3/506b137aa0d543268e847d6affb7963c"
+  },
+  "Ropsten": {
+    "InfuraWS": "wss://ropsten.infura.io/v3/506b137aa0d543268e847d6affb7963c"
+  },
+  "Kovan": {
+    "InfuraWS": "wss://kovan.infura.io/v3/506b137aa0d543268e847d6affb7963c"
+  },
+  "Goerli": {
+    "InfuraWS": "wss://goerli.infura.io/v3/506b137aa0d543268e847d6affb7963c"
+  }
+}
