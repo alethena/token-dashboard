@@ -44,7 +44,10 @@
   a {
     text-decoration: none;
     color: #333;
-    word-break: break-all;
+    // word-break: break-all;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
   }
 
   a:hover {
@@ -68,4 +71,8 @@
   padding: 0;
   margin: 0;
   font-size: 20px;
+}
+
+.horizontal-margin {
+  margin-right: 40px;
 }

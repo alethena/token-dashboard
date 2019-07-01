@@ -24,9 +24,8 @@
       <mat-card-content>
         <p class="names" style="text-align:center"> <b>{{ totalSupplyStatus | number }} Tokenized Shares </b></p>
         <p style="text-align:center">
-          <button mat-raised-button>Mint</button>
-          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-          <button mat-raised-button>Unmint</button>
+          <button mat-raised-button class="horizontal-margin" (click)="openMintDialog()">Mint</button>
+          <button mat-raised-button (click)="openUnmintDialog()"> Unmint</button>
         </p>
       </mat-card-content>
     </mat-card>
@@ -39,7 +38,7 @@
       <mat-card-content>
         <p class="names" style="text-align:center"> <b>{{ totalSharesStatus | number}} Total Shares </b></p>
         <p style="text-align:center">
-          <button mat-raised-button>Set Total Shares</button>
+          <button mat-raised-button (click)="openTotalSharesDialog()">Set Total Shares</button>
         </p>
       </mat-card-content>
     </mat-card>
@@ -56,9 +55,9 @@
         <i class="material-icons"> looks_4 </i> <i class="material-icons float-right"> settings </i>
       </mat-card-title>
       <mat-card-content>
-        <p class="names"> <b>T&C URL:</b>&nbsp; <a href="https://{{ termsandconditions }}"
+        <p class="names"> <b>T&C URL:</b> &#8205; <a href="https://{{ termsandconditions }}"
             target="_blank">{{ termsandconditions }}</a></p>
-        <p class="names"> <b>ENS:</b> &nbsp; <a href="https://etherscan.io/address/alethena.eth"
+        <p class="names"> <b>ENS:</b> &#8205; <a href="https://etherscan.io/address/alethena.eth"
             target="_blank">alethena.eth</a></p>
       </mat-card-content>
     </mat-card>
@@ -71,11 +70,11 @@
       </mat-card-title>
       <mat-card-content>
         <mat-list>
-          <mat-list-item> <b>Collateral Rate:</b> &nbsp; {{ collateralRate/1000000000000000000 }} Ether</mat-list-item>
+          <mat-list-item> <b>Collateral Rate:</b> &#8205; {{ collateralRate/1000000000000000000 }} Ether</mat-list-item>
           <mat-divider></mat-divider>
-          <mat-list-item> <b>Pre-Claim Period:</b> &nbsp; {{ preClaimPeriod/3600 }}h</mat-list-item>
+          <mat-list-item> <b>Pre-Claim Period:</b> &#8205; {{ preClaimPeriod/3600 }}h</mat-list-item>
           <mat-divider></mat-divider>
-          <mat-list-item> <b>Claim Period:</b> &nbsp; {{ claimPeriod/86400 }} Days</mat-list-item>
+          <mat-list-item> <b>Claim Period:</b> &#8205; {{ claimPeriod/86400 }} Days</mat-list-item>
         </mat-list>
       </mat-card-content>
     </mat-card>

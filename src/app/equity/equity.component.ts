@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { InfuraService } from '../services/infura/infura.service';
 import { AleqService } from '../services/aleq/aleq.service';
 import { DataService } from '../services/data/data.service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+
+export interface DialogData {
+  mintNumber: number;
+}
 
 @Component({
   selector: 'app-equity',
@@ -22,9 +27,13 @@ export class EquityComponent implements OnInit {
   public contractAddress = 'Loading';
   public ownerAddress = 'Loading';
   public masterAddress = 'Loading';
+  mintNumber: number;
 
-
-  constructor(private infuraService: InfuraService, private aleqService: AleqService, private dataService: DataService) { }
+  constructor(
+    private infuraService: InfuraService, 
+    private aleqService: AleqService, 
+    private dataService: DataService,
+    public dialog: MatDialog) { }
 
   async ngOnInit() {
     await this.infuraService.bootstrapWeb3();
@@ -65,6 +74,89 @@ export class EquityComponent implements OnInit {
     this.dataService.masterAddressObservable.subscribe((newMasterAddress) => {
       this.masterAddress = newMasterAddress;
     });
+  }
+  openMintDialog() {
+    const dialogRef = this.dialog.open(DialogMintingDialog, {
+      width: '500px',
+      data: {mintNumber: this.mintNumber}
+    });
+  }
+  openUnmintDialog() {
+    const dialogRef = this.dialog.open(DialogUnmintingDialog, {
+      width: '500px',
+      data: {mintNumber: this.mintNumber}
+    });
+  }
+  openTotalSharesDialog() {
+    const dialogRef = this.dialog.open(DialogTotalSharesDialog, {
+      width: '500px',
+      data: {mintNumber: this.mintNumber}
+    });
+  }
+}
+
+@Component({
+  selector: 'dialog-minting',
+  templateUrl: 'dialog-minting.html',
+  styleUrls: ['./dialog-minting.scss'],
+})
+
+export class DialogMintingDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogMintingDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  async changeClick() {
+    this.dialogRef.close();
+  }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'dialog-unminting',
+  templateUrl: 'dialog-unminting.html',
+  styleUrls: ['./dialog-unminting.scss'],
+})
+
+export class DialogUnmintingDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogUnmintingDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  async changeClick() {
+    this.dialogRef.close();
+  }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'dialog-total-shares',
+  templateUrl: 'dialog-total-shares.html',
+  styleUrls: ['./dialog-total-shares.scss'],
+})
+
+export class DialogTotalSharesDialog {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogTotalSharesDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  async changeClick() {
+    this.dialogRef.close();
+  }
+
+  async noClick() {
+    this.dialogRef.close();
   }
 
 }
