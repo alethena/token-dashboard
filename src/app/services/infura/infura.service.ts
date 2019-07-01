@@ -1,14 +1,11 @@
-import {
-  Injectable
-} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 declare let require: any;
 const Web3 = require('web3');
 import contract from 'truffle-contract';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root'})
+
 export class InfuraService {
   public web3: any;
   public ENS: any;

@@ -2,7 +2,10 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { InfuraService } from '../services/infura/infura.service';
 import { AleqService } from '../services/aleq/aleq.service';
 import { DataService } from '../services/data/data.service';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Web3Service } from '../services/metamask/web3.service';
+import { MatSnackBar } from '@angular/material';
+
 
 export interface DialogData {
   mintNumber: number;
@@ -33,7 +36,9 @@ export class EquityComponent implements OnInit {
     private infuraService: InfuraService, 
     private aleqService: AleqService, 
     private dataService: DataService,
-    public dialog: MatDialog) { }
+     private web3Service: Web3Service,
+    public dialog: MatDialog
+    ) { }
 
   async ngOnInit() {
     await this.infuraService.bootstrapWeb3();
