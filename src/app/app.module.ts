@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { MatCardModule, MatIconModule, MatFormFieldModule } from '@angular/material';
+import { MatCardModule, MatIconModule, MatFormFieldModule, MatSnackBarModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -44,6 +44,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from
     MatIconModule,
     MatDividerModule,
     MatListModule,
+    MatSnackBarModule,
     MatDialogModule,
     MatInputModule,
   ],

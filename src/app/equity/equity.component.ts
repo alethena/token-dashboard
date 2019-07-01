@@ -31,18 +31,23 @@ export class EquityComponent implements OnInit {
   public ownerAddress = 'Loading';
   public masterAddress = 'Loading';
   mintNumber: number;
+  web3: any;
+  txID: any;
 
   constructor(
-    private infuraService: InfuraService, 
-    private aleqService: AleqService, 
+    private infuraService: InfuraService,
+    private aleqService: AleqService,
     private dataService: DataService,
-     private web3Service: Web3Service,
-    public dialog: MatDialog
+    private web3Service: Web3Service,
+    public dialog: MatDialog,
+    private matSnackBar: MatSnackBar
     ) { }
 
   async ngOnInit() {
     await this.infuraService.bootstrapWeb3();
     await this.aleqService.bootstrapALEQ();
+    await this.web3Service.bootstrapWeb3();
+
     this.dataService.pauseStatusObservable.subscribe((newPauseStatus) => {
       this.pauseStatus = newPauseStatus;
     });
@@ -98,6 +103,15 @@ export class EquityComponent implements OnInit {
       data: {mintNumber: this.mintNumber}
     });
   }
+  async onTest() {
+    const network = await this.web3Service.web3.eth.net.getId();
+    if (network === 4) {
+    console.log(network);
+    // this.txID = await this.aleqService.allowance(price, this.numberOfShares, this.selectedAccount);
+    } else {
+      this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
+    }
+  }
 }
 
 @Component({
@@ -119,6 +133,8 @@ export class DialogMintingDialog {
   async noClick() {
     this.dialogRef.close();
   }
+
+  
 
 }
 
