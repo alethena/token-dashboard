@@ -9,10 +9,16 @@
         <p class="names"> <b>Symbol:</b> {{ symbolStatus }}</p>
         <p></p>
         <div *ngIf="pauseStatus; then thenBlock else elseBlock"></div>
-        <ng-template #thenBlock><em>Contract currently paused. Slide me to unpause the contract.</em></ng-template>
-        <ng-template #elseBlock><em>Contract currently running. Slide me to pause the contract.</em></ng-template>
-        <mat-slide-toggle [checked]="pauseStatus" color="accent" class="example-slider">
-        </mat-slide-toggle>
+        <ng-template #thenBlock><em>Contract currently paused. Slide me to unpause the contract.</em>
+          <mat-slide-toggle [checked]="pauseStatus" (change)="openUnpausingDialog()" color="accent"
+            class="example-slider">
+          </mat-slide-toggle>
+        </ng-template>
+        <ng-template #elseBlock><em>Contract currently running. Slide me to pause the contract.</em>
+          <mat-slide-toggle [checked]="pauseStatus" (change)="openPausingDialog()" color="accent"
+            class="example-slider">
+          </mat-slide-toggle>
+        </ng-template>
       </mat-card-content>
     </mat-card>
   </div>
@@ -25,7 +31,7 @@
         <p class="names" style="text-align:center"> <b>{{ totalSupplyStatus | number }} Tokenized Shares </b></p>
         <p style="text-align:center">
           <button mat-raised-button class="horizontal-margin" (click)="openMintDialog()">Mint</button>
-          <button mat-raised-button (click)="onTest()"> Unmint</button>
+          <button mat-raised-button (click)="openUnmintDialog()"> Unmint {{ checked }}</button>
         </p>
       </mat-card-content>
     </mat-card>

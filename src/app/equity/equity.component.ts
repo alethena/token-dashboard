@@ -103,6 +103,17 @@ export class EquityComponent implements OnInit {
       data: {mintNumber: this.mintNumber}
     });
   }
+  openPausingDialog() {
+    const dialogRef = this.dialog.open(DialogPausing, {
+      width: '500px'
+    });
+  }
+  openUnpausingDialog() {
+    const dialogRef = this.dialog.open(DialogUnpausing, {
+      width: '500px'
+    });
+  }
+
   async onTest() {
     const network = await this.web3Service.web3.eth.net.getId();
     if (network === 4) {
@@ -133,8 +144,6 @@ export class DialogMintingDialog {
   async noClick() {
     this.dialogRef.close();
   }
-
-  
 
 }
 
@@ -170,6 +179,50 @@ export class DialogTotalSharesDialog {
 
   constructor(
     public dialogRef: MatDialogRef<DialogTotalSharesDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  async changeClick() {
+    this.dialogRef.close();
+  }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'dialog-pausing',
+  templateUrl: 'dialog-pausing.html',
+  styleUrls: ['./dialog-pausing.scss'],
+})
+
+export class DialogPausing {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogPausing>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  async changeClick(event) {
+    this.dialogRef.close();
+  }
+
+  async noClick(event) {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'dialog-unpausing',
+  templateUrl: 'dialog-unpausing.html',
+  styleUrls: ['./dialog-unpausing.scss'],
+})
+
+export class DialogUnpausing {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogUnpausing>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   async changeClick() {
