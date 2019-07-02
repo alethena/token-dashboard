@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Change Owner Address</h1>
+<div mat-dialog-content>
+  <p class="no-top-margin"><b>You are about to change the owner address of the share token contract!</b></p>
+  <p>Enter here the new owner. Must be entered in hex format (i.e. including '0x' at the beginning)!</p>
+  <mat-form-field>
+    <input matInput type="text" placeholder="New owner address" [(ngModel)]="data.ownerAddressHex" required>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="changeClick()" cdkFocusInitial>UPDATE</button>
+    <button mat-button (click)="noClick()">CLOSE</button>
+</div>

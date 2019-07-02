@@ -20,7 +20,12 @@ import { EquityComponent,
          DialogUnmintingDialog,
          DialogTotalSharesDialog,
          DialogPausing,
-         DialogUnpausing } from './equity/equity.component';
+         DialogUnpausing,
+         DialogChangeOwner,
+         DialogClaimPeriod,
+         DialogCollateralRate,
+         DialogRenounceOwnership
+        } from './equity/equity.component';
 import { FooterComponent } from './footer/footer.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
@@ -38,6 +43,10 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from
     DialogTotalSharesDialog,
     DialogPausing,
     DialogUnpausing,
+    DialogChangeOwner,
+    DialogClaimPeriod,
+    DialogCollateralRate,
+    DialogRenounceOwnership,
     FooterComponent,
     NavigationComponent,
   ],
@@ -68,6 +77,10 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from
     DialogTotalSharesDialog,
     DialogPausing,
     DialogUnpausing,
+    DialogChangeOwner,
+    DialogClaimPeriod,
+    DialogCollateralRate,
+    DialogRenounceOwnership,
   ],
   providers: [],
   bootstrap: [AppComponent]

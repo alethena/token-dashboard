@@ -87,13 +87,13 @@
           <i class="material-icons float-right"> settings </i>
         </button>
         <mat-menu #menu2="matMenu">
-          <button mat-menu-item>
+          <button mat-menu-item (click)="openCollateralRateDialog()">
             <mat-icon> attach_money </mat-icon>
-            <span class="menu-items"> <a href="#" target="_blank"> Update Collateral Rate</a> </span>
+            <span class="menu-items"> Update Collateral Rate </span>
           </button>
-          <button mat-menu-item>
+          <button mat-menu-item (click)="openClaimPeriodDialog()">
             <mat-icon> access_time </mat-icon>
-            <span class="menu-items"> <a href="#" target="_blank"> Update Claim Period</a> </span>
+            <span class="menu-items"> Update Claim Period </span>
           </button>
         </mat-menu>
       </mat-card-title>
@@ -119,11 +119,11 @@
         <mat-menu #menu3="matMenu">
           <button mat-menu-item>
             <mat-icon> account_circle </mat-icon>
-            <span class="menu-items"> <a href="#" target="_blank"> Change Owner </a> </span>
+            <span class="menu-items" (click)="openChangeOwnerDialog()"> Change Owner </span>
           </button>
           <button mat-menu-item>
             <mat-icon> delete_forever </mat-icon>
-            <span class="menu-items"> <a href="#" target="_blank"> Renounce Ownership </a> </span>
+            <span class="menu-items" (click)="openRenounceOwnershipDialog()"> Renounce Ownership </span>
           </button>
         </mat-menu>
       </mat-card-title>

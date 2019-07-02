@@ -9,6 +9,11 @@ import { MatSnackBar } from '@angular/material';
 
 export interface DialogData {
   mintNumber: number;
+  unmintNumber: number;
+  totalSharesNumber: number;
+  collateralRateNumber: number;
+  claimPeriodNumber: number;
+  ownerAddressHex: any;
 }
 
 @Component({
@@ -31,6 +36,11 @@ export class EquityComponent implements OnInit {
   public ownerAddress = 'Loading';
   public masterAddress = 'Loading';
   mintNumber: number;
+  unmintNumber: number;
+  totalSharesNumber: number;
+  collateralRateNumber: number;
+  claimPeriodNumber: number;
+  ownerAddressHex: any;
   web3: any;
   txID: any;
 
@@ -94,13 +104,13 @@ export class EquityComponent implements OnInit {
   openUnmintDialog() {
     const dialogRef = this.dialog.open(DialogUnmintingDialog, {
       width: '500px',
-      data: {mintNumber: this.mintNumber}
+      data: {unmintNumber: this.unmintNumber}
     });
   }
   openTotalSharesDialog() {
     const dialogRef = this.dialog.open(DialogTotalSharesDialog, {
       width: '500px',
-      data: {mintNumber: this.mintNumber}
+      data: {totalSharesNumber: this.totalSharesNumber}
     });
   }
   openPausingDialog() {
@@ -110,6 +120,29 @@ export class EquityComponent implements OnInit {
   }
   openUnpausingDialog() {
     const dialogRef = this.dialog.open(DialogUnpausing, {
+      width: '500px'
+    });
+  }
+  openCollateralRateDialog() {
+    const dialogRef = this.dialog.open(DialogCollateralRate, {
+      width: '500px',
+      data: {collateralRateNumber: this.collateralRateNumber}
+    });
+  }
+  openClaimPeriodDialog() {
+    const dialogRef = this.dialog.open(DialogClaimPeriod, {
+      width: '500px',
+      data: {claimPeriodNumber: this.claimPeriodNumber}
+    });
+  }
+  openChangeOwnerDialog() {
+    const dialogRef = this.dialog.open(DialogChangeOwner, {
+      width: '500px',
+      data: {ownerAddressHex: this.ownerAddressHex}
+    });
+  }
+  openRenounceOwnershipDialog() {
+    const dialogRef = this.dialog.open(DialogRenounceOwnership, {
       width: '500px'
     });
   }
@@ -223,6 +256,94 @@ export class DialogUnpausing {
 
   constructor(
     public dialogRef: MatDialogRef<DialogUnpausing>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  async changeClick() {
+    this.dialogRef.close();
+  }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'dialog-collateral-rate',
+  templateUrl: 'dialog-collateral-rate.html',
+  styleUrls: ['./dialog-collateral-rate.scss'],
+})
+
+export class DialogCollateralRate {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogCollateralRate>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  async changeClick() {
+    this.dialogRef.close();
+  }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'dialog-claim-period',
+  templateUrl: 'dialog-claim-period.html',
+  styleUrls: ['./dialog-claim-period.scss'],
+})
+
+export class DialogClaimPeriod {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogClaimPeriod>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  async changeClick() {
+    this.dialogRef.close();
+  }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'dialog-change-owner',
+  templateUrl: 'dialog-change-owner.html',
+  styleUrls: ['./dialog-change-owner.scss'],
+})
+
+export class DialogChangeOwner {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogChangeOwner>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  async changeClick() {
+    this.dialogRef.close();
+  }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'dialog-renounce-ownership',
+  templateUrl: 'dialog-renounce-ownership.html',
+  styleUrls: ['./dialog-renounce-ownership.scss'],
+})
+
+export class DialogRenounceOwnership {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogRenounceOwnership>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
   async changeClick() {
