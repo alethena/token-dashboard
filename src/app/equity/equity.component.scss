@@ -8,6 +8,11 @@
   height: 200px;
 }
 
+.mat-icon {
+  height: auto;
+  width: auto;
+}
+
 .material-icons {
   font-size: 38px;
   color: mat-color($alethena-app-primary);
@@ -15,10 +20,10 @@
 }
 
 .float-right {
-  float: right;
-  color: rgb(197, 196, 196);
+  float: right !important;
+  color: rgb(146, 146, 146);
   font-size: 26px;
-  margin-top: 6px;
+  margin-top: 0;
 }
 
 .vertical-align {
@@ -75,4 +80,12 @@
 
 .horizontal-margin {
   margin-right: 40px;
+}
+
+.menu-items {
+  a {
+    font-size: 18px;
+    text-decoration: none;
+    color: #333;
+  }
 }

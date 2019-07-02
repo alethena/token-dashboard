@@ -11,8 +11,10 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { AppComponent } from './app.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { TestComponent } from './test/test.component';
 import { EquityComponent,
          DialogMintingDialog,
@@ -53,7 +55,9 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from
     MatSlideToggleModule,
     MatTreeModule,
     MatIconModule,
+    MatMenuModule,
     MatDividerModule,
+    MatExpansionModule,
     MatListModule,
     MatSnackBarModule,
     MatDialogModule,

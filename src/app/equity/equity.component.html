@@ -58,7 +58,17 @@
   <div class="col-4">
     <mat-card class="mat-elevation-z8 data-card">
       <mat-card-title>
-        <i class="material-icons"> looks_4 </i> <i class="material-icons float-right"> settings </i>
+        <i class="material-icons"> looks_4 </i>
+        <button mat-icon-button class="float-right" [matMenuTriggerFor]="menu1" aria-label="Settings button.">
+          <i class="material-icons float-right"> settings </i>
+        </button>
+        <mat-menu #menu1="matMenu">
+          <button mat-menu-item>
+            <mat-icon> update </mat-icon>
+            <span class="menu-items"> <a href="https://manager.ens.domains/name/alethena.eth" target="_blank"> Update
+                ENS </a> </span>
+          </button>
+        </mat-menu>
       </mat-card-title>
       <mat-card-content>
         <p class="names"> <b>T&C URL:</b> &#8205; <a href="https://{{ termsandconditions }}"
@@ -71,8 +81,21 @@
   <div class="col-4">
     <mat-card class="mat-elevation-z8 data-card">
       <mat-card-title>
-        <i class="material-icons"> looks_5 </i> <span class="vertical-align">Claim Details</span> <i
-          class="material-icons float-right"> settings </i>
+        <i class="material-icons"> looks_5 </i> <span class="vertical-align">Claim Details</span> 
+        <button
+          mat-icon-button class="float-right" [matMenuTriggerFor]="menu2" aria-label="Settings button.">
+          <i class="material-icons float-right"> settings </i>
+        </button>
+        <mat-menu #menu2="matMenu">
+          <button mat-menu-item>
+            <mat-icon> attach_money </mat-icon>
+            <span class="menu-items"> <a href="#" target="_blank"> Update Collateral Rate</a> </span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon> access_time </mat-icon>
+            <span class="menu-items"> <a href="#" target="_blank"> Update Claim Period</a> </span>
+          </button>
+        </mat-menu>
       </mat-card-title>
       <mat-card-content>
         <mat-list>
@@ -88,8 +111,21 @@
   <div class="col-4">
     <mat-card class="mat-elevation-z8 data-card">
       <mat-card-title>
-        <i class="material-icons"> looks_6 </i> <span class="vertical-align">Contract Details</span> <i
-          class="material-icons float-right"> settings </i>
+        <i class="material-icons"> looks_6 </i> <span class="vertical-align">Contract Details</span>
+        <button
+          mat-icon-button class="float-right" [matMenuTriggerFor]="menu3" aria-label="Settings button.">
+          <i class="material-icons float-right"> settings </i>
+        </button>
+        <mat-menu #menu3="matMenu">
+          <button mat-menu-item>
+            <mat-icon> account_circle </mat-icon>
+            <span class="menu-items"> <a href="#" target="_blank"> Change Owner </a> </span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon> delete_forever </mat-icon>
+            <span class="menu-items"> <a href="#" target="_blank"> Renounce Ownership </a> </span>
+          </button>
+        </mat-menu>
       </mat-card-title>
       <mat-card-content>
         <mat-list>
