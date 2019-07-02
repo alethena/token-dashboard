@@ -67,6 +67,11 @@ a:hover {
   visibility: hidden;
 }
 
+.mat-form-field-infix {
+  /* Windows Edge fix for mat-form-field */ 
+  flex-grow: 0 !important;  
+}
+
 /*------------------------------*/
 /* IMAGES & FOOTER & LOGOS */
 /*------------------------------*/
