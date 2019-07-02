@@ -15,7 +15,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { AppComponent } from './app.component';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { TestComponent } from './test/test.component';
 import { EquityComponent,
          DialogMintingDialog,
          DialogUnmintingDialog,
@@ -33,7 +32,6 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from
 @NgModule({
   declarations: [
     AppComponent,
-    TestComponent,
     EquityComponent,
     DialogMintingDialog,
     DialogUnmintingDialog,
