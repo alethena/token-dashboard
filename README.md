@@ -15,7 +15,7 @@ npm config set python /path/to/executable/python2.7
 ```
 npm install
 npm install --save web3@1.0.0-beta.37
-npm i node-sass --save
+npm install node-sass --save
 ```
 Note: Probably you need to delete the `websocket` folder after the first `npm install`.
 ### Fixes
@@ -27,3 +27,5 @@ node replacer.js
 ```
 ng serve
 ```
+### Deployment on AWS
+Just run `sh deploy_aws.sh` in your shell (if this doesn't work, update your npm packages).
