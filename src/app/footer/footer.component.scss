@@ -40,3 +40,27 @@
 .no-margin {
     margin-top: 0;
 }
+
+@media only screen and (max-width: 720px)  {
+    .no-margin {
+        font-size: 85%;
+    }
+    .address-container {
+        display: flex;
+        padding: 0 auto;
+        height: 100%;
+    }
+    .address {
+        text-align: center;
+        margin: 0px auto;
+        margin-top: 10px;
+        li {
+            float: left;
+            padding: 3px;
+        }
+        padding: 0px;
+    }
+    .footer-nav-hide {
+        visibility: hidden;
+    }
+ }

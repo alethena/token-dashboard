@@ -8,5 +8,24 @@
       <li><a href="#">Share Dispenser</a></li>
       <li><a href="#" target="_blank">Claim</a></li>
     </ul>
+    <div class="mobile-nav">
+        <button mat-icon-button [matMenuTriggerFor]="menu">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item>
+            <span><a href="#" target="_blank">Home</a></span>
+          </button>
+          <button mat-menu-item disabled>
+            <span><a href="#">Equity</a></span>
+          </button>
+          <button mat-menu-item>
+            <span><a href="#" target="_blank">Share Dispenser</a></span>
+          </button>
+          <button mat-menu-item>
+            <span><a href="#">Claim</a></span>
+          </button>
+        </mat-menu>
+      </div>
     </div>
 </header>
