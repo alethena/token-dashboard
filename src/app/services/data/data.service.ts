@@ -18,8 +18,8 @@ export class DataService {
   public contractAddressObservable = new Subject < any > ();
   public ownerAddressObservable = new Subject < any > ();
   public masterAddressObservable = new Subject < any > ();
-  public web3Observable = new Subject<any>();
-  public accountsObservable = new Subject<string[]>();
-  public accountObservable = new Subject<string>();
+  public web3Observable = new Subject < any > ();
+  public accountsObservable = new Subject < any > ();
+  public accountObservable = new Subject < any > ();
   constructor() {}
 }

@@ -232,14 +232,14 @@ export class EquityComponent implements OnInit {
   public contractAddress = 'Loading';
   public ownerAddress = 'Loading';
   public masterAddress = 'Loading';
-  mintNumber: number;
-  unmintNumber: number;
-  totalSharesNumber: number;
-  collateralRateNumber: number;
-  claimPeriodNumber: number;
-  ownerAddressHex: any;
-  web3: any;
-  txID: any;
+  public mintNumber: number;
+  public unmintNumber: number;
+  public totalSharesNumber: number;
+  public collateralRateNumber: number;
+  public claimPeriodNumber: number;
+  public ownerAddressHex: any;
+  public web3: any;
+  public txID: any;
 
   constructor(
     private infuraService: InfuraService,
