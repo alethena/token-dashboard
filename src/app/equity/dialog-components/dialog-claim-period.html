@@ -3,7 +3,7 @@
   <p class="no-top-margin"><b>You are about to change the claim period used in the declareLost function!</b></p>
   <p>Enter here your new claim period. Must be entered in seconds!</p>
   <mat-form-field>
-    <input matInput type="number" placeholder="New claim period" [(ngModel)]="data.claimPeriodNumber" required>
+    <input matInput type="number" placeholder="New claim period" [(ngModel)]="data.claimPeriodNumber" onkeypress="return event.charCode >= 48 && event.charCode <= 57" min="1">
   </mat-form-field>
   <p class="caveat"><em>Caveat: Must be a positive integer value.</em></p>
 </div>

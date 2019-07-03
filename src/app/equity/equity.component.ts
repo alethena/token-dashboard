@@ -6,7 +6,6 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { Web3Service } from '../services/metamask/web3.service';
 import { MatSnackBar } from '@angular/material';
 
-
 export interface DialogData {
   mintNumber: number;
   unmintNumber: number;
@@ -14,6 +13,204 @@ export interface DialogData {
   collateralRateNumber: number;
   claimPeriodNumber: number;
   ownerAddressHex: any;
+}
+
+@Component({
+  selector: 'app-dialog-minting',
+  templateUrl: './dialog-components/dialog-minting.html',
+  styleUrls: ['./dialog-components/dialog-minting.scss'],
+})
+
+export class DialogMintingComponent {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogMintingComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  async changeClick() {
+    this.dialogRef.close();
+  }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'app-dialog-unminting',
+  templateUrl: './dialog-components/dialog-unminting.html',
+  styleUrls: ['./dialog-components/dialog-unminting.scss'],
+})
+
+export class DialogUnmintingComponent {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogUnmintingComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  async changeClick() {
+    this.dialogRef.close();
+  }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'app-dialog-total-shares',
+  templateUrl: './dialog-components/dialog-total-shares.html',
+  styleUrls: ['./dialog-components/dialog-total-shares.scss'],
+})
+
+export class DialogTotalSharesComponent {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogTotalSharesComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  async changeClick() {
+    this.dialogRef.close();
+  }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'app-dialog-pausing',
+  templateUrl: './dialog-components/dialog-pausing.html',
+  styleUrls: ['./dialog-components/dialog-pausing.scss'],
+})
+
+export class DialogPausingComponent {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogPausingComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  async changeClick(event) {
+    this.dialogRef.close();
+  }
+
+  async noClick(event) {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'app-dialog-unpausing',
+  templateUrl: './dialog-components/dialog-unpausing.html',
+  styleUrls: ['./dialog-components/dialog-unpausing.scss'],
+})
+
+export class DialogUnpausingComponent {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogUnpausingComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  async changeClick() {
+    this.dialogRef.close();
+  }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'app-dialog-collateral-rate',
+  templateUrl: './dialog-components/dialog-collateral-rate.html',
+  styleUrls: ['./dialog-components/dialog-collateral-rate.scss'],
+})
+
+export class DialogCollateralRateComponent {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogCollateralRateComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  async changeClick() {
+    this.dialogRef.close();
+  }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'app-dialog-claim-period',
+  templateUrl: './dialog-components/dialog-claim-period.html',
+  styleUrls: ['./dialog-components/dialog-claim-period.scss'],
+})
+
+export class DialogClaimPeriodComponent {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogClaimPeriodComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  async changeClick() {
+    this.dialogRef.close();
+  }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'app-dialog-change-owner',
+  templateUrl: './dialog-components/dialog-change-owner.html',
+  styleUrls: ['./dialog-components/dialog-change-owner.scss'],
+})
+
+export class DialogChangeOwnerComponent {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogChangeOwnerComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  async changeClick() {
+    this.dialogRef.close();
+  }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'app-dialog-renounce-ownership',
+  templateUrl: './dialog-components/dialog-renounce-ownership.html',
+  styleUrls: ['./dialog-components/dialog-renounce-ownership.scss'],
+})
+
+export class DialogRenounceOwnershipComponent {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogRenounceOwnershipComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  async changeClick() {
+    this.dialogRef.close();
+  }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
 }
 
 @Component({
@@ -96,53 +293,53 @@ export class EquityComponent implements OnInit {
     });
   }
   openMintDialog() {
-    const dialogRef = this.dialog.open(DialogMintingDialog, {
+    const dialogRef = this.dialog.open(DialogMintingComponent, {
       width: '500px',
       data: {mintNumber: this.mintNumber}
     });
   }
   openUnmintDialog() {
-    const dialogRef = this.dialog.open(DialogUnmintingDialog, {
+    const dialogRef = this.dialog.open(DialogUnmintingComponent, {
       width: '500px',
       data: {unmintNumber: this.unmintNumber}
     });
   }
   openTotalSharesDialog() {
-    const dialogRef = this.dialog.open(DialogTotalSharesDialog, {
+    const dialogRef = this.dialog.open(DialogTotalSharesComponent, {
       width: '500px',
       data: {totalSharesNumber: this.totalSharesNumber}
     });
   }
   openPausingDialog() {
-    const dialogRef = this.dialog.open(DialogPausing, {
+    const dialogRef = this.dialog.open(DialogPausingComponent, {
       width: '500px'
     });
   }
   openUnpausingDialog() {
-    const dialogRef = this.dialog.open(DialogUnpausing, {
+    const dialogRef = this.dialog.open(DialogUnpausingComponent, {
       width: '500px'
     });
   }
   openCollateralRateDialog() {
-    const dialogRef = this.dialog.open(DialogCollateralRate, {
+    const dialogRef = this.dialog.open(DialogCollateralRateComponent, {
       width: '500px',
       data: {collateralRateNumber: this.collateralRateNumber}
     });
   }
   openClaimPeriodDialog() {
-    const dialogRef = this.dialog.open(DialogClaimPeriod, {
+    const dialogRef = this.dialog.open(DialogClaimPeriodComponent, {
       width: '500px',
       data: {claimPeriodNumber: this.claimPeriodNumber}
     });
   }
   openChangeOwnerDialog() {
-    const dialogRef = this.dialog.open(DialogChangeOwner, {
+    const dialogRef = this.dialog.open(DialogChangeOwnerComponent, {
       width: '500px',
       data: {ownerAddressHex: this.ownerAddressHex}
     });
   }
   openRenounceOwnershipDialog() {
-    const dialogRef = this.dialog.open(DialogRenounceOwnership, {
+    const dialogRef = this.dialog.open(DialogRenounceOwnershipComponent, {
       width: '500px'
     });
   }
@@ -156,202 +353,4 @@ export class EquityComponent implements OnInit {
       this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
     }
   }
-}
-
-@Component({
-  selector: 'dialog-minting',
-  templateUrl: 'dialog-minting.html',
-  styleUrls: ['./dialog-minting.scss'],
-})
-
-export class DialogMintingDialog {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogMintingDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-
-  async changeClick() {
-    this.dialogRef.close();
-  }
-
-  async noClick() {
-    this.dialogRef.close();
-  }
-
-}
-
-@Component({
-  selector: 'dialog-unminting',
-  templateUrl: 'dialog-unminting.html',
-  styleUrls: ['./dialog-unminting.scss'],
-})
-
-export class DialogUnmintingDialog {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogUnmintingDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-
-  async changeClick() {
-    this.dialogRef.close();
-  }
-
-  async noClick() {
-    this.dialogRef.close();
-  }
-
-}
-
-@Component({
-  selector: 'dialog-total-shares',
-  templateUrl: 'dialog-total-shares.html',
-  styleUrls: ['./dialog-total-shares.scss'],
-})
-
-export class DialogTotalSharesDialog {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogTotalSharesDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-
-  async changeClick() {
-    this.dialogRef.close();
-  }
-
-  async noClick() {
-    this.dialogRef.close();
-  }
-
-}
-
-@Component({
-  selector: 'dialog-pausing',
-  templateUrl: 'dialog-pausing.html',
-  styleUrls: ['./dialog-pausing.scss'],
-})
-
-export class DialogPausing {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogPausing>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-
-  async changeClick(event) {
-    this.dialogRef.close();
-  }
-
-  async noClick(event) {
-    this.dialogRef.close();
-  }
-
-}
-
-@Component({
-  selector: 'dialog-unpausing',
-  templateUrl: 'dialog-unpausing.html',
-  styleUrls: ['./dialog-unpausing.scss'],
-})
-
-export class DialogUnpausing {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogUnpausing>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-
-  async changeClick() {
-    this.dialogRef.close();
-  }
-
-  async noClick() {
-    this.dialogRef.close();
-  }
-
-}
-
-@Component({
-  selector: 'dialog-collateral-rate',
-  templateUrl: 'dialog-collateral-rate.html',
-  styleUrls: ['./dialog-collateral-rate.scss'],
-})
-
-export class DialogCollateralRate {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogCollateralRate>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-
-  async changeClick() {
-    this.dialogRef.close();
-  }
-
-  async noClick() {
-    this.dialogRef.close();
-  }
-
-}
-
-@Component({
-  selector: 'dialog-claim-period',
-  templateUrl: 'dialog-claim-period.html',
-  styleUrls: ['./dialog-claim-period.scss'],
-})
-
-export class DialogClaimPeriod {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogClaimPeriod>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-
-  async changeClick() {
-    this.dialogRef.close();
-  }
-
-  async noClick() {
-    this.dialogRef.close();
-  }
-
-}
-
-@Component({
-  selector: 'dialog-change-owner',
-  templateUrl: 'dialog-change-owner.html',
-  styleUrls: ['./dialog-change-owner.scss'],
-})
-
-export class DialogChangeOwner {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogChangeOwner>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-
-  async changeClick() {
-    this.dialogRef.close();
-  }
-
-  async noClick() {
-    this.dialogRef.close();
-  }
-
-}
-
-@Component({
-  selector: 'dialog-renounce-ownership',
-  templateUrl: 'dialog-renounce-ownership.html',
-  styleUrls: ['./dialog-renounce-ownership.scss'],
-})
-
-export class DialogRenounceOwnership {
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogRenounceOwnership>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-
-  async changeClick() {
-    this.dialogRef.close();
-  }
-
-  async noClick() {
-    this.dialogRef.close();
-  }
-
 }
