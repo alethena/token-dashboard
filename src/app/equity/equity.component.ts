@@ -4,6 +4,7 @@ import { AleqService } from '../services/aleq/aleq.service';
 import { DataService } from '../services/data/data.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Web3Service } from '../services/metamask/web3.service';
+import { AccountsService } from '../services/metamask/accounts.service';
 import { MatSnackBar } from '@angular/material';
 
 export interface DialogData {
@@ -240,12 +241,16 @@ export class EquityComponent implements OnInit {
   public ownerAddressHex: any;
   public web3: any;
   public txID: any;
+  public price = 1;
+  public numberOfShares = 1;
+  public selectedAccount: string;
 
   constructor(
     private infuraService: InfuraService,
     private aleqService: AleqService,
     private dataService: DataService,
     private web3Service: Web3Service,
+    private accountsService: AccountsService,
     public dialog: MatDialog,
     private matSnackBar: MatSnackBar
     ) { }
@@ -254,6 +259,7 @@ export class EquityComponent implements OnInit {
     await this.infuraService.bootstrapWeb3();
     await this.aleqService.bootstrapALEQ();
     await this.web3Service.bootstrapWeb3();
+    await this.bootstrapAccounts();
 
     this.dataService.pauseStatusObservable.subscribe((newPauseStatus) => {
       this.pauseStatus = newPauseStatus;
@@ -347,10 +353,21 @@ export class EquityComponent implements OnInit {
   async onTest() {
     const network = await this.web3Service.web3.eth.net.getId();
     if (network === 4) {
-    console.log(network);
-    // this.txID = await this.aleqService.allowance(price, this.numberOfShares, this.selectedAccount);
+    this.txID = await this.aleqService.allowance(this.price, this.numberOfShares, this.selectedAccount[0]);
     } else {
       this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
+    }
+  }
+
+  async bootstrapAccounts() {
+    try {
+      const accs = await this.web3Service.web3.eth.getAccounts();
+      if (!this.selectedAccount || this.selectedAccount.length !== accs.length || this.selectedAccount[0] !== accs[0]) {
+        this.dataService.accountsObservable.next(accs);
+        this.dataService.accountObservable.next(accs[0]);
+        this.selectedAccount = accs;
+      }
+    } catch (error) {
     }
   }
 }

@@ -1,19 +1,30 @@
 import { Injectable } from '@angular/core';
 import { InfuraService } from '../infura/infura.service';
 import { DataService } from '../data/data.service';
+import { Web3Service } from '../metamask/web3.service';
+
 declare var require: any;
+const BN = require('bn.js');
 
 const ALEQData = require('../../../../helpers/ALEQ.json');
 const ALEQAddress = '0x18a4251cd23a4e235987a11d2d36c0138e95fa7c';
+const SDAddress = '0xD091951A17030Aee1C0ab1319D6876048253bdc3';
 
-@Injectable({
-  providedIn: 'root'
-})
+interface SellCall {
+  txhash: string;
+  numberofshares: number;
+  pricelimit: any;
+}
+
+@Injectable({ providedIn: 'root' })
+
 export class AleqService {
   ALEQInstance: any;
   contractAddress: any;
 
-  constructor(private infuraService: InfuraService, private dataService: DataService) { }
+  constructor(private infuraService: InfuraService,
+              private dataService: DataService,
+              private web3Service: Web3Service) { }
 
   async bootstrapALEQ() {
     const ALEQAbstraction = await this.infuraService.artifactsToContract(ALEQData);
@@ -60,5 +71,22 @@ export class AleqService {
       const masterAddress = await this.ALEQInstance.master.call();
       this.dataService.masterAddressObservable.next(masterAddress);
     }, 1000);
+  }
+  async allowance(amount, numberOfShares, user) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const ALEQAbstraction = await this.web3Service.artifactsToContract(ALEQData);
+        const ALEQInstance = await ALEQAbstraction.at(ALEQAddress);
+        const numberOfSharesBN = new BN(numberOfShares);
+        const approveTx = await ALEQInstance.approve.sendTransaction(SDAddress, numberOfSharesBN.toString(), { from: user, gasPrice: 20 * 10 ** 9 });
+
+        const data: SellCall = { 'txhash': approveTx.tx, 'numberofshares': numberOfShares, 'pricelimit': amount };
+
+        console.log(approveTx.tx);
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
   }
 }
