@@ -93,11 +93,11 @@ export class DialogPausingComponent {
     public dialogRef: MatDialogRef<DialogPausingComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
-  async changeClick(event) {
+  async changeClick() {
     this.dialogRef.close();
   }
 
-  async noClick(event) {
+  async noClick() {
     this.dialogRef.close();
   }
 
