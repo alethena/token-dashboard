@@ -2,18 +2,18 @@ const Artifactor = require('truffle-artifactor');
 
 const artifactor = new Artifactor(__dirname);
 
-const XCHFabi = require('../src/assets/contracts/CryptoFranc.json');
-const ALEQabi = require('../src/assets/contracts/AlethenaShares.json');
+//const XCHFabi = require('../src/assets/contracts/CryptoFranc.json');
+const TTEabi = require('./TestTokenEquity.json')
 
-const XCHFData = {
-    contractName: 'XCHF',
-    abi: XCHFabi
+//const XCHFData = {
+//    contractName: 'XCHF',
+//    abi: XCHFabi
+//}
+
+const TTEData = {
+    contractName: 'TTE',
+    abi: TTEabi
 }
 
-const ALEQData = {
-    contractName: 'ALEQ',
-    abi: ALEQabi
-}
-
-artifactor.save(XCHFData);
-artifactor.save(ALEQData);
+//artifactor.save(XCHFData);
+artifactor.save(TTEData);

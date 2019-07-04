@@ -7,7 +7,7 @@ declare var require: any;
 const BN = require('bn.js');
 
 const ALEQData = require('../../../../helpers/ALEQ.json');
-const ALEQAddress = '0x18a4251cd23a4e235987a11d2d36c0138e95fa7c';
+const ALEQAddress = '0x40A1BE7f167C7f14D7EDE17972bC7c87b91e1D91';
 const SDAddress = '0xD091951A17030Aee1C0ab1319D6876048253bdc3';
 
 interface SellCall {

@@ -1,4 +1,6 @@
 {
+  "contractName": "TTE",
+  "abi": {
     "contractName": "TestTokenContract",
     "abi": [
       {
@@ -14957,4 +14959,8 @@
       },
       "notice": "The main addition is a functionality that allows the user to claim that the key for a certain address is lost.In order to prevent malicious attempts, a collateral needs to be posted.The contract owner can delete claims in case of disputes. * https://github.com/ethereum/EIPs/issues/20 Based on code by FirstBlood: https://github.com/Firstbloodio/token/blob/master/smart_contract/FirstBloodToken.sol"
     }
-  }
+  },
+  "networks": {},
+  "schemaVersion": "3.0.11",
+  "updatedAt": "2019-07-04T12:45:40.321Z"
+}
