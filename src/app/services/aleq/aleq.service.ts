@@ -78,7 +78,8 @@ export class AleqService {
         const ALEQAbstraction = await this.web3Service.artifactsToContract(ALEQData);
         const ALEQInstance = await ALEQAbstraction.at(ALEQAddress);
         const numberOfSharesBN = new BN(numberOfShares);
-        const approveTx = await ALEQInstance.approve.sendTransaction(SDAddress, numberOfSharesBN.toString(), { from: user, gasPrice: 20 * 10 ** 9 });
+        const approveTx = await ALEQInstance.approve.
+                                sendTransaction(SDAddress, numberOfSharesBN.toString(), { from: user, gasPrice: 20 * 10 ** 9 });
 
         const data: SellCall = { 'txhash': approveTx.tx, 'numberofshares': numberOfShares, 'pricelimit': amount };
 

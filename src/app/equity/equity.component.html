@@ -9,15 +9,11 @@
         <p class="names"> <b>Symbol:</b> {{ symbolStatus }}</p>
         <p></p>
         <div *ngIf="pauseStatus; then thenBlock else elseBlock"></div>
-        <ng-template #thenBlock><em>Contract currently paused. Slide me to unpause the contract.</em>
-          <mat-slide-toggle [checked]="pauseStatus" (change)="openUnpausingDialog()" color="accent"
-            class="example-slider">
-          </mat-slide-toggle>
+        <ng-template #thenBlock>
+            <p class="names no-margin-bottom"> <b>Status:</b> Paused <button mat-raised-button class="no-margin-top" (click)="openUnpausingDialog()">Unpause</button></p>
         </ng-template>
-        <ng-template #elseBlock><em>Contract currently running. Slide me to pause the contract.</em>
-          <mat-slide-toggle [checked]="pauseStatus" (change)="openPausingDialog()" color="accent"
-            class="example-slider">
-          </mat-slide-toggle>
+        <ng-template #elseBlock>
+            <p class="names no-margin-bottom"> <b>Status:</b> Live <button mat-raised-button class="no-margin-top" (click)="openPausingDialog()">Pause</button></p>
         </ng-template>
       </mat-card-content>
     </mat-card>
