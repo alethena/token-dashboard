@@ -8,13 +8,7 @@ const BN = require('bn.js');
 
 const ALEQData = require('../../../../helpers/ALEQ.json');
 const ALEQAddress = '0x40A1BE7f167C7f14D7EDE17972bC7c87b91e1D91';
-const SDAddress = '0xD091951A17030Aee1C0ab1319D6876048253bdc3';
-
-interface SellCall {
-  txhash: string;
-  numberofshares: number;
-  pricelimit: any;
-}
+// const SDAddress = '0xD091951A17030Aee1C0ab1319D6876048253bdc3';
 
 @Injectable({ providedIn: 'root' })
 
@@ -22,9 +16,10 @@ export class AleqService {
   ALEQInstance: any;
   contractAddress: any;
 
-  constructor(private infuraService: InfuraService,
-              private dataService: DataService,
-              private web3Service: Web3Service) { }
+  constructor(
+    private infuraService: InfuraService,
+    private dataService: DataService,
+    private web3Service: Web3Service) { }
 
   async bootstrapALEQ() {
     const ALEQAbstraction = await this.infuraService.artifactsToContract(ALEQData);
@@ -72,17 +67,30 @@ export class AleqService {
       this.dataService.masterAddressObservable.next(masterAddress);
     }, 1000);
   }
-  async allowance(amount, numberOfShares, user) {
+  // async allowance(amount, numberOfShares, user) {
+  //   return new Promise(async (resolve, reject) => {
+  //     try {
+  //       const ALEQAbstraction = await this.web3Service.artifactsToContract(ALEQData);
+  //       const ALEQInstance = await ALEQAbstraction.at(ALEQAddress);
+  //       const numberOfSharesBN = new BN(numberOfShares);
+  //       const approveTx = await ALEQInstance.approve
+  //       .sendTransaction(SDAddress, numberOfSharesBN.toString(), { from: user, gasPrice: 20 * 10 ** 9 });
+  //       console.log(approveTx.tx);
+  //     } catch (error) {
+  //       console.log(error);
+  //       reject(error);
+  //     }
+  //   });
+  // }
+  async minting(shareholderAddress, numberOfShares, messageMinting, user) {
     return new Promise(async (resolve, reject) => {
       try {
         const ALEQAbstraction = await this.web3Service.artifactsToContract(ALEQData);
         const ALEQInstance = await ALEQAbstraction.at(ALEQAddress);
         const numberOfSharesBN = new BN(numberOfShares);
-        const approveTx = await ALEQInstance.approve.
-                                sendTransaction(SDAddress, numberOfSharesBN.toString(), { from: user, gasPrice: 20 * 10 ** 9 });
-
-        const data: SellCall = { 'txhash': approveTx.tx, 'numberofshares': numberOfShares, 'pricelimit': amount };
-
+        const approveTx = await ALEQInstance.mint
+        .sendTransaction(shareholderAddress, numberOfSharesBN.toString(),
+        messageMinting, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
         console.log(approveTx.tx);
       } catch (error) {
         console.log(error);
