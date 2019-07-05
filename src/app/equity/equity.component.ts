@@ -483,15 +483,56 @@ export class DialogClaimPeriodComponent implements OnInit {
   styleUrls: ['./dialog-components/dialog-change-owner.scss'],
 })
 
-export class DialogChangeOwnerComponent {
+export class DialogChangeOwnerComponent implements OnInit {
+  public web3: any;
+  public txID: any;
+  public selectedAccount: string;
+  public masterAddress: any;
 
   constructor(
+    private infuraService: InfuraService,
+    private aleqService: AleqService,
+    private dataService: DataService,
+    private web3Service: Web3Service,
+    public dialog: MatDialog,
+    private matSnackBar: MatSnackBar,
     public dialogRef: MatDialogRef<DialogChangeOwnerComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
-  async changeClick() {
-    this.dialogRef.close();
-  }
+    async ngOnInit() {
+      await this.infuraService.bootstrapWeb3();
+      await this.aleqService.bootstrapALEQ();
+      await this.web3Service.bootstrapWeb3();
+      await this.bootstrapAccounts();
+      await this.dataService.masterAddressObservable.subscribe((newMasterAddress) => {
+        this.masterAddress = newMasterAddress;
+      });
+    }
+
+    async changeOwnerCall() {
+      this.dialogRef.close();
+      const network = await this.web3Service.web3.eth.net.getId();
+      const masterFlag = await this.selectedAccount[0] === this.masterAddress;
+      if (network === 4 && masterFlag === true) {
+      this.txID = await this.aleqService.changeOwner(this.data.ownerAddressHex, this.selectedAccount[0]);
+      } else if (network !== 4) {
+        this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
+      } else if (masterFlag === false) {
+// tslint:disable-next-line: max-line-length
+      this.matSnackBar.open('You are currently not logged in via the master address of the contract. Please connect to the master address in your Web3 application in order to enable an owner change.', null, { duration: 6000 });
+     }
+    }
+    async bootstrapAccounts() {
+      try {
+        const accs = await this.web3Service.web3.eth.getAccounts();
+        if (!this.selectedAccount || this.selectedAccount.length !== accs.length || this.selectedAccount[0] !== accs[0]) {
+          this.dataService.accountsObservable.next(accs);
+          this.dataService.accountObservable.next(accs[0]);
+          this.selectedAccount = accs;
+        }
+      } catch (error) {
+      }
+    }
 
   async noClick() {
     this.dialogRef.close();
@@ -505,15 +546,56 @@ export class DialogChangeOwnerComponent {
   styleUrls: ['./dialog-components/dialog-renounce-ownership.scss'],
 })
 
-export class DialogRenounceOwnershipComponent {
+export class DialogRenounceOwnershipComponent implements OnInit {
+  public web3: any;
+  public txID: any;
+  public selectedAccount: string;
+  public ownerAddress: any;
 
   constructor(
+    private infuraService: InfuraService,
+    private aleqService: AleqService,
+    private dataService: DataService,
+    private web3Service: Web3Service,
+    public dialog: MatDialog,
+    private matSnackBar: MatSnackBar,
     public dialogRef: MatDialogRef<DialogRenounceOwnershipComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
-  async changeClick() {
-    this.dialogRef.close();
-  }
+    async ngOnInit() {
+      await this.infuraService.bootstrapWeb3();
+      await this.aleqService.bootstrapALEQ();
+      await this.web3Service.bootstrapWeb3();
+      await this.bootstrapAccounts();
+      await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
+        this.ownerAddress = newOwnerAddress;
+      });
+    }
+
+    async renounceOwnerCall() {
+      this.dialogRef.close();
+      const network = await this.web3Service.web3.eth.net.getId();
+      const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
+      if (network === 4 && ownerFlag === true) {
+      this.txID = await this.aleqService.renounceOwnership(this.selectedAccount[0]);
+      } else if (network !== 4) {
+        this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
+      } else if (ownerFlag === false) {
+// tslint:disable-next-line: max-line-length
+      this.matSnackBar.open('You are currently not logged in as the owner of the contract. Please connect to the owner address in your Web3 application in order to enable changes.', null, { duration: 6000 });
+     }
+    }
+    async bootstrapAccounts() {
+      try {
+        const accs = await this.web3Service.web3.eth.getAccounts();
+        if (!this.selectedAccount || this.selectedAccount.length !== accs.length || this.selectedAccount[0] !== accs[0]) {
+          this.dataService.accountsObservable.next(accs);
+          this.dataService.accountObservable.next(accs[0]);
+          this.selectedAccount = accs;
+        }
+      } catch (error) {
+      }
+    }
 
   async noClick() {
     this.dialogRef.close();

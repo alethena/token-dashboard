@@ -177,4 +177,32 @@ export class AleqService {
       }
     });
   }
+  async changeOwner(newOwner, user) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const ALEQAbstraction = await this.web3Service.artifactsToContract(ALEQData);
+        const ALEQInstance = await ALEQAbstraction.at(ALEQAddress);
+        const changeOwnerTx = await ALEQInstance.transferOwnership
+        .sendTransaction(newOwner, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+        console.log(changeOwnerTx.tx);
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  }
+  async renounceOwnership(user) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const ALEQAbstraction = await this.web3Service.artifactsToContract(ALEQData);
+        const ALEQInstance = await ALEQAbstraction.at(ALEQAddress);
+        const renounceOwnerTx = await ALEQInstance.renounceOwnership
+        .sendTransaction({ from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+        console.log(renounceOwnerTx.tx);
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  }
 }
