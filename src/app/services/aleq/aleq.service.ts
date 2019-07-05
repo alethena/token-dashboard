@@ -5,6 +5,7 @@ import { Web3Service } from '../metamask/web3.service';
 
 declare var require: any;
 const BN = require('bn.js');
+const bigInt = require('big-integer');
 
 const ALEQData = require('../../../../helpers/ALEQ.json');
 const ALEQAddress = '0x40A1BE7f167C7f14D7EDE17972bC7c87b91e1D91';
@@ -154,6 +155,22 @@ export class AleqService {
         const totalSharesTx = await ALEQInstance.setTotalShares
         .sendTransaction(numberOfSharesBN.toString(), { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
         console.log(totalSharesTx.tx);
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  }
+  async setClaimParameters(collateralRate, claimPeriod, user) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const ALEQAbstraction = await this.web3Service.artifactsToContract(ALEQData);
+        const ALEQInstance = await ALEQAbstraction.at(ALEQAddress);
+        const collateralRateBN = bigInt(collateralRate);
+        // const claimPeriodBN = new BN(claimPeriod / 86400);
+        const claimParametersTx = await ALEQInstance.setClaimParameters
+        .sendTransaction(collateralRateBN.toString(), claimPeriod / 86400, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+        console.log(claimParametersTx.tx);
       } catch (error) {
         console.log(error);
         reject(error);

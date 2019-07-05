@@ -7,6 +7,9 @@ import { Web3Service } from '../services/metamask/web3.service';
 import { AccountsService } from '../services/metamask/accounts.service';
 import { MatSnackBar } from '@angular/material';
 
+declare var require: any;
+const bigInt = require('big-integer');
+
 export interface DialogData {
   mintNumber: number;
   unmintNumber: number;
@@ -44,7 +47,7 @@ export class DialogUnmintingComponent implements OnInit {
       await this.aleqService.bootstrapALEQ();
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
-      this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
+      await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
         this.ownerAddress = newOwnerAddress;
       });
     }
@@ -109,7 +112,7 @@ export class DialogMintingComponent implements OnInit {
       await this.aleqService.bootstrapALEQ();
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
-      this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
+      await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
         this.ownerAddress = newOwnerAddress;
       });
     }
@@ -173,7 +176,7 @@ export class DialogTotalSharesComponent implements OnInit {
       await this.aleqService.bootstrapALEQ();
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
-      this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
+      await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
         this.ownerAddress = newOwnerAddress;
       });
     }
@@ -236,7 +239,7 @@ export class DialogPausingComponent implements OnInit {
       await this.aleqService.bootstrapALEQ();
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
-      this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
+      await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
         this.ownerAddress = newOwnerAddress;
       });
     }
@@ -300,7 +303,7 @@ export class DialogUnpausingComponent implements OnInit {
       await this.aleqService.bootstrapALEQ();
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
-      this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
+      await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
         this.ownerAddress = newOwnerAddress;
       });
     }
@@ -343,15 +346,62 @@ export class DialogUnpausingComponent implements OnInit {
   styleUrls: ['./dialog-components/dialog-collateral-rate.scss'],
 })
 
-export class DialogCollateralRateComponent {
+export class DialogCollateralRateComponent implements OnInit {
+  public web3: any;
+  public txID: any;
+  public selectedAccount: string;
+  public ownerAddress: any;
+  public claimPeriod: any;
 
   constructor(
+    private infuraService: InfuraService,
+    private aleqService: AleqService,
+    private dataService: DataService,
+    private web3Service: Web3Service,
+    public dialog: MatDialog,
+    private matSnackBar: MatSnackBar,
     public dialogRef: MatDialogRef<DialogCollateralRateComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
-  async changeClick() {
-    this.dialogRef.close();
-  }
+    async ngOnInit() {
+      await this.infuraService.bootstrapWeb3();
+      await this.aleqService.bootstrapALEQ();
+      await this.web3Service.bootstrapWeb3();
+      await this.bootstrapAccounts();
+      await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
+        this.ownerAddress = newOwnerAddress;
+      });
+      await this.dataService.claimPeriodObservable.subscribe((newClaimPeriod) => {
+        this.claimPeriod = parseFloat(newClaimPeriod);
+      });
+    }
+
+    async collateralRateCall() {
+      this.dialogRef.close();
+      const network = await this.web3Service.web3.eth.net.getId();
+      const claimPeriod = this.claimPeriod;
+      const collateralRate = bigInt(this.data.collateralRateNumber);
+      const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
+      if (network === 4 && ownerFlag === true) {
+      this.txID = await this.aleqService.setClaimParameters(collateralRate, claimPeriod, this.selectedAccount[0]);
+      } else if (network !== 4) {
+        this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
+      } else if (ownerFlag === false) {
+// tslint:disable-next-line: max-line-length
+      this.matSnackBar.open('You are currently not logged in as the owner of the contract. Please connect to the owner address in your Web3 application in order to enable changes.', null, { duration: 6000 });
+     }
+    }
+    async bootstrapAccounts() {
+      try {
+        const accs = await this.web3Service.web3.eth.getAccounts();
+        if (!this.selectedAccount || this.selectedAccount.length !== accs.length || this.selectedAccount[0] !== accs[0]) {
+          this.dataService.accountsObservable.next(accs);
+          this.dataService.accountObservable.next(accs[0]);
+          this.selectedAccount = accs;
+        }
+      } catch (error) {
+      }
+    }
 
   async noClick() {
     this.dialogRef.close();
@@ -365,15 +415,61 @@ export class DialogCollateralRateComponent {
   styleUrls: ['./dialog-components/dialog-claim-period.scss'],
 })
 
-export class DialogClaimPeriodComponent {
+export class DialogClaimPeriodComponent implements OnInit {
+  public web3: any;
+  public txID: any;
+  public selectedAccount: string;
+  public ownerAddress: any;
+  public collateralRate: any;
 
   constructor(
+    private infuraService: InfuraService,
+    private aleqService: AleqService,
+    private dataService: DataService,
+    private web3Service: Web3Service,
+    public dialog: MatDialog,
+    private matSnackBar: MatSnackBar,
     public dialogRef: MatDialogRef<DialogClaimPeriodComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
-  async changeClick() {
-    this.dialogRef.close();
-  }
+    async ngOnInit() {
+      await this.infuraService.bootstrapWeb3();
+      await this.aleqService.bootstrapALEQ();
+      await this.web3Service.bootstrapWeb3();
+      await this.bootstrapAccounts();
+      await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
+        this.ownerAddress = newOwnerAddress;
+      });
+      await this.dataService.collateralRateObservable.subscribe((newCollateralRate) => {
+        this.collateralRate = parseFloat(newCollateralRate);
+      });
+    }
+
+    async claimPeriodCall() {
+      this.dialogRef.close();
+      const network = await this.web3Service.web3.eth.net.getId();
+      const collateralRate = this.collateralRate;
+      const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
+      if (network === 4 && ownerFlag === true) {
+      this.txID = await this.aleqService.setClaimParameters(collateralRate, this.data.claimPeriodNumber, this.selectedAccount[0]);
+      } else if (network !== 4) {
+        this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
+      } else if (ownerFlag === false) {
+// tslint:disable-next-line: max-line-length
+      this.matSnackBar.open('You are currently not logged in as the owner of the contract. Please connect to the owner address in your Web3 application in order to enable changes.', null, { duration: 6000 });
+     }
+    }
+    async bootstrapAccounts() {
+      try {
+        const accs = await this.web3Service.web3.eth.getAccounts();
+        if (!this.selectedAccount || this.selectedAccount.length !== accs.length || this.selectedAccount[0] !== accs[0]) {
+          this.dataService.accountsObservable.next(accs);
+          this.dataService.accountObservable.next(accs[0]);
+          this.selectedAccount = accs;
+        }
+      } catch (error) {
+      }
+    }
 
   async noClick() {
     this.dialogRef.close();
