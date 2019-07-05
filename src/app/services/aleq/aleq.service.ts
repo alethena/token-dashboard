@@ -152,7 +152,7 @@ export class AleqService {
         const ALEQInstance = await ALEQAbstraction.at(ALEQAddress);
         const numberOfSharesBN = new BN(numberOfShares);
         const totalSharesTx = await ALEQInstance.setTotalShares
-        .sendTransaction(numberOfSharesBN, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+        .sendTransaction(numberOfSharesBN.toString(), { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
         console.log(totalSharesTx.tx);
       } catch (error) {
         console.log(error);
