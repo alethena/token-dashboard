@@ -1,13 +1,13 @@
 <h1 mat-dialog-title>Set Total Amount of Shares</h1>
 <div mat-dialog-content>
   <p class="no-top-margin"><b>You are about to set the total number of tokenized and untokenized shares available!</b></p>
-  <p>Enter here your number of total existing shares. Must be above 0!</p>
+  <p>Enter here your new number of TOTAL existing shares. Must be above 0!</p>
   <mat-form-field>
     <input matInput type="number" placeholder="# of total shares" [(ngModel)]="data.totalSharesNumber" onkeypress="return event.charCode >= 48 && event.charCode <= 57" min="1">
   </mat-form-field>
   <p class="caveat"><em>Caveat: Must be a positive integer value.</em></p>
 </div>
 <div mat-dialog-actions>
-    <button mat-button (click)="changeClick()" cdkFocusInitial>UPDATE</button>
+    <button mat-button (click)="setTotalSharesCall()" cdkFocusInitial>UPDATE</button>
     <button mat-button (click)="noClick()">CLOSE</button>
 </div>

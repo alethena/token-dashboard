@@ -88,10 +88,72 @@ export class AleqService {
         const ALEQAbstraction = await this.web3Service.artifactsToContract(ALEQData);
         const ALEQInstance = await ALEQAbstraction.at(ALEQAddress);
         const numberOfSharesBN = new BN(numberOfShares);
-        const approveTx = await ALEQInstance.mint
+        const mintingTx = await ALEQInstance.mint
         .sendTransaction(shareholderAddress, numberOfSharesBN.toString(),
         messageMinting, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
-        console.log(approveTx.tx);
+        console.log(mintingTx.tx);
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  }
+  async unminting(numberOfShares, messageUnminting, user) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const ALEQAbstraction = await this.web3Service.artifactsToContract(ALEQData);
+        const ALEQInstance = await ALEQAbstraction.at(ALEQAddress);
+        const numberOfSharesBN = new BN(numberOfShares);
+        const unmintingTx = await ALEQInstance.unmint.sendTransaction(numberOfSharesBN.toString(),
+        messageUnminting, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+        console.log(unmintingTx.tx);
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  }
+  async pausing(fromBlock, user) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const ALEQAbstraction = await this.web3Service.artifactsToContract(ALEQData);
+        const ALEQInstance = await ALEQAbstraction.at(ALEQAddress);
+        const messagePausing = 'Pausing contract.';
+        const pausingFlag = true;
+        const pausingTx = await ALEQInstance.pause
+        .sendTransaction(pausingFlag, messagePausing, ALEQAddress, fromBlock, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+        console.log(pausingTx.tx);
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  }
+  async unpausing(fromBlock, user) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const ALEQAbstraction = await this.web3Service.artifactsToContract(ALEQData);
+        const ALEQInstance = await ALEQAbstraction.at(ALEQAddress);
+        const messageUnpausing = 'Unpausing contract.';
+        const pausingFlag = false;
+        const unpausingTx = await ALEQInstance.pause
+        .sendTransaction(pausingFlag, messageUnpausing, ALEQAddress, fromBlock, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+        console.log(unpausingTx.tx);
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  }
+  async setTotalShares(numberOfShares, user) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const ALEQAbstraction = await this.web3Service.artifactsToContract(ALEQData);
+        const ALEQInstance = await ALEQAbstraction.at(ALEQAddress);
+        const numberOfSharesBN = new BN(numberOfShares);
+        const totalSharesTx = await ALEQInstance.setTotalShares
+        .sendTransaction(numberOfSharesBN, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+        console.log(totalSharesTx.tx);
       } catch (error) {
         console.log(error);
         reject(error);
