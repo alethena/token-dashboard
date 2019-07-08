@@ -31,7 +31,6 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
 
 
 @NgModule({
@@ -52,7 +51,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from
   ],
   imports: [
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule.withConfig({warnOnNgModelWithFormControl: 'never'}),
     HttpClientModule,
     MatFormFieldModule,
     BrowserAnimationsModule,

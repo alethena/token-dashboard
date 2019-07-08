@@ -1,9 +1,10 @@
 <h1 mat-dialog-title>Minting New Tokenized Shares</h1>
-<div mat-dialog-content>
+<div mat-dialog-content [formGroup]="orderFormGroup">
   <p class="no-top-margin"><b>You are about to increase the number of tokenized shares available! The tokens will be directly minted to the owner address.</b></p>
   <p>Enter here your number of ADDITIONAL shares. Must be above 0!</p>
   <mat-form-field>
-    <input matInput type="number" placeholder="# of NEW shares" [(ngModel)]="data.mintNumber" onkeypress="return event.charCode >= 48 && event.charCode <= 57" min="1">
+    <input matInput type="number" placeholder="# of NEW shares" [(ngModel)]="data.mintNumber"
+    formControlName="numberOfTokens">
   </mat-form-field>
   <p class="caveat"><em>Caveat: Must be a positive integer value.</em></p>
 </div>

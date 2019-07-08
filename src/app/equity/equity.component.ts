@@ -6,6 +6,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { Web3Service } from '../services/metamask/web3.service';
 import { AccountsService } from '../services/metamask/accounts.service';
 import { MatSnackBar } from '@angular/material';
+import { debounceTime } from 'rxjs/operators';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 declare var require: any;
 const bigInt = require('big-integer');
@@ -28,9 +30,11 @@ export interface DialogData {
 export class DialogUnmintingComponent implements OnInit {
   public web3: any;
   public txID: any;
+  public orderFormGroup: FormGroup;
   public selectedAccount: string;
   public ownerAddress: any;
-  messageUnminting = 'Unminting of tokenized shares.';
+  public totalSupplyStatus: any;
+  public messageUnminting = 'Unminting of tokenized shares.';
 
   constructor(
     private infuraService: InfuraService,
@@ -39,8 +43,27 @@ export class DialogUnmintingComponent implements OnInit {
     private web3Service: Web3Service,
     public dialog: MatDialog,
     private matSnackBar: MatSnackBar,
+    private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<DialogUnmintingComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+        this.orderFormGroup = this._formBuilder.group({
+          numberOfTokens: [0, [Validators.required, Validators.min(1)]],
+        });
+        this.orderFormGroup.get('numberOfTokens').valueChanges
+          .pipe(debounceTime(250))
+          .subscribe(async numberOfTokens => {
+            if (this.data.unmintNumber !== null) {
+              this.data.unmintNumber = numberOfTokens;
+              if (this.data.unmintNumber < 0) {
+                this.orderFormGroup.patchValue({ 'numberOfTokens': 1 });
+              } else if (this.data.unmintNumber > this.totalSupplyStatus) {
+                this.orderFormGroup.patchValue({ 'numberOfTokens': this.totalSupplyStatus });
+              } else if (Math.ceil(this.data.unmintNumber) !== numberOfTokens) {
+                this.orderFormGroup.patchValue({ 'numberOfTokens': Math.ceil(numberOfTokens) });
+              }
+            }
+          });
+    }
 
     async ngOnInit() {
       await this.infuraService.bootstrapWeb3();
@@ -49,6 +72,9 @@ export class DialogUnmintingComponent implements OnInit {
       await this.bootstrapAccounts();
       await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
         this.ownerAddress = newOwnerAddress;
+      });
+      await this.dataService.totalSupplyStatusObservable.subscribe((newTotalSupplyStatus) => {
+        this.totalSupplyStatus = parseFloat(newTotalSupplyStatus);
       });
     }
 
@@ -95,7 +121,10 @@ export class DialogMintingComponent implements OnInit {
   public txID: any;
   public selectedAccount: string;
   public ownerAddress: any;
-  messageMinting = 'Additional minting of tokenized shares.';
+  public orderFormGroup: FormGroup;
+  public totalSharesStatus: any;
+  public totalSupplyStatus: any;
+  public messageMinting = 'Additional minting of tokenized shares.';
 
   constructor(
     private infuraService: InfuraService,
@@ -104,8 +133,27 @@ export class DialogMintingComponent implements OnInit {
     private web3Service: Web3Service,
     public dialog: MatDialog,
     private matSnackBar: MatSnackBar,
+    private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<DialogMintingComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+      this.orderFormGroup = this._formBuilder.group({
+        numberOfTokens: [0, [Validators.required, Validators.min(1)]],
+      });
+      this.orderFormGroup.get('numberOfTokens').valueChanges
+        .pipe(debounceTime(250))
+        .subscribe(async numberOfTokens => {
+          if (this.data.mintNumber !== null) {
+            this.data.mintNumber = numberOfTokens;
+            if (this.data.mintNumber < 0) {
+              this.orderFormGroup.patchValue({ 'numberOfTokens': 1 });
+            } else if (this.data.mintNumber + this.totalSupplyStatus > this.totalSharesStatus) {
+              this.orderFormGroup.patchValue({ 'numberOfTokens': this.totalSharesStatus - this.totalSupplyStatus });
+            } else if (Math.ceil(this.data.mintNumber) !== numberOfTokens) {
+              this.orderFormGroup.patchValue({ 'numberOfTokens': Math.ceil(numberOfTokens) });
+            }
+          }
+        });
+    }
 
     async ngOnInit() {
       await this.infuraService.bootstrapWeb3();
@@ -114,6 +162,12 @@ export class DialogMintingComponent implements OnInit {
       await this.bootstrapAccounts();
       await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
         this.ownerAddress = newOwnerAddress;
+      });
+      await this.dataService.totalSharesStatusObservable.subscribe((newTotalSharesStatus) => {
+        this.totalSharesStatus = parseFloat(newTotalSharesStatus);
+      });
+      await this.dataService.totalSupplyStatusObservable.subscribe((newTotalSupplyStatus) => {
+        this.totalSupplyStatus = parseFloat(newTotalSupplyStatus);
       });
     }
 
@@ -158,8 +212,10 @@ export class DialogMintingComponent implements OnInit {
 export class DialogTotalSharesComponent implements OnInit {
   public web3: any;
   public txID: any;
+  public orderFormGroup: FormGroup;
   public selectedAccount: string;
   public ownerAddress: any;
+  public totalSupplyStatus: any;
 
   constructor(
     private infuraService: InfuraService,
@@ -168,8 +224,27 @@ export class DialogTotalSharesComponent implements OnInit {
     private web3Service: Web3Service,
     public dialog: MatDialog,
     private matSnackBar: MatSnackBar,
+    private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<DialogTotalSharesComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+      this.orderFormGroup = this._formBuilder.group({
+        numberOfTokens: [0, [Validators.required, Validators.min(1)]],
+      });
+      this.orderFormGroup.get('numberOfTokens').valueChanges
+        .pipe(debounceTime(250))
+        .subscribe(async numberOfTokens => {
+          if (this.data.totalSharesNumber !== null) {
+            this.data.totalSharesNumber = numberOfTokens;
+            if (this.data.totalSharesNumber < 0) {
+              this.orderFormGroup.patchValue({ 'numberOfTokens': 1 });
+            } else if (this.data.totalSharesNumber < this.totalSupplyStatus) {
+              this.orderFormGroup.patchValue({ 'numberOfTokens': this.totalSupplyStatus });
+            } else if (Math.ceil(this.data.totalSharesNumber) !== numberOfTokens) {
+              this.orderFormGroup.patchValue({ 'numberOfTokens': Math.ceil(numberOfTokens) });
+            }
+          }
+        });
+    }
 
     async ngOnInit() {
       await this.infuraService.bootstrapWeb3();
@@ -178,6 +253,9 @@ export class DialogTotalSharesComponent implements OnInit {
       await this.bootstrapAccounts();
       await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
         this.ownerAddress = newOwnerAddress;
+      });
+      await this.dataService.totalSupplyStatusObservable.subscribe((newTotalSupplyStatus) => {
+        this.totalSupplyStatus = parseFloat(newTotalSupplyStatus);
       });
     }
 
@@ -352,6 +430,7 @@ export class DialogCollateralRateComponent implements OnInit {
   public selectedAccount: string;
   public ownerAddress: any;
   public claimPeriod: any;
+  public orderFormGroup: FormGroup;
 
   constructor(
     private infuraService: InfuraService,
@@ -360,8 +439,25 @@ export class DialogCollateralRateComponent implements OnInit {
     private web3Service: Web3Service,
     public dialog: MatDialog,
     private matSnackBar: MatSnackBar,
+    private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<DialogCollateralRateComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+      this.orderFormGroup = this._formBuilder.group({
+        numberOfTokens: [0, [Validators.required, Validators.min(1)]],
+      });
+      this.orderFormGroup.get('numberOfTokens').valueChanges
+        .pipe(debounceTime(250))
+        .subscribe(async numberOfTokens => {
+          if (this.data.collateralRateNumber !== null) {
+            this.data.collateralRateNumber = numberOfTokens;
+            if (this.data.collateralRateNumber < 0) {
+              this.orderFormGroup.patchValue({ 'numberOfTokens': 1 });
+            } else if (Math.ceil(this.data.collateralRateNumber) !== numberOfTokens) {
+              this.orderFormGroup.patchValue({ 'numberOfTokens': Math.ceil(numberOfTokens) });
+            }
+          }
+        });
+    }
 
     async ngOnInit() {
       await this.infuraService.bootstrapWeb3();
