@@ -8,6 +8,7 @@ import { AccountsService } from '../services/metamask/accounts.service';
 import { MatSnackBar } from '@angular/material';
 import { debounceTime } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { isAddress } from 'web3-utils';
 
 declare var require: any;
 const bigInt = require('big-integer');
@@ -443,17 +444,17 @@ export class DialogCollateralRateComponent implements OnInit {
     public dialogRef: MatDialogRef<DialogCollateralRateComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {
       this.orderFormGroup = this._formBuilder.group({
-        numberOfTokens: [0, [Validators.required, Validators.min(1)]],
+        numberOfCollateral: [0, [Validators.required, Validators.min(1)]],
       });
-      this.orderFormGroup.get('numberOfTokens').valueChanges
+      this.orderFormGroup.get('numberOfCollateral').valueChanges
         .pipe(debounceTime(250))
-        .subscribe(async numberOfTokens => {
+        .subscribe(async numberOfCollateral => {
           if (this.data.collateralRateNumber !== null) {
-            this.data.collateralRateNumber = numberOfTokens;
+            this.data.collateralRateNumber = numberOfCollateral;
             if (this.data.collateralRateNumber < 0) {
-              this.orderFormGroup.patchValue({ 'numberOfTokens': 1 });
-            } else if (Math.ceil(this.data.collateralRateNumber) !== numberOfTokens) {
-              this.orderFormGroup.patchValue({ 'numberOfTokens': Math.ceil(numberOfTokens) });
+              this.orderFormGroup.patchValue({ 'numberOfCollateral': 1 });
+            } else if (Math.ceil(this.data.collateralRateNumber) !== numberOfCollateral) {
+              this.orderFormGroup.patchValue({ 'numberOfCollateral': Math.ceil(numberOfCollateral) });
             }
           }
         });
@@ -517,6 +518,7 @@ export class DialogClaimPeriodComponent implements OnInit {
   public selectedAccount: string;
   public ownerAddress: any;
   public collateralRate: any;
+  public orderFormGroup: FormGroup;
 
   constructor(
     private infuraService: InfuraService,
@@ -525,8 +527,27 @@ export class DialogClaimPeriodComponent implements OnInit {
     private web3Service: Web3Service,
     public dialog: MatDialog,
     private matSnackBar: MatSnackBar,
+    private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<DialogClaimPeriodComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+      this.orderFormGroup = this._formBuilder.group({
+        numberOfClaim: [0, [Validators.required, Validators.min(1)]],
+      });
+      this.orderFormGroup.get('numberOfClaim').valueChanges
+        .pipe(debounceTime(250))
+        .subscribe(async numberOfClaim => {
+          if (this.data.claimPeriodNumber !== null) {
+            this.data.claimPeriodNumber = numberOfClaim;
+            if (this.data.claimPeriodNumber < 0) {
+              this.orderFormGroup.patchValue({ 'numberOfClaim': 1 });
+            } else if (this.data.claimPeriodNumber < 60 * 60 * 24 * 90) {
+              this.orderFormGroup.patchValue({ 'numberOfClaim': 60 * 60 * 24 * 90 });
+            } else if (Math.ceil(this.data.claimPeriodNumber) !== numberOfClaim) {
+              this.orderFormGroup.patchValue({ 'numberOfClaim': Math.ceil(numberOfClaim) });
+            }
+          }
+        });
+    }
 
     async ngOnInit() {
       await this.infuraService.bootstrapWeb3();
@@ -584,6 +605,7 @@ export class DialogChangeOwnerComponent implements OnInit {
   public txID: any;
   public selectedAccount: string;
   public masterAddress: any;
+  public orderFormGroup: FormGroup;
 
   constructor(
     private infuraService: InfuraService,
@@ -592,8 +614,22 @@ export class DialogChangeOwnerComponent implements OnInit {
     private web3Service: Web3Service,
     public dialog: MatDialog,
     private matSnackBar: MatSnackBar,
+    private _formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<DialogChangeOwnerComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+      this.orderFormGroup = this._formBuilder.group({
+        hexAddress: ['', Validators.requiredTrue],
+      });
+      this.orderFormGroup.get('hexAddress').valueChanges
+        .pipe(debounceTime(250))
+        .subscribe(async hexAddress => {
+          if (isAddress(this.data.ownerAddressHex) === true) {
+            this.data.ownerAddressHex = hexAddress;
+          } else {
+            this.orderFormGroup.patchValue({ 'hexAddress': '' });
+          }
+        });
+    }
 
     async ngOnInit() {
       await this.infuraService.bootstrapWeb3();
