@@ -16,6 +16,6 @@ export class AppComponent {
   contracts: Contract[] = [
     {value: 'contract-0', viewValue: 'Quitt'},
     {value: 'contract-1', viewValue: 'Alethena'},
-    {value: 'contract-2', viewValue: 'Bitcoin Suisse'}
+    {value: 'contract-2', viewValue: 'LEXR'}
   ];
 }
