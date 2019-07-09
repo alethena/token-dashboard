@@ -13,6 +13,11 @@ import { isAddress } from 'web3-utils';
 declare var require: any;
 const bigInt = require('big-integer');
 
+export interface Contract {
+  value: string;
+  viewValue: string;
+}
+
 export interface DialogData {
   mintNumber: number;
   unmintNumber: number;
@@ -761,6 +766,13 @@ export class EquityComponent implements OnInit {
   public claimPeriodNumber: number;
   public ownerAddressHex: any;
   public web3: any;
+
+  title = 'Alethena\'s Token Dashboard';
+  contracts: Contract[] = [
+    {value: 'contract-0', viewValue: 'Quitt'},
+    {value: 'contract-1', viewValue: 'Alethena'},
+    {value: 'contract-2', viewValue: 'LEXR'}
+  ];
 
   constructor(
     private infuraService: InfuraService,

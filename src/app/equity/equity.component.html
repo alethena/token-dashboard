@@ -1,3 +1,23 @@
+<div class="row">
+  <h1>Welcome to Alethena's Token Dashboard</h1>
+</div>
+<div class="row owner-info">
+    <b>Only for the owner of the Share Token contract:</b><br>
+    Please connect to your MetaMask account and the corresponding wallet address in order to enable changes. Please be
+    aware that any change costs a tiny amount of Gas in Ether.
+</div>
+<div class="row owner-info">
+    <h4>Select Your Contract</h4>
+    <mat-form-field>
+      <mat-label>Share Token Contract</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let contract of contracts" [value]="contract.value">
+          {{contract.viewValue}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+</div>
+
 <div class="row data-container">
   <div class="col-4">
     <mat-card class="mat-elevation-z8 data-card">

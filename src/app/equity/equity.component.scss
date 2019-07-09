@@ -1,5 +1,20 @@
 @import '../../styles-material.scss';
 
+h1 {
+  padding:0;
+  margin-top: 0;
+}
+
+h4 {
+  margin-bottom: 10px;
+}
+
+.owner-info {
+  padding: 0;
+  margin-top: 0;
+  width: 75%;
+}
+
 .data-container {
   margin-top: 2vh;
 }

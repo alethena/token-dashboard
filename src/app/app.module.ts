@@ -31,7 +31,9 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { AppRoutingModule } from './app-routing.module';
+import { SharedispenserComponent } from './sharedispenser/sharedispenser.component';
+import { ClaimtoolComponent } from './claimtool/claimtool.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     DialogRenounceOwnershipComponent,
     FooterComponent,
     NavigationComponent,
+    SharedispenserComponent,
+    ClaimtoolComponent,
   ],
   imports: [
     FormsModule,
@@ -69,6 +73,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatDialogModule,
     MatInputModule,
     MatSelectModule,
+    AppRoutingModule,
   ],
   entryComponents: [
     DialogMintingComponent,
