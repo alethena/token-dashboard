@@ -25,6 +25,7 @@ export interface DialogData {
   collateralRateNumber: number;
   claimPeriodNumber: number;
   ownerAddressHex: any;
+  selectedContract: any;
 }
 
 @Component({
@@ -73,7 +74,7 @@ export class DialogUnmintingComponent implements OnInit {
 
     async ngOnInit() {
       await this.infuraService.bootstrapWeb3();
-      await this.aleqService.bootstrapALEQ();
+      await this.aleqService.bootstrapALEQ(this.data.selectedContract);
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
       await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
@@ -89,7 +90,7 @@ export class DialogUnmintingComponent implements OnInit {
       const network = await this.web3Service.web3.eth.net.getId();
       const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
       if (network === 4 && ownerFlag === true) {
-      this.txID = await this.aleqService.unminting(this.data.unmintNumber,
+      this.txID = await this.aleqService.unminting(this.data.selectedContract, this.data.unmintNumber,
         this.messageUnminting, this.selectedAccount[0]);
       } else if (network !== 4) {
         this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
@@ -163,7 +164,7 @@ export class DialogMintingComponent implements OnInit {
 
     async ngOnInit() {
       await this.infuraService.bootstrapWeb3();
-      await this.aleqService.bootstrapALEQ();
+      await this.aleqService.bootstrapALEQ(this.data.selectedContract);
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
       await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
@@ -182,7 +183,7 @@ export class DialogMintingComponent implements OnInit {
       const network = await this.web3Service.web3.eth.net.getId();
       const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
       if (network === 4 && ownerFlag === true) {
-      this.txID = await this.aleqService.minting(this.selectedAccount[0], this.data.mintNumber,
+      this.txID = await this.aleqService.minting(this.data.selectedContract, this.selectedAccount[0], this.data.mintNumber,
         this.messageMinting, this.selectedAccount[0]);
       } else if (network !== 4) {
         this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
@@ -254,7 +255,7 @@ export class DialogTotalSharesComponent implements OnInit {
 
     async ngOnInit() {
       await this.infuraService.bootstrapWeb3();
-      await this.aleqService.bootstrapALEQ();
+      await this.aleqService.bootstrapALEQ(this.data.selectedContract);
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
       await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
@@ -270,7 +271,7 @@ export class DialogTotalSharesComponent implements OnInit {
       const network = await this.web3Service.web3.eth.net.getId();
       const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
       if (network === 4 && ownerFlag === true) {
-      this.txID = await this.aleqService.setTotalShares(this.data.totalSharesNumber, this.selectedAccount[0]);
+      this.txID = await this.aleqService.setTotalShares(this.data.selectedContract, this.data.totalSharesNumber, this.selectedAccount[0]);
       } else if (network !== 4) {
         this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
       } else if (ownerFlag === false) {
@@ -320,7 +321,7 @@ export class DialogPausingComponent implements OnInit {
 
     async ngOnInit() {
       await this.infuraService.bootstrapWeb3();
-      await this.aleqService.bootstrapALEQ();
+      await this.aleqService.bootstrapALEQ(this.data.selectedContract);
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
       await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
@@ -334,7 +335,7 @@ export class DialogPausingComponent implements OnInit {
       const blockNumber = await this.web3Service.web3.eth.getBlockNumber();
       const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
       if (network === 4 && ownerFlag === true) {
-      this.txID = await this.aleqService.pausing(blockNumber, this.selectedAccount[0]);
+      this.txID = await this.aleqService.pausing(this.data.selectedContract, blockNumber, this.selectedAccount[0]);
       } else if (network !== 4) {
         this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
       } else if (ownerFlag === false) {
@@ -384,7 +385,7 @@ export class DialogUnpausingComponent implements OnInit {
 
     async ngOnInit() {
       await this.infuraService.bootstrapWeb3();
-      await this.aleqService.bootstrapALEQ();
+      await this.aleqService.bootstrapALEQ(this.data.selectedContract);
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
       await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
@@ -398,7 +399,7 @@ export class DialogUnpausingComponent implements OnInit {
       const blockNumber = await this.web3Service.web3.eth.getBlockNumber();
       const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
       if (network === 4 && ownerFlag === true) {
-      this.txID = await this.aleqService.unpausing(blockNumber, this.selectedAccount[0]);
+      this.txID = await this.aleqService.unpausing(this.data.selectedContract, blockNumber, this.selectedAccount[0]);
       } else if (network !== 4) {
         this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
       } else if (ownerFlag === false) {
@@ -467,7 +468,7 @@ export class DialogCollateralRateComponent implements OnInit {
 
     async ngOnInit() {
       await this.infuraService.bootstrapWeb3();
-      await this.aleqService.bootstrapALEQ();
+      await this.aleqService.bootstrapALEQ(this.data.selectedContract);
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
       await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
@@ -485,7 +486,8 @@ export class DialogCollateralRateComponent implements OnInit {
       const collateralRate = bigInt(this.data.collateralRateNumber);
       const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
       if (network === 4 && ownerFlag === true) {
-      this.txID = await this.aleqService.setClaimParameters(collateralRate, claimPeriod, this.selectedAccount[0]);
+      this.txID = await this.aleqService.setClaimParameters(this.data.selectedContract,
+        collateralRate, claimPeriod, this.selectedAccount[0]);
       } else if (network !== 4) {
         this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
       } else if (ownerFlag === false) {
@@ -556,7 +558,7 @@ export class DialogClaimPeriodComponent implements OnInit {
 
     async ngOnInit() {
       await this.infuraService.bootstrapWeb3();
-      await this.aleqService.bootstrapALEQ();
+      await this.aleqService.bootstrapALEQ(this.data.selectedContract);
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
       await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
@@ -573,7 +575,8 @@ export class DialogClaimPeriodComponent implements OnInit {
       const collateralRate = this.collateralRate;
       const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
       if (network === 4 && ownerFlag === true) {
-      this.txID = await this.aleqService.setClaimParameters(collateralRate, this.data.claimPeriodNumber, this.selectedAccount[0]);
+      this.txID = await this.aleqService.setClaimParameters(this.data.selectedContract, collateralRate,
+        this.data.claimPeriodNumber, this.selectedAccount[0]);
       } else if (network !== 4) {
         this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
       } else if (ownerFlag === false) {
@@ -638,7 +641,7 @@ export class DialogChangeOwnerComponent implements OnInit {
 
     async ngOnInit() {
       await this.infuraService.bootstrapWeb3();
-      await this.aleqService.bootstrapALEQ();
+      await this.aleqService.bootstrapALEQ(this.data.selectedContract);
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
       await this.dataService.masterAddressObservable.subscribe((newMasterAddress) => {
@@ -651,7 +654,7 @@ export class DialogChangeOwnerComponent implements OnInit {
       const network = await this.web3Service.web3.eth.net.getId();
       const masterFlag = await this.selectedAccount[0] === this.masterAddress;
       if (network === 4 && masterFlag === true) {
-      this.txID = await this.aleqService.changeOwner(this.data.ownerAddressHex, this.selectedAccount[0]);
+      this.txID = await this.aleqService.changeOwner(this.data.selectedContract, this.data.ownerAddressHex, this.selectedAccount[0]);
       } else if (network !== 4) {
         this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
       } else if (masterFlag === false) {
@@ -701,7 +704,7 @@ export class DialogRenounceOwnershipComponent implements OnInit {
 
     async ngOnInit() {
       await this.infuraService.bootstrapWeb3();
-      await this.aleqService.bootstrapALEQ();
+      await this.aleqService.bootstrapALEQ(this.data.selectedContract);
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
       await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
@@ -714,7 +717,7 @@ export class DialogRenounceOwnershipComponent implements OnInit {
       const network = await this.web3Service.web3.eth.net.getId();
       const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
       if (network === 4 && ownerFlag === true) {
-      this.txID = await this.aleqService.renounceOwnership(this.selectedAccount[0]);
+      this.txID = await this.aleqService.renounceOwnership(this.data.selectedContract, this.selectedAccount[0]);
       } else if (network !== 4) {
         this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
       } else if (ownerFlag === false) {
@@ -766,13 +769,15 @@ export class EquityComponent implements OnInit {
   public claimPeriodNumber: number;
   public ownerAddressHex: any;
   public web3: any;
+  selectedContract: any;
 
   title = 'Alethena\'s Token Dashboard';
   contracts: Contract[] = [
-    {value: 'contract-0', viewValue: 'Quitt'},
-    {value: 'contract-1', viewValue: 'Alethena'},
-    {value: 'contract-2', viewValue: 'LEXR'}
+    {value: '0x18A4251cD23A4e235987a11d2d36C0138E95fA7c', viewValue: 'Alethena'},
+    {value: '0x204B0020923C906D8BF2e1FB2fd8C43e612A68f4', viewValue: 'Quitt'},
+    {value: '0x40A1BE7f167C7f14D7EDE17972bC7c87b91e1D91', viewValue: 'Test Token'}
   ];
+  selected = '0x40A1BE7f167C7f14D7EDE17972bC7c87b91e1D91';
 
   constructor(
     private infuraService: InfuraService,
@@ -786,7 +791,7 @@ export class EquityComponent implements OnInit {
 
   async ngOnInit() {
     await this.infuraService.bootstrapWeb3();
-    await this.aleqService.bootstrapALEQ();
+    await this.aleqService.bootstrapALEQ(this.selected);
     await this.web3Service.bootstrapWeb3();
 
     this.dataService.pauseStatusObservable.subscribe((newPauseStatus) => {
@@ -826,11 +831,20 @@ export class EquityComponent implements OnInit {
       this.masterAddress = newMasterAddress;
     });
   }
+  refreshContractAddress(event: any) {
+    if (event.source.controlType === 'mat-select') {
+      console.log(event);
+      // location.reload();
+      // this.selected = 
+      this.aleqService.bootstrapALEQ(this.selected);
+    }
+  }
   openMintDialog() {
     if (this.web3Service.MM) {
     const dialogRef = this.dialog.open(DialogMintingComponent, {
       width: '500px',
-      data: {mintNumber: this.mintNumber}
+      data: {mintNumber: this.mintNumber,
+        selectedContract: this.selected }
     });
   } else {
     this.web3Service.setStatus('Please use MetaMask to enable contract changes.');
@@ -840,7 +854,8 @@ export class EquityComponent implements OnInit {
     if (this.web3Service.MM) {
     const dialogRef = this.dialog.open(DialogUnmintingComponent, {
       width: '500px',
-      data: {unmintNumber: this.unmintNumber}
+      data: {unmintNumber: this.unmintNumber,
+        selectedContract: this.selected }
     });
   } else {
     this.web3Service.setStatus('Please use MetaMask to enable contract changes.');
@@ -850,7 +865,8 @@ export class EquityComponent implements OnInit {
     if (this.web3Service.MM) {
     const dialogRef = this.dialog.open(DialogTotalSharesComponent, {
       width: '500px',
-      data: {totalSharesNumber: this.totalSharesNumber}
+      data: {totalSharesNumber: this.totalSharesNumber,
+        selectedContract: this.selected}
     });
   } else {
     this.web3Service.setStatus('Please use MetaMask to enable contract changes.');
@@ -859,7 +875,8 @@ export class EquityComponent implements OnInit {
   openPausingDialog() {
     if (this.web3Service.MM) {
     const dialogRef = this.dialog.open(DialogPausingComponent, {
-      width: '500px'
+      width: '500px',
+      data: {selectedContract: this.selected}
     });
   } else {
     this.web3Service.setStatus('Please use MetaMask to enable contract changes.');
@@ -868,7 +885,8 @@ export class EquityComponent implements OnInit {
   openUnpausingDialog() {
     if (this.web3Service.MM) {
     const dialogRef = this.dialog.open(DialogUnpausingComponent, {
-      width: '500px'
+      width: '500px',
+      data: {selectedContract: this.selected}
     });
   } else {
     this.web3Service.setStatus('Please use MetaMask to enable contract changes.');
@@ -878,7 +896,8 @@ export class EquityComponent implements OnInit {
     if (this.web3Service.MM) {
     const dialogRef = this.dialog.open(DialogCollateralRateComponent, {
       width: '500px',
-      data: {collateralRateNumber: this.collateralRateNumber}
+      data: {collateralRateNumber: this.collateralRateNumber,
+        selectedContract: this.selected}
     });
   } else {
     this.web3Service.setStatus('Please use MetaMask to enable contract changes.');
@@ -888,7 +907,8 @@ export class EquityComponent implements OnInit {
     if (this.web3Service.MM) {
     const dialogRef = this.dialog.open(DialogClaimPeriodComponent, {
       width: '500px',
-      data: {claimPeriodNumber: this.claimPeriodNumber}
+      data: {claimPeriodNumber: this.claimPeriodNumber,
+        selectedContract: this.selected}
     });
   } else {
     this.web3Service.setStatus('Please use MetaMask to enable contract changes.');
@@ -898,7 +918,8 @@ export class EquityComponent implements OnInit {
     if (this.web3Service.MM) {
     const dialogRef = this.dialog.open(DialogChangeOwnerComponent, {
       width: '500px',
-      data: {ownerAddressHex: this.ownerAddressHex}
+      data: {ownerAddressHex: this.ownerAddressHex,
+        selectedContract: this.selected}
     });
   } else {
     this.web3Service.setStatus('Please use MetaMask to enable contract changes.');
@@ -907,7 +928,8 @@ export class EquityComponent implements OnInit {
   openRenounceOwnershipDialog() {
     if (this.web3Service.MM) {
     const dialogRef = this.dialog.open(DialogRenounceOwnershipComponent, {
-      width: '500px'
+      width: '500px',
+      data: {selectedContract: this.selected}
     });
   } else {
     this.web3Service.setStatus('Please use MetaMask to enable contract changes.');

@@ -10,7 +10,7 @@
     <h4>Select Your Contract</h4>
     <mat-form-field>
       <mat-label>Share Token Contract</mat-label>
-      <mat-select>
+      <mat-select (selectionChange)="refreshContractAddress($event)" [(value)]="selected">
         <mat-option *ngFor="let contract of contracts" [value]="contract.value">
           {{contract.viewValue}}
         </mat-option>
