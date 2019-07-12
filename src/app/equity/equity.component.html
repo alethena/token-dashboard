@@ -2,20 +2,20 @@
   <h1>Welcome to Alethena's Token Dashboard</h1>
 </div>
 <div class="row owner-info">
-    <b>Only for the owner of the Share Token contract:</b><br>
-    Please connect to your MetaMask account and the corresponding wallet address in order to enable changes. Please be
-    aware that any change costs a tiny amount of Gas in Ether.
+  <b>Only for the owner of the Share Token contract:</b><br>
+  Please connect to your MetaMask account and the corresponding wallet address in order to enable changes. Please be
+  aware that any change costs a tiny amount of Gas in Ether.
 </div>
 <div class="row owner-info">
-    <h4>Select Your Contract</h4>
-    <mat-form-field>
-      <mat-label>Share Token Contract</mat-label>
-      <mat-select (selectionChange)="refreshContractAddress($event)" [(value)]="selected">
-        <mat-option *ngFor="let contract of contracts" [value]="contract.value">
-          {{contract.viewValue}}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+  <h4>Select Your Contract</h4>
+  <mat-form-field>
+    <mat-label>Share Token Contract</mat-label>
+    <mat-select (selectionChange)="refreshContractAddress($event)" [(value)]="selected">
+      <mat-option *ngFor="let contract of contracts" [value]="contract.value">
+        {{contract.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 
 <div class="row data-container">
@@ -30,10 +30,12 @@
         <p></p>
         <div *ngIf="pauseStatus; then thenBlock else elseBlock"></div>
         <ng-template #thenBlock>
-            <p class="names no-margin-bottom"> <b>Status:</b> Paused <button mat-raised-button class="no-margin-top" (click)="openUnpausingDialog()">Unpause</button></p>
+          <p class="names no-margin-bottom"> <b>Status:</b> Paused <button mat-raised-button class="no-margin-top"
+              (click)="openUnpausingDialog()">Unpause</button></p>
         </ng-template>
         <ng-template #elseBlock>
-            <p class="names no-margin-bottom"> <b>Status:</b> Live <button mat-raised-button class="no-margin-top" (click)="openPausingDialog()">Pause</button></p>
+          <p class="names no-margin-bottom"> <b>Status:</b> Live <button mat-raised-button class="no-margin-top"
+              (click)="openPausingDialog()">Pause</button></p>
         </ng-template>
       </mat-card-content>
     </mat-card>
@@ -81,25 +83,36 @@
         <mat-menu #menu1="matMenu">
           <button mat-menu-item>
             <mat-icon> update </mat-icon>
-            <span class="menu-items"> <a href="https://manager.ens.domains/name/alethena.eth" target="_blank"> Update
-                ENS </a> </span>
+            <div *ngIf="symbolStatus === 'ALEQ'; then thenBlock2 else elseBlock2"></div>
+            <ng-template #thenBlock2>
+              <span class="menu-items"> <a href="https://manager.ens.domains/name/alethena.eth" target="_blank"> Update
+                  ENS </a> </span>
+            </ng-template>
+            <ng-template #elseBlock2>
+              <span class="menu-items"> <a href="https://manager.ens.domains" target="_blank"> Update ENS </a> </span>
+            </ng-template>
           </button>
         </mat-menu>
       </mat-card-title>
       <mat-card-content>
         <p class="names"> <b>T&C URL:</b> &#8205; <a href="https://{{ termsandconditions }}"
             target="_blank">{{ termsandconditions }}</a></p>
-        <p class="names"> <b>ENS:</b> &#8205; <a href="https://etherscan.io/address/alethena.eth"
-            target="_blank">alethena.eth</a></p>
+        <div *ngIf="symbolStatus === 'ALEQ'; then thenBlock3 else elseBlock3"></div>
+        <ng-template #thenBlock3>
+          <p class="names"> <b>ENS:</b> &#8205; <a href="https://etherscan.io/address/alethena.eth"
+              target="_blank">alethena.eth</a></p>
+        </ng-template>
+        <ng-template #elseBlock3>
+          <p class="names"> <b>ENS:</b> &#8205; N/A</p>
+        </ng-template>
       </mat-card-content>
     </mat-card>
   </div>
   <div class="col-4">
     <mat-card class="mat-elevation-z8 data-card">
       <mat-card-title>
-        <i class="material-icons"> looks_5 </i> <span class="vertical-align">Claim Details</span> 
-        <button
-          mat-icon-button class="float-right" [matMenuTriggerFor]="menu2" aria-label="Settings button.">
+        <i class="material-icons"> looks_5 </i> <span class="vertical-align">Claim Details</span>
+        <button mat-icon-button class="float-right" [matMenuTriggerFor]="menu2" aria-label="Settings button.">
           <i class="material-icons float-right"> settings </i>
         </button>
         <mat-menu #menu2="matMenu">
@@ -128,8 +141,7 @@
     <mat-card class="mat-elevation-z8 data-card">
       <mat-card-title>
         <i class="material-icons"> looks_6 </i> <span class="vertical-align">Contract Details</span>
-        <button
-          mat-icon-button class="float-right" [matMenuTriggerFor]="menu3" aria-label="Settings button.">
+        <button mat-icon-button class="float-right" [matMenuTriggerFor]="menu3" aria-label="Settings button.">
           <i class="material-icons float-right"> settings </i>
         </button>
         <mat-menu #menu3="matMenu">
