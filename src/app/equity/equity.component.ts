@@ -834,9 +834,6 @@ export class EquityComponent implements OnInit {
   }
   refreshContractAddress(event: any) {
     if (event.source.controlType === 'mat-select') {
-      console.log(event);
-      // location.reload();
-      // this.selected = 
       this.aleqService.bootstrapALEQ(this.selected);
     }
   }

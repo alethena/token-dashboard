@@ -23,10 +23,15 @@ export class AleqService {
     private web3Service: Web3Service) { }
 
   async bootstrapALEQ(selectedAddress) {
+    if (this.ALEQInstance === undefined) {
     const ALEQAbstraction = await this.infuraService.artifactsToContract(ALEQData);
     this.ALEQInstance = await ALEQAbstraction.at(selectedAddress);
-    console.log(this.ALEQInstance);
+    // console.log(this.ALEQInstance);
     this.refreshVariables();
+    } else {
+      const ALEQAbstraction = await this.infuraService.artifactsToContract(ALEQData);
+      this.ALEQInstance = await ALEQAbstraction.at(selectedAddress);
+    }
   }
 
   async refreshVariables() {
