@@ -482,7 +482,7 @@ export class DialogCollateralRateComponent implements OnInit {
     async collateralRateCall() {
       this.dialogRef.close();
       const network = await this.web3Service.web3.eth.net.getId();
-      const claimPeriod = this.claimPeriod;
+      const claimPeriod = bigInt(this.claimPeriod);
       const collateralRate = bigInt(this.data.collateralRateNumber);
       const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
       if (network === 4 && ownerFlag === true) {
@@ -547,8 +547,8 @@ export class DialogClaimPeriodComponent implements OnInit {
             this.data.claimPeriodNumber = numberOfClaim;
             if (this.data.claimPeriodNumber < 0) {
               this.orderFormGroup.patchValue({ 'numberOfClaim': 1 });
-            } else if (this.data.claimPeriodNumber < 60 * 60 * 24 * 90) {
-              this.orderFormGroup.patchValue({ 'numberOfClaim': 60 * 60 * 24 * 90 });
+            } else if (this.data.claimPeriodNumber < 90) {
+              this.orderFormGroup.patchValue({ 'numberOfClaim': 90 });
             } else if (Math.ceil(this.data.claimPeriodNumber) !== numberOfClaim) {
               this.orderFormGroup.patchValue({ 'numberOfClaim': Math.ceil(numberOfClaim) });
             }
@@ -572,11 +572,12 @@ export class DialogClaimPeriodComponent implements OnInit {
     async claimPeriodCall() {
       this.dialogRef.close();
       const network = await this.web3Service.web3.eth.net.getId();
-      const collateralRate = this.collateralRate;
+      const collateralRate = bigInt(this.collateralRate);
+      const claimPeriod = bigInt(this.data.claimPeriodNumber);
       const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
       if (network === 4 && ownerFlag === true) {
       this.txID = await this.aleqService.setClaimParameters(this.data.selectedContract, collateralRate,
-        this.data.claimPeriodNumber, this.selectedAccount[0]);
+        claimPeriod, this.selectedAccount[0]);
       } else if (network !== 4) {
         this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
       } else if (ownerFlag === false) {

@@ -167,9 +167,9 @@ export class AleqService {
         const ALEQAbstraction = await this.web3Service.artifactsToContract(ALEQData);
         const ALEQInstance = await ALEQAbstraction.at(selectedAddress);
         const collateralRateBN = bigInt(collateralRate);
-        // const claimPeriodBN = new BN(claimPeriod / 86400);
+        const claimPeriodBN = bigInt(claimPeriod);
         const claimParametersTx = await ALEQInstance.setClaimParameters
-        .sendTransaction(collateralRateBN.toString(), claimPeriod / 86400, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+        .sendTransaction(collateralRateBN.toString(), claimPeriodBN.toString(), { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
         console.log(claimParametersTx.tx);
       } catch (error) {
         console.log(error);
