@@ -244,12 +244,17 @@ export class DialogTotalSharesComponent implements OnInit {
             this.data.totalSharesNumber = numberOfTokens;
             if (this.data.totalSharesNumber < 0) {
               this.orderFormGroup.patchValue({ 'numberOfTokens': 1 });
-            } else if (this.data.totalSharesNumber < this.totalSupplyStatus) {
-              this.orderFormGroup.patchValue({ 'numberOfTokens': this.totalSupplyStatus });
             } else if (Math.ceil(this.data.totalSharesNumber) !== numberOfTokens) {
               this.orderFormGroup.patchValue({ 'numberOfTokens': Math.ceil(numberOfTokens) });
             }
           }
+        });
+        this.orderFormGroup.get('numberOfTokens').valueChanges
+        .pipe(debounceTime(3000))
+        .subscribe(async numberOfTokens => {
+          if (this.data.totalSharesNumber < this.totalSupplyStatus) {
+              this.orderFormGroup.patchValue({ 'numberOfTokens': this.totalSupplyStatus });
+            }
         });
     }
 
@@ -547,11 +552,16 @@ export class DialogClaimPeriodComponent implements OnInit {
             this.data.claimPeriodNumber = numberOfClaim;
             if (this.data.claimPeriodNumber < 0) {
               this.orderFormGroup.patchValue({ 'numberOfClaim': 1 });
-            } else if (this.data.claimPeriodNumber < 90) {
-              this.orderFormGroup.patchValue({ 'numberOfClaim': 90 });
             } else if (Math.ceil(this.data.claimPeriodNumber) !== numberOfClaim) {
               this.orderFormGroup.patchValue({ 'numberOfClaim': Math.ceil(numberOfClaim) });
             }
+          }
+        });
+        this.orderFormGroup.get('numberOfClaim').valueChanges
+        .pipe(debounceTime(3000))
+        .subscribe(async numberOfClaim => {
+          if (this.data.claimPeriodNumber < 90) {
+              this.orderFormGroup.patchValue({ 'numberOfClaim': 90 });
           }
         });
     }
