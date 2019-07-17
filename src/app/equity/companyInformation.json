@@ -2,16 +2,19 @@
     "0x40A1BE7f167C7f14D7EDE17972bC7c87b91e1D91": {
       "NAME": "Test AG",
       "WEBSITE": "https://www.alethena.com", 
-      "UID": "CHE-123.456.789"
+      "UID": "CHE-123.456.789",
+      "UIDLINK": "https://www.zefix.ch/en/search/entity/welcome" 
     },
     "0x204B0020923C906D8BF2e1FB2fd8C43e612A68f4": {
       "NAME": "ServiceHunter AG",
       "WEBSITE": "https://quitt.ch", 
-      "UID": "CHE-115.866.090"
+      "UID": "CHE-115.866.090",
+      "UIDLINK": "https://www.zefix.ch/en/search/entity/list/firm/989312?name=CHE-115.866.090&searchType=exact" 
     },
     "0x18A4251cD23A4e235987a11d2d36C0138E95fA7c": {
       "NAME": "Equility AG",
       "WEBSITE": "https://www.alethena.com",
-      "UID": "CHE-460.255.304"
+      "UID": "CHE-460.255.304",
+      "UIDLINK": "https://www.zefix.ch/en/search/entity/list/firm/1318471?name=CHE-460.255.304&searchType=exact"
     }
   }

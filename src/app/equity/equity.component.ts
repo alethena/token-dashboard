@@ -797,6 +797,7 @@ export class EquityComponent implements OnInit {
   companyName = config2[this.selected].NAME;
   companyWebsite = config2[this.selected].WEBSITE;
   companyUID = config2[this.selected].UID;
+  companyUIDLink = config2[this.selected].UIDLINK;
 
   constructor(
     private infuraService: InfuraService,
@@ -859,6 +860,7 @@ export class EquityComponent implements OnInit {
       this.companyName = config2[this.selected].NAME;
       this.companyWebsite = config2[this.selected].WEBSITE;
       this.companyUID = config2[this.selected].UID;
+      this.companyUIDLink = config2[this.selected].UIDLINK;
     }
   }
   openMintDialog() {
