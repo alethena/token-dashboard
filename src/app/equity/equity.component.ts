@@ -11,6 +11,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { isAddress } from 'web3-utils';
 
 declare var require: any;
+const config = require('./ensConfig.json');
+const config2 = require('./companyInformation.json');
 const bigInt = require('big-integer');
 
 export interface Contract {
@@ -487,7 +489,7 @@ export class DialogCollateralRateComponent implements OnInit {
     async collateralRateCall() {
       this.dialogRef.close();
       const network = await this.web3Service.web3.eth.net.getId();
-      const claimPeriod = bigInt(this.claimPeriod);
+      const claimPeriod = bigInt(this.claimPeriod / 86400);
       const collateralRate = bigInt(this.data.collateralRateNumber);
       const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
       if (network === 4 && ownerFlag === true) {
@@ -789,6 +791,12 @@ export class EquityComponent implements OnInit {
     {value: '0x40A1BE7f167C7f14D7EDE17972bC7c87b91e1D91', viewValue: 'Test Token'}
   ];
   selected = '0x40A1BE7f167C7f14D7EDE17972bC7c87b91e1D91';
+  ens = config[this.selected].ENS;
+  ensUrl = config[this.selected].URL;
+  ensLink = config[this.selected].ENSLINK;
+  companyName = config2[this.selected].NAME;
+  companyWebsite = config2[this.selected].WEBSITE;
+  companyUID = config2[this.selected].UID;
 
   constructor(
     private infuraService: InfuraService,
@@ -845,6 +853,12 @@ export class EquityComponent implements OnInit {
   refreshContractAddress(event: any) {
     if (event.source.controlType === 'mat-select') {
       this.aleqService.bootstrapALEQ(this.selected);
+      this.ens = config[this.selected].ENS;
+      this.ensUrl = config[this.selected].URL;
+      this.ensLink = config[this.selected].ENSLINK;
+      this.companyName = config2[this.selected].NAME;
+      this.companyWebsite = config2[this.selected].WEBSITE;
+      this.companyUID = config2[this.selected].UID;
     }
   }
   openMintDialog() {

@@ -20,7 +20,7 @@ h4 {
 }
 
 .data-card {
-  height: 200px;
+  height: 250px;
 }
 
 .mat-icon {
@@ -38,7 +38,11 @@ h4 {
   float: right !important;
   color: rgb(146, 146, 146);
   font-size: 26px;
-  margin-top: 0;
+  margin-top: -2px;
+}
+
+.float-right-icon {
+  margin-top: -6px;
 }
 
 .vertical-align {
@@ -47,7 +51,8 @@ h4 {
 }
 
 .names {
-  font-size: 20px;
+  font-size: 14px;
+  color: rgb(121, 121, 121);
 
   a {
     text-decoration: none;
@@ -115,4 +120,11 @@ h4 {
 .no-margin-top {
   margin-top: 0;
   margin-left: 10px;
+}
+
+.no-margin-top-p {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 20px;
+  color: #333;
 }

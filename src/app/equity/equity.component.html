@@ -2,11 +2,6 @@
   <h1>Welcome to Alethena's Token Dashboard</h1>
 </div>
 <div class="row owner-info">
-  <b>Only for the owner of the Share Token contract:</b><br>
-  Please connect to your MetaMask account and the corresponding wallet address in order to enable changes. Please be
-  aware that any change costs a tiny amount of Gas in Ether.
-</div>
-<div class="row owner-info">
   <h4>Select Your Contract</h4>
   <mat-form-field>
     <mat-label>Share Token Contract</mat-label>
@@ -22,48 +17,83 @@
   <div class="col-4">
     <mat-card class="mat-elevation-z8 data-card">
       <mat-card-title>
-        <i class="material-icons"> looks_one </i>
+        <i class="material-icons"> looks_one </i> <span class="vertical-align">Company Information</span>
       </mat-card-title>
       <mat-card-content>
-        <p class="names"> <b>Name:</b> {{ nameStatus }}</p>
-        <p class="names"> <b>Symbol:</b> {{ symbolStatus }}</p>
-        <p></p>
-        <div *ngIf="pauseStatus; then thenBlock else elseBlock"></div>
-        <ng-template #thenBlock>
-          <p class="names no-margin-bottom"> <b>Status:</b> Paused <button mat-raised-button class="no-margin-top"
-              (click)="openUnpausingDialog()">Unpause</button></p>
-        </ng-template>
-        <ng-template #elseBlock>
-          <p class="names no-margin-bottom"> <b>Status:</b> Live <button mat-raised-button class="no-margin-top"
-              (click)="openPausingDialog()">Pause</button></p>
-        </ng-template>
+        <p class="names no-margin-bottom"> Company Name </p>
+        <p class="names no-margin-top-p"> {{ companyName }} </p>
+        <p class="names no-margin-bottom"> Website </p>
+        <p class="names no-margin-top-p"> <a href="{{ companyWebsite }}" target="_blank">Link</a></p>
+        <p class="names no-margin-bottom"> UID </p>
+        <p class="names no-margin-top-p"> {{ companyUID }}</p>
       </mat-card-content>
     </mat-card>
   </div>
   <div class="col-4 ">
     <mat-card class="mat-elevation-z8 data-card">
       <mat-card-title>
-        <i class="material-icons"> looks_two </i>
+        <i class="material-icons"> looks_two </i><span class="vertical-align">Token Information</span>
+        <button mat-icon-button class="float-right" [matMenuTriggerFor]="menu4" aria-label="Settings button.">
+          <i class="material-icons float-right"> settings </i>
+        </button>
+        <mat-menu #menu4="matMenu">
+          <button mat-menu-item>
+            <div *ngIf="pauseStatus; then thenBlock4 else elseBlock4"></div>
+            <ng-template #thenBlock4>
+              <mat-icon class="float-right-icon"> play_circle_outline </mat-icon>
+              <span class="menu-items" (click)="openUnpausingDialog()"> Unpausing Contract </span>
+            </ng-template>
+            <ng-template #elseBlock4>
+              <mat-icon class="float-right-icon"> pause_circle_outline </mat-icon>
+              <span class="menu-items" (click)="openPausingDialog()"> Pausing Contract </span>
+            </ng-template>
+          </button>
+        </mat-menu>
       </mat-card-title>
       <mat-card-content>
-        <p class="names" style="text-align:center"> <b>{{ totalSupplyStatus | number }} Tokenized Shares </b></p>
-        <p style="text-align:center">
-          <button mat-raised-button class="horizontal-margin" (click)="openMintDialog()">Mint</button>
-          <button mat-raised-button (click)="openUnmintDialog()">Unmint</button>
-        </p>
+        <p class="names no-margin-bottom"> Name </p>
+        <p class="names no-margin-top-p"> {{ nameStatus }} </p>
+        <p class="names no-margin-bottom"> Symbol </p>
+        <p class="names no-margin-top-p"> {{ symbolStatus }}</p>
+        <div *ngIf="pauseStatus; then thenBlock else elseBlock"></div>
+        <ng-template #thenBlock>
+          <p class="names no-margin-bottom"> Contract Status </p>
+          <p class="names no-margin-top-p"> Paused </p>
+        </ng-template>
+        <ng-template #elseBlock>
+          <p class="names no-margin-bottom"> Contract Status </p>
+          <p class="names no-margin-top-p"> Live </p>
+        </ng-template>
       </mat-card-content>
     </mat-card>
   </div>
   <div class="col-4">
     <mat-card class="mat-elevation-z8 data-card">
       <mat-card-title>
-        <i class="material-icons"> looks_3 </i>
+        <i class="material-icons"> looks_3 </i><span class="vertical-align">Overview Supply</span>
+        <button mat-icon-button class="float-right" [matMenuTriggerFor]="menu5" aria-label="Settings button.">
+          <i class="material-icons float-right"> settings </i>
+        </button>
+        <mat-menu #menu5="matMenu">
+          <button mat-menu-item>
+            <mat-icon class="float-right-icon"> library_books </mat-icon>
+            <span class="menu-items" (click)="openTotalSharesDialog()"> Set Total Shares </span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon class="float-right-icon"> add </mat-icon>
+            <span class="menu-items" (click)="openMintDialog()"> Mint New Tokens </span>
+          </button>
+          <button mat-menu-item>
+            <mat-icon class="float-right-icon"> clear </mat-icon>
+            <span class="menu-items" (click)="openUnmintDialog()"> Unmint Tokens </span>
+          </button>
+        </mat-menu>
       </mat-card-title>
       <mat-card-content>
-        <p class="names" style="text-align:center"> <b>{{ totalSharesStatus | number}} Total Shares </b></p>
-        <p style="text-align:center">
-          <button mat-raised-button (click)="openTotalSharesDialog()">Set Total Shares</button>
-        </p>
+        <p class="names no-margin-bottom"> Total Shares </p>
+        <p class="names no-margin-top-p"> {{ totalSharesStatus | number}} </p>
+        <p class="names no-margin-bottom"> Tokenized Shares </p>
+        <p class="names no-margin-top-p"> {{ totalSupplyStatus | number }} </p>
       </mat-card-content>
     </mat-card>
   </div>
@@ -76,35 +106,24 @@
   <div class="col-4">
     <mat-card class="mat-elevation-z8 data-card">
       <mat-card-title>
-        <i class="material-icons"> looks_4 </i>
+        <i class="material-icons"> looks_4 </i><span class="vertical-align">Token References</span>
         <button mat-icon-button class="float-right" [matMenuTriggerFor]="menu1" aria-label="Settings button.">
           <i class="material-icons float-right"> settings </i>
         </button>
         <mat-menu #menu1="matMenu">
           <button mat-menu-item>
-            <mat-icon> update </mat-icon>
-            <div *ngIf="symbolStatus === 'ALEQ'; then thenBlock2 else elseBlock2"></div>
-            <ng-template #thenBlock2>
-              <span class="menu-items"> <a href="https://manager.ens.domains/name/alethena.eth" target="_blank"> Update
-                  ENS </a> </span>
-            </ng-template>
-            <ng-template #elseBlock2>
-              <span class="menu-items"> <a href="https://manager.ens.domains" target="_blank"> Update ENS </a> </span>
-            </ng-template>
+            <mat-icon class="float-right-icon"> update </mat-icon>
+            <span class="menu-items"> <a href="{{ ensUrl }}" target="_blank"> Update
+                ENS </a> </span>
           </button>
         </mat-menu>
       </mat-card-title>
       <mat-card-content>
-        <p class="names"> <b>T&C URL:</b> &#8205; <a href="https://{{ termsandconditions }}"
+        <p class="names no-margin-bottom"> T&C URL</p>
+        <p class="names no-margin-top-p"><a href="https://{{ termsandconditions }}"
             target="_blank">{{ termsandconditions }}</a></p>
-        <div *ngIf="symbolStatus === 'ALEQ'; then thenBlock3 else elseBlock3"></div>
-        <ng-template #thenBlock3>
-          <p class="names"> <b>ENS:</b> &#8205; <a href="https://etherscan.io/address/alethena.eth"
-              target="_blank">alethena.eth</a></p>
-        </ng-template>
-        <ng-template #elseBlock3>
-          <p class="names"> <b>ENS:</b> &#8205; N/A</p>
-        </ng-template>
+        <p class="names no-margin-bottom"> ENS</p>
+        <p class="names no-margin-top-p"><a href="{{ ensLink }}" target="_blank">{{ ens }}</a></p>
       </mat-card-content>
     </mat-card>
   </div>
@@ -117,23 +136,22 @@
         </button>
         <mat-menu #menu2="matMenu">
           <button mat-menu-item (click)="openCollateralRateDialog()">
-            <mat-icon> attach_money </mat-icon>
+            <mat-icon class="float-right-icon"> attach_money </mat-icon>
             <span class="menu-items"> Update Collateral Rate </span>
           </button>
           <button mat-menu-item (click)="openClaimPeriodDialog()">
-            <mat-icon> access_time </mat-icon>
+            <mat-icon class="float-right-icon"> access_time </mat-icon>
             <span class="menu-items"> Update Claim Period </span>
           </button>
         </mat-menu>
       </mat-card-title>
       <mat-card-content>
-        <mat-list>
-          <mat-list-item> <b>Collateral Rate:</b> &#8205; {{ collateralRate/1000000000000000000 }} Ether</mat-list-item>
-          <mat-divider></mat-divider>
-          <mat-list-item> <b>Pre-Claim Period:</b> &#8205; {{ preClaimPeriod/3600 }}h</mat-list-item>
-          <mat-divider></mat-divider>
-          <mat-list-item> <b>Claim Period:</b> &#8205; {{ claimPeriod/86400 }} Days</mat-list-item>
-        </mat-list>
+        <p class="names no-margin-bottom"> Collateral Rate </p>
+        <p class="names no-margin-top-p"> {{ collateralRate/1000000000000000000 | number:'.2' }} Ether </p>
+        <p class="names no-margin-bottom"> Pre-Claim Period </p>
+        <p class="names no-margin-top-p"> {{ preClaimPeriod/3600 | number}}h </p>
+        <p class="names no-margin-bottom"> Claim Period </p>
+        <p class="names no-margin-top-p"> {{ claimPeriod/86400 | number}} Days </p>
       </mat-card-content>
     </mat-card>
   </div>
@@ -146,27 +164,28 @@
         </button>
         <mat-menu #menu3="matMenu">
           <button mat-menu-item>
-            <mat-icon> account_circle </mat-icon>
+            <mat-icon class="float-right-icon"> account_circle </mat-icon>
             <span class="menu-items" (click)="openChangeOwnerDialog()"> Change Owner </span>
           </button>
-          <button mat-menu-item>
-            <mat-icon> delete_forever </mat-icon>
+          <!-- <button mat-menu-item>
+            <mat-icon class="float-right-icon"> delete_forever </mat-icon>
             <span class="menu-items" (click)="openRenounceOwnershipDialog()"> Renounce Ownership </span>
-          </button>
+          </button> -->
         </mat-menu>
       </mat-card-title>
       <mat-card-content>
-        <mat-list>
-          <mat-list-item><b>Contract Address:</b> &nbsp; <a
-              href="https://rinkeby.etherscan.io/address/{{contractAddress}}" target="_blank"> {{ contractAddress }}
-            </a></mat-list-item>
-          <mat-divider></mat-divider>
-          <mat-list-item><b>Owner Address:</b> &nbsp; <a href="https://rinkeby.etherscan.io/address/{{ownerAddress}}"
-              target="_blank"> {{ ownerAddress }} </a></mat-list-item>
-          <mat-divider></mat-divider>
-          <mat-list-item><b>Master Address:</b> &nbsp; <a href="https://rinkeby.etherscan.io/address/{{masterAddress}}"
-              target="_blank"> {{ masterAddress }} </a></mat-list-item>
-        </mat-list>
+        <p class="names no-margin-bottom"> Contract Address </p>
+        <p class="names no-margin-top-p"> <a href="https://rinkeby.etherscan.io/address/{{contractAddress}}"
+            target="_blank"> Etherscan
+          </a> </p>
+        <p class="names no-margin-bottom"> Owner Address </p>
+        <p class="names no-margin-top-p"> <a href="https://rinkeby.etherscan.io/address/{{ownerAddress}}"
+            target="_blank"> Etherscan
+          </a> </p>
+        <p class="names no-margin-bottom"> Master Address </p>
+        <p class="names no-margin-top-p"> <a href="https://rinkeby.etherscan.io/address/{{masterAddress}}"
+            target="_blank"> Etherscan
+          </a> </p>
       </mat-card-content>
     </mat-card>
   </div>
