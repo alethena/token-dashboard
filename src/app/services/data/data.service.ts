@@ -21,5 +21,6 @@ export class DataService {
   public web3Observable = new Subject < any > ();
   public accountsObservable = new Subject < any > ();
   public accountObservable = new Subject < any > ();
+  public MMenabledObservable = new Subject < any > ();
   constructor() {}
 }

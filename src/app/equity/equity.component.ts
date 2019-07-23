@@ -783,6 +783,10 @@ export class EquityComponent implements OnInit {
   public ownerAddressHex: any;
   public web3: any;
   selectedContract: any;
+  isLinear = false;
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+  public MMenabled = false;
 
   title = 'Alethena\'s Token Dashboard';
   contracts: Contract[] = [
@@ -806,14 +810,23 @@ export class EquityComponent implements OnInit {
     private web3Service: Web3Service,
     private accountsService: AccountsService,
     public dialog: MatDialog,
-    private matSnackBar: MatSnackBar
-    ) { }
+    private matSnackBar: MatSnackBar,
+    private _formBuilder: FormBuilder
+    ) {this.firstFormGroup = this._formBuilder.group({
+      firstCtrl: ['', Validators.required]
+    });
+    this.secondFormGroup = this._formBuilder.group({
+      secondCtrl: ['', Validators.required]
+    });
+  }
 
   async ngOnInit() {
     await this.infuraService.bootstrapWeb3();
     await this.aleqService.bootstrapALEQ(this.selected);
-    await this.web3Service.bootstrapWeb3();
-
+    // await this.web3Service.bootstrapWeb3();
+    this.dataService.MMenabledObservable.subscribe((newMMenabled) => {
+      this.MMenabled = newMMenabled;
+    });
     this.dataService.pauseStatusObservable.subscribe((newPauseStatus) => {
       this.pauseStatus = newPauseStatus;
     });
@@ -861,6 +874,14 @@ export class EquityComponent implements OnInit {
       this.companyWebsite = config2[this.selected].WEBSITE;
       this.companyUID = config2[this.selected].UID;
       this.companyUIDLink = config2[this.selected].UIDLINK;
+    }
+  }
+  async getAccountFromMetaMask() {
+    if (!this.web3Service.MM) {
+      try {
+        await this.web3Service.bootstrapWeb3();
+      } catch (error) {
+      }
     }
   }
   openMintDialog() {

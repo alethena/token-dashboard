@@ -16,6 +16,7 @@ const ALEQData = require('../../../../helpers/ALEQ.json');
 export class AleqService {
   ALEQInstance: any;
   contractAddress: any;
+  MMenabled = false;
 
   constructor(
     private infuraService: InfuraService,
@@ -71,6 +72,11 @@ export class AleqService {
 
       const masterAddress = await this.ALEQInstance.master.call();
       this.dataService.masterAddressObservable.next(masterAddress);
+
+      if (this.web3Service.MM) {
+        this.MMenabled = true;
+      }
+      this.dataService.MMenabledObservable.next(this.MMenabled);
     }, 1000);
   }
   // async allowance(amount, numberOfShares, user) {

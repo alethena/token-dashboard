@@ -6,6 +6,7 @@ import { MatCardModule,
          MatFormFieldModule,
          MatSnackBarModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
+import { MatStepperModule } from '@angular/material/stepper';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTreeModule } from '@angular/material/tree';
@@ -66,6 +67,7 @@ import { ClaimtoolComponent } from './claimtool/claimtool.component';
     MatTreeModule,
     MatIconModule,
     MatMenuModule,
+    MatStepperModule,
     MatDividerModule,
     MatExpansionModule,
     MatListModule,
