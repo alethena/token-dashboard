@@ -1,0 +1,47 @@
+@import '../../../styles-material.scss';
+
+h1 {
+  padding:0;
+  margin-top: 0;
+}
+
+.data-card {
+  height: 100px;
+}
+
+.material-icons {
+  font-size: 38px;
+  color: mat-color($alethena-app-primary);
+  margin-left: -4px;
+}
+
+.selection-row {
+  padding: 0;
+  margin-top: 0;
+  width: 70%;
+}
+
+.mat-form-field {
+  margin-left: 10px;
+}
+
+.mat-elevation-z8 {
+  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0), 0px 1px 1px 0px rgba(0, 0, 0, 0), 0px 1px 3px 0px rgba(0, 0, 0, 0); 
+}
+
+.mat-card {
+  background: rgba(255, 255, 255, 0);
+}
+
+.vertical-align {
+  vertical-align: 14px;
+  margin-left: 15px;
+  font-size: 15px;
+}
+
+.mat-raised-button {
+  background-color: mat-color($alethena-app-primary);
+  color: white;
+  margin-right: 0px;
+  margin-top: 10px;
+}

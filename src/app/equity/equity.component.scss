@@ -19,6 +19,16 @@ h4 {
   width: 75%;
 }
 
+.mat-form-field {
+  margin-left: 10px;
+}
+
+.selection-row {
+  padding: 0;
+  margin-top: 0;
+  width: 65%;
+}
+
 .data-container {
   margin-top: 2vh;
 }
@@ -131,4 +141,8 @@ h4 {
   margin-bottom: 8px;
   font-size: 20px;
   color: #333;
+}
+
+.margin-row {
+  margin-top: 50px;
 }

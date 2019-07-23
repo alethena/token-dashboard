@@ -1,0 +1,52 @@
+<div class="row">
+  <h1>Welcome to Alethena's Token Dashboard</h1>
+</div>
+<div class="row selection-row">
+  <div class="col-4 ">
+    <mat-card class="mat-elevation-z8 data-card">
+      <mat-card-title>
+        <i class="material-icons"> account_balance </i> <span class="vertical-align">Select Your Company</span>
+      </mat-card-title>
+      <mat-card-content>
+        <mat-form-field>
+          <mat-select (selectionChange)="refreshContractAddress($event)" [(value)]="selected">
+            <mat-option *ngFor="let contract of contracts" [value]="contract.value">
+              {{contract.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+    <div>
+    </div>
+  </div>
+  <div class="col-4 ">
+    <mat-card class="mat-elevation-z8 data-card">
+      <mat-card-title>
+        <i class="material-icons"> build </i> <span class="vertical-align">Select Tool</span>
+      </mat-card-title>
+      <mat-card-content>
+        <mat-form-field>
+          <mat-select (selectionChange)="navigateTo($event)" [(value)]="selectedTool">
+            <mat-option *ngFor="let tool of tools" [value]="tool.value">
+              {{tool.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-card-content>
+    </mat-card>
+  </div>
+  <div class="col-4 ">
+    <mat-card class="mat-elevation-z8 data-card">
+      <mat-card-title>
+        <i class="material-icons"> account_circle </i> <span class="vertical-align">MetaMask Login</span>
+      </mat-card-title>
+      <mat-card-content>
+        <button *ngIf="MMenabled==false" mat-raised-button (click)="getAccountFromMetaMask()">Login with
+          MetaMask</button>
+        <div *ngIf="MMenabled==true"> <em>You are now logged in. If you log out, please refresh the webpage.</em></div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>

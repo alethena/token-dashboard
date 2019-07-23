@@ -25,7 +25,8 @@ import { EquityComponent,
          DialogChangeOwnerComponent,
          DialogClaimPeriodComponent,
          DialogCollateralRateComponent,
-         DialogRenounceOwnershipComponent
+         DialogRenounceOwnershipComponent,
+         SelectorComponent
         } from './equity/equity.component';
 import { FooterComponent } from './footer/footer.component';
 import { NavigationComponent } from './navigation/navigation.component';
@@ -53,6 +54,7 @@ import { ClaimtoolComponent } from './claimtool/claimtool.component';
     NavigationComponent,
     SharedispenserComponent,
     ClaimtoolComponent,
+    SelectorComponent,
   ],
   imports: [
     FormsModule,
@@ -87,6 +89,8 @@ import { ClaimtoolComponent } from './claimtool/claimtool.component';
     DialogClaimPeriodComponent,
     DialogCollateralRateComponent,
     DialogRenounceOwnershipComponent,
+    EquityComponent,
+    SelectorComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

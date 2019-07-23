@@ -22,5 +22,6 @@ export class DataService {
   public accountsObservable = new Subject < any > ();
   public accountObservable = new Subject < any > ();
   public MMenabledObservable = new Subject < any > ();
+  public selectedContractObservable = new Subject < any > ();
   constructor() {}
 }
