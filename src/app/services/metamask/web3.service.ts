@@ -15,9 +15,9 @@ export class Web3Service {
   public MM: any;
 
   constructor(private matSnackBar: MatSnackBar) {
-    window.addEventListener('load', (event) => {
-      this.bootstrapWeb3();
-    });
+    // window.addEventListener('load', (event) => {
+    //   this.bootstrapWeb3();
+    // });
   }
 
   setStatus(status) {
