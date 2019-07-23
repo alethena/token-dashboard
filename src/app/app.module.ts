@@ -25,8 +25,7 @@ import { EquityComponent,
          DialogChangeOwnerComponent,
          DialogClaimPeriodComponent,
          DialogCollateralRateComponent,
-         DialogRenounceOwnershipComponent,
-         SelectorComponent
+         DialogRenounceOwnershipComponent
         } from './equity/equity.component';
 import { FooterComponent } from './footer/footer.component';
 import { NavigationComponent } from './navigation/navigation.component';
@@ -36,6 +35,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedispenserComponent } from './sharedispenser/sharedispenser.component';
 import { ClaimtoolComponent } from './claimtool/claimtool.component';
+import { SelectorPanelComponent } from './selector-panel/selector-panel.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +54,7 @@ import { ClaimtoolComponent } from './claimtool/claimtool.component';
     NavigationComponent,
     SharedispenserComponent,
     ClaimtoolComponent,
-    SelectorComponent,
+    SelectorPanelComponent,
   ],
   imports: [
     FormsModule,
@@ -89,8 +89,6 @@ import { ClaimtoolComponent } from './claimtool/claimtool.component';
     DialogClaimPeriodComponent,
     DialogCollateralRateComponent,
     DialogRenounceOwnershipComponent,
-    EquityComponent,
-    SelectorComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

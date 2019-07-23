@@ -1,4 +1,4 @@
-@import '../../../styles-material.scss';
+@import '../../styles-material.scss';
 
 h1 {
   padding:0;
@@ -26,11 +26,11 @@ h1 {
 }
 
 .mat-elevation-z8 {
-  box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0), 0px 1px 1px 0px rgba(0, 0, 0, 0), 0px 1px 3px 0px rgba(0, 0, 0, 0); 
+  // box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0), 0px 1px 1px 0px rgba(0, 0, 0, 0), 0px 1px 3px 0px rgba(0, 0, 0, 0); 
 }
 
 .mat-card {
-  background: rgba(255, 255, 255, 0);
+  background: rgba(167, 167, 167, 0.2);
 }
 
 .vertical-align {
