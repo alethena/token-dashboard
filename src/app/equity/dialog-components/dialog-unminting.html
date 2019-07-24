@@ -1,12 +1,11 @@
 <h1 mat-dialog-title>Unminting Tokenized Shares</h1>
 <div mat-dialog-content [formGroup]="orderFormGroup">
-    <p class="no-top-margin"><b>You are about to decrease the number of tokenized shares available!</b></p>
-    <p>Enter here your number of shares to be destroyed. Must be above 0!</p>
+    <p class="no-top-margin">You are about to decrease the number of tokenized shares available!</p>
     <mat-form-field>
       <input matInput type="number" placeholder="# of unminted shares" [(ngModel)]="data.unmintNumber"
         formControlName="numberOfTokens">
     </mat-form-field>
-    <p class="caveat"><em>Caveat: Must be a positive integer value.</em></p>
+    <p class="caveat"><em>Enter here your number of shares to be DESTROYED. Must be above 0!</em></p>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="unmintingCall()" cdkFocusInitial>UPDATE</button>

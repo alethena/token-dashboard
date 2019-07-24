@@ -1,12 +1,11 @@
 <h1 mat-dialog-title>Update the Claim Period</h1>
 <div mat-dialog-content [formGroup]="orderFormGroup">
-  <p class="no-top-margin"><b>You are about to change the claim period used in the declareLost function!</b></p>
-  <p>Enter here your new claim period. Must be entered in days and must be at least 90 days!</p>
+  <p class="no-top-margin">You are about to change the claim period used in the declareLost function!</p>
   <mat-form-field>
     <input matInput type="number" placeholder="New claim period" [(ngModel)]="data.claimPeriodNumber"
     formControlName="numberOfClaim">
   </mat-form-field>
-  <p class="caveat"><em>Caveat: Must be a positive integer value.</em></p>
+  <p class="caveat"><em>Must be entered in days and must be at least 90 days!</em></p>
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="claimPeriodCall()" cdkFocusInitial>UPDATE</button>

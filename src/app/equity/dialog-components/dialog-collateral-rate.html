@@ -1,12 +1,11 @@
 <h1 mat-dialog-title>Update the Collateral Rate</h1>
 <div mat-dialog-content [formGroup]="orderFormGroup">
-  <p class="no-top-margin"><b>You are about to change the collateral rate per token!</b></p>
-  <p>Enter here your new collateral rate. Must be entered in Wei (1 Ether = 10<sup>18</sup> Wei)!</p>
+  <p class="no-top-margin">You are about to change the collateral rate per token!</p>
   <mat-form-field>
     <input matInput type="number" placeholder="New collateral rate" [(ngModel)]="data.collateralRateNumber"
     formControlName="numberOfCollateral">
   </mat-form-field>
-  <p class="caveat"><em>Caveat: Must be a positive integer value.</em></p>
+  <p class="caveat"><em>Must be entered in Wei (1 Ether = 10<sup>18</sup> Wei)!</em></p>
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="collateralRateCall()" cdkFocusInitial>UPDATE</button>
