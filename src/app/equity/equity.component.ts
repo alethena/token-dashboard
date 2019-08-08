@@ -4,7 +4,7 @@ import { AleqService } from '../services/aleq/aleq.service';
 import { DataService } from '../services/data/data.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Web3Service } from '../services/metamask/web3.service';
-import { AccountsService } from '../services/metamask/accounts.service';
+// import { AccountsService } from '../services/metamask/accounts.service';
 import { MatSnackBar } from '@angular/material';
 import { debounceTime } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -779,29 +779,29 @@ export class EquityComponent implements OnInit {
   public web3: any;
   public selectedContract: any;
   public MMenabled = false;
-  selected = '0x40A1BE7f167C7f14D7EDE17972bC7c87b91e1D91';
-  ens = config[this.selected].ENS;
-  ensUrl = config[this.selected].URL;
-  ensLink = config[this.selected].ENSLINK;
-  companyName = config2[this.selected].NAME;
-  companyWebsite = config2[this.selected].WEBSITE;
-  companyUID = config2[this.selected].UID;
-  companyUIDLink = config2[this.selected].UIDLINK;
+  public selected = '0x40A1BE7f167C7f14D7EDE17972bC7c87b91e1D91';
+  public selectedTool = 'EQ';
+  public ens = config[this.selected].ENS;
+  public ensUrl = config[this.selected].URL;
+  public ensLink = config[this.selected].ENSLINK;
+  public companyName = config2[this.selected].NAME;
+  public companyWebsite = config2[this.selected].WEBSITE;
+  public companyUID = config2[this.selected].UID;
+  public companyUIDLink = config2[this.selected].UIDLINK;
 
-  constructor(
-    private infuraService: InfuraService,
-    private aleqService: AleqService,
+  constructor(// private infuraService: InfuraService,
+    // private aleqService: AleqService,
     private dataService: DataService,
     private web3Service: Web3Service,
-    private accountsService: AccountsService,
+    // private accountsService: AccountsService,
     public dialog: MatDialog,
     private matSnackBar: MatSnackBar,
     private _formBuilder: FormBuilder
     ) {}
 
   async ngOnInit() {
-    await this.infuraService.bootstrapWeb3();
-    await this.aleqService.bootstrapALEQ(this.selected);
+    // await this.infuraService.bootstrapWeb3();
+    // await this.aleqService.bootstrapALEQ(this.selected);
     // await this.web3Service.bootstrapWeb3();
     this.dataService.selectedContractObservable.subscribe((newSelected) => {
       this.selected = newSelected;
@@ -815,6 +815,9 @@ export class EquityComponent implements OnInit {
     });
     this.dataService.MMenabledObservable.subscribe((newMMenabled) => {
       this.MMenabled = newMMenabled;
+    });
+    this.dataService.selectedToolObservable.subscribe((newSelectedTool) => {
+      this.selectedTool = newSelectedTool;
     });
     this.dataService.pauseStatusObservable.subscribe((newPauseStatus) => {
       this.pauseStatus = newPauseStatus;
@@ -950,4 +953,3 @@ export class EquityComponent implements OnInit {
   }
   }
 }
-

@@ -5,14 +5,14 @@ import { SharedispenserComponent } from '../app/sharedispenser/sharedispenser.co
 import { ClaimtoolComponent } from '../app/claimtool/claimtool.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/equity', pathMatch: 'full' },
-  { path: 'equity', component: EquityComponent },
-  { path: 'sharedispenser', component: SharedispenserComponent },
-  { path: 'claim', component: ClaimtoolComponent },
+  { path: '', redirectTo: '', pathMatch: 'full' },
+  // { path: 'equity', component: EquityComponent },
+  // { path: 'sharedispenser', component: SharedispenserComponent },
+  // { path: 'claim', component: ClaimtoolComponent },
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes, { enableTracing: false, useHash: true })],
+  imports: [ RouterModule.forRoot(routes, { enableTracing: false, useHash: false })],
   exports: [ RouterModule ]
 })
 export class AppRoutingModule {}

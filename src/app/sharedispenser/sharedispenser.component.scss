@@ -9,10 +9,138 @@ h4 {
   margin-bottom: 10px;
 }
 
+.mat-stepper-horizontal {
+  background-color: rgba(21, 92, 114, 0);
+}
+
 .owner-info {
   padding: 0;
   margin-top: 0;
   width: 75%;
+}
+
+.mat-form-field {
+  margin-left: 10px;
+}
+
+.selection-row {
+  padding: 0;
+  margin-top: 0;
+  width: 65%;
+}
+
+.data-container {
+  margin-top: 2vh;
+}
+
+.data-card {
+  height: 250px;
+}
+
+.mat-icon {
+  height: auto;
+  width: auto;
+}
+
+.material-icons {
+  font-size: 38px;
+  color: mat-color($alethena-app-primary);
+  margin-left: -4px;
+}
+
+.float-right {
+  float: right !important;
+  color: rgb(146, 146, 146);
+  font-size: 26px;
+  margin-top: -2px;
+}
+
+.float-right-icon {
+  margin-top: -6px;
+}
+
+.vertical-align {
+  vertical-align: 10px;
+  margin-left: 15px;
+}
+
+.names {
+  font-size: 14px;
+  color: rgb(121, 121, 121);
+
+  a {
+    text-decoration: none;
+    color: #333;
+  }
+
+  a:hover {
+    border-bottom: solid 2px #155c72;
+    color: #155c72;
+  }
+}
+
+.mat-list-item {
+  a {
+    text-decoration: none;
+    color: #333;
+    // word-break: break-all;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  a:hover {
+    border-bottom: solid 2px #155c72;
+    color: #155c72;
+  }
+}
+
+.mat-raised-button {
+  background-color: mat-color($alethena-app-primary);
+  color: white;
+  margin-right: 0px;
+  margin-top: 10px;
+}
+
+.example-slider {
+  margin-left: 10px;
+}
+
+.details {
+  padding: 0;
+  margin: 0;
+  font-size: 20px;
+}
+
+.horizontal-margin {
+  margin-right: 40px;
+}
+
+.menu-items {
+  font-size: 18px;
+  text-decoration: none;
+  color: #333;
+  a {
+    font-size: 18px;
+    text-decoration: none;
+    color: #333;
+  }
+}
+
+.no-margin-bottom {
+  margin-bottom: 0;
+}
+
+.no-margin-top {
+  margin-top: 0;
+  margin-left: 10px;
+}
+
+.no-margin-top-p {
+  margin-top: 0;
+  margin-bottom: 8px;
+  font-size: 20px;
+  color: #333;
 }
 
 .margin-row {
