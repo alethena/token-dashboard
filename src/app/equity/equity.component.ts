@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, Injectable } from '@angular/core';
-import { InfuraService } from '../services/infura/infura.service';
+// import { InfuraService } from '../services/infura/infura.service';
 import { AleqService } from '../services/aleq/aleq.service';
 import { DataService } from '../services/data/data.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -41,7 +41,7 @@ export class DialogUnmintingComponent implements OnInit {
   public messageUnminting = 'Unminting of tokenized shares.';
 
   constructor(
-    private infuraService: InfuraService,
+    // private infuraService: InfuraService,
     private aleqService: AleqService,
     private dataService: DataService,
     private web3Service: Web3Service,
@@ -70,8 +70,8 @@ export class DialogUnmintingComponent implements OnInit {
     }
 
     async ngOnInit() {
-      await this.infuraService.bootstrapWeb3();
-      await this.aleqService.bootstrapALEQ(this.data.selectedContract);
+      // await this.infuraService.bootstrapWeb3();
+      // await this.aleqService.bootstrapALEQ(this.data.selectedContract);
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
       await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
@@ -131,7 +131,7 @@ export class DialogMintingComponent implements OnInit {
   public messageMinting = 'Additional minting of tokenized shares.';
 
   constructor(
-    private infuraService: InfuraService,
+    // private infuraService: InfuraService,
     private aleqService: AleqService,
     private dataService: DataService,
     private web3Service: Web3Service,
@@ -160,8 +160,8 @@ export class DialogMintingComponent implements OnInit {
     }
 
     async ngOnInit() {
-      await this.infuraService.bootstrapWeb3();
-      await this.aleqService.bootstrapALEQ(this.data.selectedContract);
+      // await this.infuraService.bootstrapWeb3();
+      // await this.aleqService.bootstrapALEQ(this.data.selectedContract);
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
       await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
@@ -222,7 +222,7 @@ export class DialogTotalSharesComponent implements OnInit {
   public totalSupplyStatus: any;
 
   constructor(
-    private infuraService: InfuraService,
+    // private infuraService: InfuraService,
     private aleqService: AleqService,
     private dataService: DataService,
     private web3Service: Web3Service,
@@ -256,8 +256,8 @@ export class DialogTotalSharesComponent implements OnInit {
     }
 
     async ngOnInit() {
-      await this.infuraService.bootstrapWeb3();
-      await this.aleqService.bootstrapALEQ(this.data.selectedContract);
+      // await this.infuraService.bootstrapWeb3();
+      // await this.aleqService.bootstrapALEQ(this.data.selectedContract);
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
       await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
@@ -312,7 +312,7 @@ export class DialogPausingComponent implements OnInit {
   public ownerAddress: any;
 
   constructor(
-    private infuraService: InfuraService,
+    // private infuraService: InfuraService,
     private aleqService: AleqService,
     private dataService: DataService,
     private web3Service: Web3Service,
@@ -322,8 +322,8 @@ export class DialogPausingComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
     async ngOnInit() {
-      await this.infuraService.bootstrapWeb3();
-      await this.aleqService.bootstrapALEQ(this.data.selectedContract);
+      // await this.infuraService.bootstrapWeb3();
+      // await this.aleqService.bootstrapALEQ(this.data.selectedContract);
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
       await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
@@ -376,7 +376,7 @@ export class DialogUnpausingComponent implements OnInit {
   public ownerAddress: any;
 
   constructor(
-    private infuraService: InfuraService,
+    // private infuraService: InfuraService,
     private aleqService: AleqService,
     private dataService: DataService,
     private web3Service: Web3Service,
@@ -386,8 +386,8 @@ export class DialogUnpausingComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
     async ngOnInit() {
-      await this.infuraService.bootstrapWeb3();
-      await this.aleqService.bootstrapALEQ(this.data.selectedContract);
+      // await this.infuraService.bootstrapWeb3();
+      // await this.aleqService.bootstrapALEQ(this.data.selectedContract);
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
       await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
@@ -442,7 +442,7 @@ export class DialogCollateralRateComponent implements OnInit {
   public orderFormGroup: FormGroup;
 
   constructor(
-    private infuraService: InfuraService,
+    // private infuraService: InfuraService,
     private aleqService: AleqService,
     private dataService: DataService,
     private web3Service: Web3Service,
@@ -469,8 +469,8 @@ export class DialogCollateralRateComponent implements OnInit {
     }
 
     async ngOnInit() {
-      await this.infuraService.bootstrapWeb3();
-      await this.aleqService.bootstrapALEQ(this.data.selectedContract);
+      // await this.infuraService.bootstrapWeb3();
+      // await this.aleqService.bootstrapALEQ(this.data.selectedContract);
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
       await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
@@ -530,7 +530,7 @@ export class DialogClaimPeriodComponent implements OnInit {
   public orderFormGroup: FormGroup;
 
   constructor(
-    private infuraService: InfuraService,
+    // private infuraService: InfuraService,
     private aleqService: AleqService,
     private dataService: DataService,
     private web3Service: Web3Service,
@@ -564,8 +564,8 @@ export class DialogClaimPeriodComponent implements OnInit {
     }
 
     async ngOnInit() {
-      await this.infuraService.bootstrapWeb3();
-      await this.aleqService.bootstrapALEQ(this.data.selectedContract);
+      // await this.infuraService.bootstrapWeb3();
+      // await this.aleqService.bootstrapALEQ(this.data.selectedContract);
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
       await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
@@ -624,7 +624,7 @@ export class DialogChangeOwnerComponent implements OnInit {
   public orderFormGroup: FormGroup;
 
   constructor(
-    private infuraService: InfuraService,
+    // private infuraService: InfuraService,
     private aleqService: AleqService,
     private dataService: DataService,
     private web3Service: Web3Service,
@@ -648,8 +648,8 @@ export class DialogChangeOwnerComponent implements OnInit {
     }
 
     async ngOnInit() {
-      await this.infuraService.bootstrapWeb3();
-      await this.aleqService.bootstrapALEQ(this.data.selectedContract);
+      // await this.infuraService.bootstrapWeb3();
+      // await this.aleqService.bootstrapALEQ(this.data.selectedContract);
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
       await this.dataService.masterAddressObservable.subscribe((newMasterAddress) => {
@@ -701,7 +701,7 @@ export class DialogRenounceOwnershipComponent implements OnInit {
   public ownerAddress: any;
 
   constructor(
-    private infuraService: InfuraService,
+    // private infuraService: InfuraService,
     private aleqService: AleqService,
     private dataService: DataService,
     private web3Service: Web3Service,
@@ -711,8 +711,8 @@ export class DialogRenounceOwnershipComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
 
     async ngOnInit() {
-      await this.infuraService.bootstrapWeb3();
-      await this.aleqService.bootstrapALEQ(this.data.selectedContract);
+      // await this.infuraService.bootstrapWeb3();
+      // await this.aleqService.bootstrapALEQ(this.data.selectedContract);
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
       await this.dataService.ownerAddressObservable.subscribe((newOwnerAddress) => {
@@ -889,7 +889,7 @@ export class EquityComponent implements OnInit {
     this.web3Service.setStatus('Please use MetaMask to enable contract changes.');
   }
   }
-  openPausingDialog() {
+  public openPausingDialog() {
     if (this.web3Service.MM) {
     const dialogRef = this.dialog.open(DialogPausingComponent, {
       width: '500px',
@@ -899,7 +899,7 @@ export class EquityComponent implements OnInit {
     this.web3Service.setStatus('Please use MetaMask to enable contract changes.');
   }
   }
-  openUnpausingDialog() {
+  public openUnpausingDialog() {
     if (this.web3Service.MM) {
     const dialogRef = this.dialog.open(DialogUnpausingComponent, {
       width: '500px',

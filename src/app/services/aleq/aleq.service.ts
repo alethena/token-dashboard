@@ -4,18 +4,18 @@ import { DataService } from '../data/data.service';
 import { Web3Service } from '../metamask/web3.service';
 
 declare var require: any;
+const config = require('./contractMapping.json');
 const BN = require('bn.js');
 const bigInt = require('big-integer');
 
 const ALEQData = require('../../../../helpers/ALEQ.json');
-// const ALEQAddress = '0x40A1BE7f167C7f14D7EDE17972bC7c87b91e1D91';
-// const SDAddress = '0xD091951A17030Aee1C0ab1319D6876048253bdc3';
+const SDData = require('../../../../helpers/ShareDispenser.json');
 
 @Injectable({ providedIn: 'root' })
 
 export class AleqService {
   ALEQInstance: any;
-  contractAddress: any;
+  SDInstance: any;
   MMenabled = false;
 
   constructor(
@@ -26,12 +26,17 @@ export class AleqService {
   async bootstrapALEQ(selectedAddress) {
     if (this.ALEQInstance === undefined) {
     const ALEQAbstraction = await this.infuraService.artifactsToContract(ALEQData);
+    const SDAbstraction = await this.infuraService.artifactsToContract(SDData);
     this.ALEQInstance = await ALEQAbstraction.at(selectedAddress);
+    this.SDInstance = await SDAbstraction.at(config[selectedAddress].SD);
     // console.log(this.ALEQInstance);
+    console.log(this.SDInstance);
     this.refreshVariables();
     } else {
       const ALEQAbstraction = await this.infuraService.artifactsToContract(ALEQData);
       this.ALEQInstance = await ALEQAbstraction.at(selectedAddress);
+      const SDAbstraction = await this.infuraService.artifactsToContract(SDData);
+      this.SDInstance = await SDAbstraction.at(config[selectedAddress].SD);
     }
   }
 
@@ -73,6 +78,12 @@ export class AleqService {
       const masterAddress = await this.ALEQInstance.master.call();
       this.dataService.masterAddressObservable.next(masterAddress);
 
+      const contractAddressSD = await this.SDInstance.address;
+      this.dataService.SDcontractAddressObservable.next(contractAddressSD);
+
+      const ownerAddressSD = await this.SDInstance.owner.call();
+      this.dataService.SDownerAddressObservable.next(ownerAddressSD);
+
       if (this.web3Service.MM) {
         this.MMenabled = true;
       }
@@ -103,7 +114,7 @@ export class AleqService {
         const mintingTx = await ALEQInstance.mint
         .sendTransaction(shareholderAddress, numberOfSharesBN.toString(),
         messageMinting, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
-        console.log(mintingTx.tx);
+        // console.log(mintingTx.tx);
       } catch (error) {
         console.log(error);
         reject(error);
@@ -118,7 +129,7 @@ export class AleqService {
         const numberOfSharesBN = new BN(numberOfShares);
         const unmintingTx = await ALEQInstance.unmint.sendTransaction(numberOfSharesBN.toString(),
         messageUnminting, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
-        console.log(unmintingTx.tx);
+        // console.log(unmintingTx.tx);
       } catch (error) {
         console.log(error);
         reject(error);
@@ -134,7 +145,7 @@ export class AleqService {
         const pausingFlag = true;
         const pausingTx = await ALEQInstance.pause
         .sendTransaction(pausingFlag, messagePausing, selectedAddress, fromBlock, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
-        console.log(pausingTx.tx);
+        // console.log(pausingTx.tx);
       } catch (error) {
         console.log(error);
         reject(error);
@@ -150,7 +161,7 @@ export class AleqService {
         const pausingFlag = false;
         const unpausingTx = await ALEQInstance.pause
         .sendTransaction(pausingFlag, messageUnpausing, selectedAddress, fromBlock, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
-        console.log(unpausingTx.tx);
+        // console.log(unpausingTx.tx);
       } catch (error) {
         console.log(error);
         reject(error);
@@ -165,7 +176,7 @@ export class AleqService {
         const numberOfSharesBN = new BN(numberOfShares);
         const totalSharesTx = await ALEQInstance.setTotalShares
         .sendTransaction(numberOfSharesBN.toString(), { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
-        console.log(totalSharesTx.tx);
+        // console.log(totalSharesTx.tx);
       } catch (error) {
         console.log(error);
         reject(error);
@@ -181,7 +192,7 @@ export class AleqService {
         const claimPeriodBN = bigInt(claimPeriod);
         const claimParametersTx = await ALEQInstance.setClaimParameters
         .sendTransaction(collateralRateBN.toString(), claimPeriodBN.toString(), { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
-        console.log(claimParametersTx.tx);
+        // console.log(claimParametersTx.tx);
       } catch (error) {
         console.log(error);
         reject(error);
@@ -195,7 +206,7 @@ export class AleqService {
         const ALEQInstance = await ALEQAbstraction.at(selectedAddress);
         const changeOwnerTx = await ALEQInstance.transferOwnership
         .sendTransaction(newOwner, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
-        console.log(changeOwnerTx.tx);
+        // console.log(changeOwnerTx.tx);
       } catch (error) {
         console.log(error);
         reject(error);
@@ -209,7 +220,21 @@ export class AleqService {
         const ALEQInstance = await ALEQAbstraction.at(selectedAddress);
         const renounceOwnerTx = await ALEQInstance.renounceOwnership
         .sendTransaction({ from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
-        console.log(renounceOwnerTx.tx);
+        // console.log(renounceOwnerTx.tx);
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  }
+  async changeOwnerSD(selectedAddress, newOwner, user) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const SDAbstraction = await this.web3Service.artifactsToContract(SDData);
+        const SDInstance = await SDAbstraction.at(config[selectedAddress].SD);
+        const changeOwnerTx = await SDInstance.transferOwnership
+        .sendTransaction(newOwner, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+        // console.log(changeOwnerTx.tx);
       } catch (error) {
         console.log(error);
         reject(error);

@@ -29,11 +29,11 @@
                 <div *ngIf="pauseStatus; then thenBlock4 else elseBlock4"></div>
                 <ng-template #thenBlock4>
                   <mat-icon class="float-right-icon"> play_circle_outline </mat-icon>
-                  <span class="menu-items" (click)="openUnpausingDialog()"> Unpausing Contract </span>
+                  <span class="menu-items" (click)="dialogCall('Unpausing')"> Unpausing Contract </span>
                 </ng-template>
                 <ng-template #elseBlock4>
                   <mat-icon class="float-right-icon"> pause_circle_outline </mat-icon>
-                  <span class="menu-items" (click)="openPausingDialog()"> Pausing Contract </span>
+                  <span class="menu-items" (click)="dialogCall('Pausing')"> Pausing Contract </span>
                 </ng-template>
               </button>
             </mat-menu>
@@ -79,12 +79,10 @@
             </mat-menu>
           </mat-card-title>
           <mat-card-content>
-            <p class="names no-margin-bottom"> Total Shares </p>
+            <p class="names no-margin-bottom"> Available Shares </p>
             <p class="names no-margin-top-p"> {{ totalSharesStatus | number}} </p>
-            <p class="names no-margin-bottom"> Tokenized Shares </p>
+            <p class="names no-margin-bottom"> Available XCHF </p>
             <p class="names no-margin-top-p"> {{ totalSupplyStatus | number }} </p>
-            <p class="names no-margin-bottom"> Acquisition Offering </p>
-            <p class="names no-margin-top-p"> None </p>
           </mat-card-content>
         </mat-card>
       </div>
@@ -111,11 +109,12 @@
             </mat-menu>
           </mat-card-title>
           <mat-card-content>
-            <p class="names no-margin-bottom"> T&C URL</p>
-            <p class="names no-margin-top-p"><a href="https://{{ termsandconditions }}"
-                target="_blank">{{ termsandconditions }}</a></p>
-            <p class="names no-margin-bottom"> ENS</p>
-            <p class="names no-margin-top-p"><a href="{{ ensLink }}" target="_blank">{{ ens }}</a></p>
+              <p class="names no-margin-bottom"> Minimum Price </p>
+              <p class="names no-margin-top-p"> {{ totalSharesStatus | number}} </p>
+              <p class="names no-margin-bottom"> Maximum Price </p>
+              <p class="names no-margin-top-p"> {{ totalSupplyStatus | number }} </p>
+              <p class="names no-margin-bottom"> Linear Price Slope </p>
+              <p class="names no-margin-top-p"> {{ totalSupplyStatus | number }} </p>
           </mat-card-content>
         </mat-card>
       </div>
@@ -139,11 +138,11 @@
             </mat-menu>
           </mat-card-title>
           <mat-card-content>
-            <p class="names no-margin-bottom"> Collateral Rate </p>
+            <p class="names no-margin-bottom"> Minimum Trade Volume </p>
             <p class="names no-margin-top-p"> {{ collateralRate/1000000000000000000 | number:'.2' }} Ether </p>
-            <p class="names no-margin-bottom"> Pre-Claim Period </p>
+            <p class="names no-margin-bottom"> Buy Side </p>
             <p class="names no-margin-top-p"> {{ preClaimPeriod/3600 | number}}h </p>
-            <p class="names no-margin-bottom"> Claim Period </p>
+            <p class="names no-margin-bottom"> Sell Side </p>
             <p class="names no-margin-top-p"> {{ claimPeriod/86400 | number}} Days </p>
           </mat-card-content>
         </mat-card>
@@ -159,7 +158,7 @@
             <mat-menu #menu3="matMenu">
               <button mat-menu-item>
                 <mat-icon class="float-right-icon"> account_circle </mat-icon>
-                <span class="menu-items" (click)="openChangeOwnerDialog()"> Change Owner </span>
+                <span class="menu-items" (click)="openChangeOwnerSDDialog()"> Change Owner </span>
               </button>
               <!-- <button mat-menu-item>
               <mat-icon class="float-right-icon"> delete_forever </mat-icon>
@@ -169,15 +168,11 @@
           </mat-card-title>
           <mat-card-content>
             <p class="names no-margin-bottom"> Contract Address </p>
-            <p class="names no-margin-top-p"> <a href="https://rinkeby.etherscan.io/address/{{contractAddress}}"
+            <p class="names no-margin-top-p"> <a href="https://rinkeby.etherscan.io/address/{{contractAddressSD}}"
                 target="_blank"> Etherscan
               </a> </p>
             <p class="names no-margin-bottom"> Owner Address </p>
-            <p class="names no-margin-top-p"> <a href="https://rinkeby.etherscan.io/address/{{ownerAddress}}"
-                target="_blank"> Etherscan
-              </a> </p>
-            <p class="names no-margin-bottom"> Master Address </p>
-            <p class="names no-margin-top-p"> <a href="https://rinkeby.etherscan.io/address/{{masterAddress}}"
+            <p class="names no-margin-top-p"> <a href="https://rinkeby.etherscan.io/address/{{ownerAddressSD}}"
                 target="_blank"> Etherscan
               </a> </p>
           </mat-card-content>
