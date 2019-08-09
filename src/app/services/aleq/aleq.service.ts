@@ -4,10 +4,9 @@ import { DataService } from '../data/data.service';
 import { Web3Service } from '../metamask/web3.service';
 
 declare var require: any;
-const config = require('./contractMapping.json');
+const config = require('../../equity/companyInformation.json');
 const BN = require('bn.js');
 const bigInt = require('big-integer');
-
 const ALEQData = require('../../../../helpers/ALEQ.json');
 const SDData = require('../../../../helpers/ShareDispenser.json');
 
@@ -90,21 +89,7 @@ export class AleqService {
       this.dataService.MMenabledObservable.next(this.MMenabled);
     }, 1000);
   }
-  // async allowance(amount, numberOfShares, user) {
-  //   return new Promise(async (resolve, reject) => {
-  //     try {
-  //       const ALEQAbstraction = await this.web3Service.artifactsToContract(ALEQData);
-  //       const ALEQInstance = await ALEQAbstraction.at(ALEQAddress);
-  //       const numberOfSharesBN = new BN(numberOfShares);
-  //       const approveTx = await ALEQInstance.approve
-  //       .sendTransaction(SDAddress, numberOfSharesBN.toString(), { from: user, gasPrice: 20 * 10 ** 9 });
-  //       console.log(approveTx.tx);
-  //     } catch (error) {
-  //       console.log(error);
-  //       reject(error);
-  //     }
-  //   });
-  // }
+
   async minting(selectedAddress, shareholderAddress, numberOfShares, messageMinting, user) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -121,6 +106,7 @@ export class AleqService {
       }
     });
   }
+
   async unminting(selectedAddress, numberOfShares, messageUnminting, user) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -136,6 +122,7 @@ export class AleqService {
       }
     });
   }
+
   async pausing(selectedAddress, fromBlock, user) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -152,6 +139,7 @@ export class AleqService {
       }
     });
   }
+
   async unpausing(selectedAddress, fromBlock, user) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -168,6 +156,7 @@ export class AleqService {
       }
     });
   }
+
   async setTotalShares(selectedAddress, numberOfShares, user) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -183,6 +172,7 @@ export class AleqService {
       }
     });
   }
+
   async setClaimParameters(selectedAddress, collateralRate, claimPeriod, user) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -199,6 +189,7 @@ export class AleqService {
       }
     });
   }
+
   async changeOwner(selectedAddress, newOwner, user) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -213,6 +204,7 @@ export class AleqService {
       }
     });
   }
+
   async renounceOwnership(selectedAddress, user) {
     return new Promise(async (resolve, reject) => {
       try {
@@ -227,6 +219,7 @@ export class AleqService {
       }
     });
   }
+
   async changeOwnerSD(selectedAddress, newOwner, user) {
     return new Promise(async (resolve, reject) => {
       try {

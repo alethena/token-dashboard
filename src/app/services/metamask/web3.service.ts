@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
 import contract from 'truffle-contract';
 import { MatSnackBar } from '@angular/material';
-import { DataService } from '../data/data.service';
 
 declare let require: any;
+declare let window: any;
 const InfuraWebsocket = 'wss://rinkeby.infura.io/ws/v3/506b137aa0d543268e847d6affb7963c';
 const Web3 = require('web3');
-declare let window: any;
 
 @Injectable({ providedIn: 'root' })
 export class Web3Service {
@@ -35,12 +33,8 @@ export class Web3Service {
       const provider = window['ethereum'] || window.web3.currentProvider;
       this.web3 = new Web3(provider);
       Web3.providers.WebsocketProvider.prototype.sendAsync = Web3.providers.WebsocketProvider.prototype.send;
-
-      // Hack to provide backwards compatibility for Truffle, which uses web3js 0.20.x
-      // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail);
     } else {
       Web3.providers.WebsocketProvider.prototype.sendAsync = Web3.providers.WebsocketProvider.prototype.send;
-
       this.web3 = new Web3(new Web3.providers.WebsocketProvider(InfuraWebsocket));
     }
   }

@@ -1,10 +1,8 @@
-import { Component, OnInit, Inject, Injectable } from '@angular/core';
-// import { InfuraService } from '../services/infura/infura.service';
+import { Component, OnInit, Inject } from '@angular/core';
 import { AleqService } from '../services/aleq/aleq.service';
 import { DataService } from '../services/data/data.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Web3Service } from '../services/metamask/web3.service';
-// import { AccountsService } from '../services/metamask/accounts.service';
 import { MatSnackBar } from '@angular/material';
 import { debounceTime } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -12,7 +10,7 @@ import { isAddress } from 'web3-utils';
 import { EquityComponent } from '../equity/equity.component';
 
 declare var require: any;
-const config2 = require('../equity/companyInformation.json');
+const config = require('../equity/companyInformation.json');
 
 export interface DialogData {
   ownerAddressHex: any;
@@ -32,9 +30,7 @@ export class DialogChangeOwnerSDComponent implements OnInit {
   public ownerAddressSD: any;
   public orderFormGroup: FormGroup;
 
-  constructor(
-    // private infuraService: InfuraService,
-    private aleqService: AleqService,
+  constructor(private aleqService: AleqService,
     private dataService: DataService,
     private web3Service: Web3Service,
     public dialog: MatDialog,
@@ -57,8 +53,6 @@ export class DialogChangeOwnerSDComponent implements OnInit {
     }
 
     async ngOnInit() {
-      // await this.infuraService.bootstrapWeb3();
-      // await this.aleqService.bootstrapALEQ(this.data.selectedContract);
       await this.web3Service.bootstrapWeb3();
       await this.bootstrapAccounts();
       await this.dataService.SDownerAddressObservable.subscribe((newOwnerAddressSD) => {
@@ -113,32 +107,24 @@ export class SharedispenserComponent implements OnInit {
   public ownerAddressHex: any;
   public selected = '0x40A1BE7f167C7f14D7EDE17972bC7c87b91e1D91';
   public selectedTool = 'EQ';
-  public companyName = config2[this.selected].NAME;
-  public companyWebsite = config2[this.selected].WEBSITE;
-  public companyUID = config2[this.selected].UID;
-  public companyUIDLink = config2[this.selected].UIDLINK;
+  public companyName = config[this.selected].NAME;
+  public companyWebsite = config[this.selected].WEBSITE;
+  public companyUID = config[this.selected].UID;
+  public companyUIDLink = config[this.selected].UIDLINK;
 
-  constructor(// private infuraService: InfuraService,
-    // private aleqService: AleqService,
-    private dataService: DataService,
+  constructor(private dataService: DataService,
     private web3Service: Web3Service,
-    // private accountsService: AccountsService,
     public dialog: MatDialog,
-    private matSnackBar: MatSnackBar,
-    private _formBuilder: FormBuilder,
     private equityComponent: EquityComponent
     ) { }
 
     async ngOnInit() {
-    // await this.infuraService.bootstrapWeb3();
-    // await this.aleqService.bootstrapALEQ(this.selected);
-    // await this.web3Service.bootstrapWeb3();
     this.dataService.selectedContractObservable.subscribe((newSelected) => {
       this.selected = newSelected;
-      this.companyName = config2[this.selected].NAME;
-      this.companyWebsite = config2[this.selected].WEBSITE;
-      this.companyUID = config2[this.selected].UID;
-      this.companyUIDLink = config2[this.selected].UIDLINK;
+      this.companyName = config[this.selected].NAME;
+      this.companyWebsite = config[this.selected].WEBSITE;
+      this.companyUID = config[this.selected].UID;
+      this.companyUIDLink = config[this.selected].UIDLINK;
     });
     this.dataService.MMenabledObservable.subscribe((newMMenabled) => {
       this.MMenabled = newMMenabled;
@@ -162,6 +148,7 @@ export class SharedispenserComponent implements OnInit {
       this.ownerAddressSD = newOwnerAddressSD;
     });
   }
+
   public dialogCall(flag: any) {
     if (flag === 'Pausing') {
       this.equityComponent.openPausingDialog();
@@ -169,6 +156,7 @@ export class SharedispenserComponent implements OnInit {
       this.equityComponent.openUnpausingDialog();
     }
   }
+
   openChangeOwnerSDDialog() {
     if (this.web3Service.MM) {
     const dialogRef = this.dialog.open(DialogChangeOwnerSDComponent, {

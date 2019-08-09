@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { Web3Service } from './web3.service';
 import { DataService } from '../data/data.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
+
 export class AccountsService {
   public accounts: string[];
 
