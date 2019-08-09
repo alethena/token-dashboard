@@ -4,7 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule,
          MatIconModule,
          MatFormFieldModule,
-         MatSnackBarModule } from '@angular/material';
+         MatSnackBarModule,
+         MatTooltipModule } from '@angular/material';
 import { MatButtonModule } from '@angular/material/button';
 import { MatStepperModule } from '@angular/material/stepper';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -78,6 +79,7 @@ import { SelectorPanelComponent } from './selector-panel/selector-panel.componen
     MatListModule,
     MatSnackBarModule,
     MatDialogModule,
+    MatTooltipModule,
     MatInputModule,
     MatSelectModule,
     AppRoutingModule,

@@ -86,7 +86,7 @@ export class AleqService {
       const contractAddressXCHF = await this.SDInstance.XCHFContractAddress.call();
       this.dataService.XCHFcontractAddressObservable.next(contractAddressXCHF);
 
-      const availableSharesSD = await this.SDInstance.getERC20Balance.call(contractAddressSD);
+      const availableSharesSD = await this.SDInstance.getERC20Balance.call(contractAddress);
       this.dataService.SDavailableSharesObservable.next(availableSharesSD);
 
       const availableXCHFSD = await this.SDInstance.getERC20Balance.call(contractAddressXCHF);

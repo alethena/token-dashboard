@@ -1,185 +1,221 @@
 <div *ngIf="selectedTool === 'SD'">
-    <div class="row margin-row"></div>
-    <div class="row data-container">
-      <div class="col-4">
-        <mat-card class="mat-elevation-z8 data-card">
-          <mat-card-title>
-            <i class="material-icons"> looks_one </i> <span class="vertical-align">Company Information</span>
-          </mat-card-title>
-          <mat-card-content>
-            <p class="names no-margin-bottom"> Company Name </p>
-            <p class="names no-margin-top-p"> {{ companyName }} </p>
-            <p class="names no-margin-bottom"> Website </p>
-            <p class="names no-margin-top-p"> <a href="{{ companyWebsite }}" target="_blank">Link</a></p>
-            <p class="names no-margin-bottom"> UID </p>
-            <p class="names no-margin-top-p"> <a href="{{ companyUIDLink }}" target="_blank"> {{ companyUID }} </a></p>
-          </mat-card-content>
-        </mat-card>
-      </div>
-      <div class="col-4 ">
-        <mat-card class="mat-elevation-z8 data-card">
-          <mat-card-title>
-            <i class="material-icons"> looks_two </i><span class="vertical-align">Token Information</span>
-            <button *ngIf="MMenabled" mat-icon-button class="float-right" [matMenuTriggerFor]="menu4"
-              aria-label="Settings button.">
-              <i class="material-icons float-right"> settings </i>
-            </button>
-            <mat-menu #menu4="matMenu">
-              <button mat-menu-item>
-                <div *ngIf="pauseStatus; then thenBlock4 else elseBlock4"></div>
-                <ng-template #thenBlock4>
-                  <mat-icon class="float-right-icon"> play_circle_outline </mat-icon>
-                  <span class="menu-items" (click)="dialogCall('Unpausing')"> Unpausing Contract </span>
-                </ng-template>
-                <ng-template #elseBlock4>
-                  <mat-icon class="float-right-icon"> pause_circle_outline </mat-icon>
-                  <span class="menu-items" (click)="dialogCall('Pausing')"> Pausing Contract </span>
-                </ng-template>
-              </button>
-            </mat-menu>
-          </mat-card-title>
-          <mat-card-content>
-            <p class="names no-margin-bottom"> Name </p>
-            <p class="names no-margin-top-p"> {{ nameStatus }} </p>
-            <p class="names no-margin-bottom"> Symbol </p>
-            <p class="names no-margin-top-p"> {{ symbolStatus }}</p>
-            <div *ngIf="pauseStatus; then thenBlock else elseBlock"></div>
-            <ng-template #thenBlock>
-              <p class="names no-margin-bottom"> Contract Status </p>
-              <p class="names no-margin-top-p"> Paused </p>
-            </ng-template>
-            <ng-template #elseBlock>
-              <p class="names no-margin-bottom"> Contract Status </p>
-              <p class="names no-margin-top-p"> Live </p>
-            </ng-template>
-          </mat-card-content>
-        </mat-card>
-      </div>
-      <div class="col-4">
-        <mat-card class="mat-elevation-z8 data-card">
-          <mat-card-title>
-            <i class="material-icons"> looks_3 </i><span class="vertical-align">Overview Supply</span>
-            <button *ngIf="MMenabled" mat-icon-button class="float-right" [matMenuTriggerFor]="menu5"
-              aria-label="Settings button.">
-              <i class="material-icons float-right"> settings </i>
-            </button>
-            <mat-menu #menu5="matMenu">
-              <button mat-menu-item>
-                <mat-icon class="float-right-icon"> library_books </mat-icon>
-                <span class="menu-items" (click)="openTotalSharesDialog()"> Set Total Shares </span>
-              </button>
-              <button mat-menu-item>
-                <mat-icon class="float-right-icon"> add </mat-icon>
-                <span class="menu-items" (click)="openMintDialog()"> Mint New Tokens </span>
-              </button>
-              <button mat-menu-item>
-                <mat-icon class="float-right-icon"> clear </mat-icon>
-                <span class="menu-items" (click)="openUnmintDialog()"> Unmint Tokens </span>
-              </button>
-            </mat-menu>
-          </mat-card-title>
-          <mat-card-content>
-            <p class="names no-margin-bottom"> Available Shares </p>
-            <p class="names no-margin-top-p"> {{ availableSharesSD }} </p>
-            <p class="names no-margin-bottom"> Available XCHF </p>
-            <p class="names no-margin-top-p"> {{ availableXCHFSD }} </p>
-            <p class="names no-margin-bottom"> Minimum Trade Volume </p>
-            <p class="names no-margin-top-p"> {{ minVolumeSD }} </p>
-          </mat-card-content>
-        </mat-card>
-      </div>
+  <div class="row margin-row"></div>
+  <div class="row data-container">
+    <div class="col-4">
+      <mat-card class="mat-elevation-z8 data-card">
+        <mat-card-title>
+          <i class="material-icons"> looks_one </i> <span class="vertical-align">Company Information</span>
+        </mat-card-title>
+        <mat-card-content>
+          <p class="names no-margin-bottom"> Company Name </p>
+          <p class="names no-margin-top-p"> {{ companyName }} </p>
+          <p class="names no-margin-bottom"> Website </p>
+          <p class="names no-margin-top-p"> <a href="{{ companyWebsite }}" target="_blank">Link</a></p>
+          <p class="names no-margin-bottom"> UID </p>
+          <p class="names no-margin-top-p"> <a href="{{ companyUIDLink }}" target="_blank"> {{ companyUID }} </a></p>
+        </mat-card-content>
+      </mat-card>
     </div>
-  
-  
-    <!-- SECOND ROW -->
-  
-    <div class="row data-container">
-      <div class="col-4">
-        <mat-card class="mat-elevation-z8 data-card">
-          <mat-card-title>
-            <i class="material-icons"> looks_4 </i><span class="vertical-align">Price Information</span>
-            <button *ngIf="MMenabled" mat-icon-button class="float-right" [matMenuTriggerFor]="menu1"
-              aria-label="Settings button.">
-              <i class="material-icons float-right"> settings </i>
+    <div class="col-4 ">
+      <mat-card class="mat-elevation-z8 data-card">
+        <mat-card-title>
+          <i class="material-icons"> looks_two </i><span class="vertical-align">Token Information</span>
+          <button *ngIf="MMenabled" mat-icon-button class="float-right" [matMenuTriggerFor]="menu4"
+            aria-label="Settings button.">
+            <i class="material-icons float-right"> settings </i>
+          </button>
+          <mat-menu #menu4="matMenu">
+            <button mat-menu-item>
+              <div *ngIf="pauseStatus; then thenBlock4 else elseBlock4"></div>
+              <ng-template #thenBlock4>
+                <mat-icon class="float-right-icon"> play_circle_outline </mat-icon>
+                <span class="menu-items" (click)="dialogCall('Unpausing')"> Unpausing Contract </span>
+              </ng-template>
+              <ng-template #elseBlock4>
+                <mat-icon class="float-right-icon"> pause_circle_outline </mat-icon>
+                <span class="menu-items" (click)="dialogCall('Pausing')"> Pausing Contract </span>
+              </ng-template>
             </button>
-            <mat-menu #menu1="matMenu">
-              <button mat-menu-item>
-                <mat-icon class="float-right-icon"> update </mat-icon>
-                <span class="menu-items"> <a href="{{ ensUrl }}" target="_blank"> Update
-                    ENS </a> </span>
-              </button>
-            </mat-menu>
-          </mat-card-title>
-          <mat-card-content>
-              <p class="names no-margin-bottom"> Minimum Price </p>
-              <p class="names no-margin-top-p"> {{ minPriceSD / 1000000000000000000 | number:'.2' }} CHF</p>
-              <p class="names no-margin-bottom"> Maximum Price </p>
-              <p class="names no-margin-top-p"> {{ maxPriceSD / 1000000000000000000 | number:'.2' }} CHF</p>
-              <p class="names no-margin-bottom"> Linear Price Slope </p>
-              <p class="names no-margin-top-p"> {{ slopeSD | number }} </p>
-          </mat-card-content>
-        </mat-card>
-      </div>
-      <div class="col-4">
-        <mat-card class="mat-elevation-z8 data-card">
-          <mat-card-title>
-            <i class="material-icons"> looks_5 </i> <span class="vertical-align">Dispenser Details</span>
-            <button *ngIf="MMenabled" mat-icon-button class="float-right" [matMenuTriggerFor]="menu2"
-              aria-label="Settings button.">
-              <i class="material-icons float-right"> settings </i>
+          </mat-menu>
+        </mat-card-title>
+        <mat-card-content>
+          <p class="names no-margin-bottom"> Name </p>
+          <p class="names no-margin-top-p"> {{ nameStatus }} </p>
+          <p class="names no-margin-bottom"> Symbol </p>
+          <p class="names no-margin-top-p"> {{ symbolStatus }}</p>
+          <div *ngIf="pauseStatus; then thenBlock else elseBlock"></div>
+          <ng-template #thenBlock>
+            <p class="names no-margin-bottom"> Contract Status </p>
+            <p class="names no-margin-top-p"> Paused </p>
+          </ng-template>
+          <ng-template #elseBlock>
+            <p class="names no-margin-bottom"> Contract Status </p>
+            <p class="names no-margin-top-p"> Live </p>
+          </ng-template>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-4">
+      <mat-card class="mat-elevation-z8 data-card">
+        <mat-card-title>
+          <i class="material-icons"> looks_3 </i><span class="vertical-align">Overview Supply</span>
+          <button *ngIf="MMenabled" mat-icon-button class="float-right" [matMenuTriggerFor]="menu5"
+            aria-label="Settings button.">
+            <i class="material-icons float-right"> settings </i>
+          </button>
+          <mat-menu #menu5="matMenu">
+            <button mat-menu-item>
+              <mat-icon class="float-right-icon"> library_books </mat-icon>
+              <span class="menu-items" (click)="openTotalSharesDialog()"> Set Total Shares </span>
             </button>
-            <mat-menu #menu2="matMenu">
-              <button mat-menu-item (click)="openCollateralRateDialog()">
-                <mat-icon class="float-right-icon"> attach_money </mat-icon>
-                <span class="menu-items"> Update Collateral Rate </span>
-              </button>
-              <button mat-menu-item (click)="openClaimPeriodDialog()">
-                <mat-icon class="float-right-icon"> access_time </mat-icon>
-                <span class="menu-items"> Update Claim Period </span>
-              </button>
-            </mat-menu>
-          </mat-card-title>
-          <mat-card-content>
-            <p class="names no-margin-bottom"> Buy Side </p>
-            <p class="names no-margin-top-p"> {{ preClaimPeriod/3600 | number}}h </p>
-            <p class="names no-margin-bottom"> Sell Side </p>
-            <p class="names no-margin-top-p"> {{ claimPeriod/86400 | number}} Days </p>
-            <p class="names no-margin-bottom"> Minimum Trade Volume </p>
-            <p class="names no-margin-top-p"> {{ collateralRate/1000000000000000000 | number:'.2' }} Ether </p>
-          </mat-card-content>
-        </mat-card>
-      </div>
-      <div class="col-4">
-        <mat-card class="mat-elevation-z8 data-card">
-          <mat-card-title>
-            <i class="material-icons"> looks_6 </i> <span class="vertical-align">Contract Details</span>
-            <button *ngIf="MMenabled" mat-icon-button class="float-right" [matMenuTriggerFor]="menu3"
-              aria-label="Settings button.">
-              <i class="material-icons float-right"> settings </i>
+            <button mat-menu-item>
+              <mat-icon class="float-right-icon"> add </mat-icon>
+              <span class="menu-items" (click)="openMintDialog()"> Mint New Tokens </span>
             </button>
-            <mat-menu #menu3="matMenu">
-              <button mat-menu-item>
-                <mat-icon class="float-right-icon"> account_circle </mat-icon>
-                <span class="menu-items" (click)="openChangeOwnerSDDialog()"> Change Owner </span>
-              </button>
-              <!-- <button mat-menu-item>
-              <mat-icon class="float-right-icon"> delete_forever </mat-icon>
-              <span class="menu-items" (click)="openRenounceOwnershipDialog()"> Renounce Ownership </span>
-            </button> -->
-            </mat-menu>
-          </mat-card-title>
-          <mat-card-content>
-            <p class="names no-margin-bottom"> Contract Address </p>
-            <p class="names no-margin-top-p"> <a href="https://rinkeby.etherscan.io/address/{{contractAddressSD}}"
-                target="_blank"> Etherscan
-              </a> </p>
-            <p class="names no-margin-bottom"> Owner Address </p>
-            <p class="names no-margin-top-p"> <a href="https://rinkeby.etherscan.io/address/{{ownerAddressSD}}"
-                target="_blank"> Etherscan
-              </a> </p>
-          </mat-card-content>
-        </mat-card>
-      </div>
+            <button mat-menu-item>
+              <mat-icon class="float-right-icon"> clear </mat-icon>
+              <span class="menu-items" (click)="openUnmintDialog()"> Unmint Tokens </span>
+            </button>
+          </mat-menu>
+        </mat-card-title>
+        <mat-card-content>
+          <p class="names no-margin-bottom"> Available Shares </p>
+          <p class="names no-margin-top-p"> {{ availableSharesSD | number }} </p>
+          <p class="names no-margin-bottom"> Available XCHF </p>
+          <p class="names no-margin-top-p"> {{ availableXCHFSD / 1000000000000000000 | number:'.2' }} </p>
+          <p class="names no-margin-bottom"> Minimum Trade Volume </p>
+          <p class="names no-margin-top-p"> {{ minVolumeSD | number }} </p>
+        </mat-card-content>
+      </mat-card>
     </div>
   </div>
-  
+
+
+  <!-- SECOND ROW -->
+
+  <div class="row data-container">
+    <div class="col-4">
+      <mat-card class="mat-elevation-z8 data-card">
+        <mat-card-title>
+          <i class="material-icons"> looks_4 </i><span class="vertical-align">Price Information</span>
+          <button *ngIf="MMenabled" mat-icon-button class="float-right" [matMenuTriggerFor]="menu1"
+            aria-label="Settings button.">
+            <i class="material-icons float-right"> settings </i>
+          </button>
+          <mat-menu #menu1="matMenu">
+            <button mat-menu-item>
+              <mat-icon class="float-right-icon"> update </mat-icon>
+              <span class="menu-items"> <a href="{{ ensUrl }}" target="_blank"> Update
+                  ENS </a> </span>
+            </button>
+          </mat-menu>
+        </mat-card-title>
+        <mat-card-content>
+          <p class="names no-margin-bottom"> Minimum Price </p>
+          <p class="names no-margin-top-p"> {{ minPriceSD / 1000000000000000000 | number:'.2' }} CHF</p>
+          <p class="names no-margin-bottom"> Maximum Price </p>
+          <p class="names no-margin-top-p"> {{ maxPriceSD / 1000000000000000000 | number:'.2' }} CHF</p>
+          <p class="names no-margin-bottom"> Linear Price Slope </p>
+          <p class="names no-margin-top-p"> {{ slopeSD | number:'.4' }} </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-4">
+      <mat-card class="mat-elevation-z8 data-card">
+        <mat-card-title>
+          <i class="material-icons"> looks_5 </i> <span class="vertical-align">Dispenser Details</span>
+          <button *ngIf="MMenabled" mat-icon-button class="float-right" [matMenuTriggerFor]="menu2"
+            aria-label="Settings button.">
+            <i class="material-icons float-right"> settings </i>
+          </button>
+          <mat-menu #menu2="matMenu">
+            <button mat-menu-item (click)="openCollateralRateDialog()">
+              <mat-icon class="float-right-icon"> attach_money </mat-icon>
+              <span class="menu-items"> Update Collateral Rate </span>
+            </button>
+            <button mat-menu-item (click)="openClaimPeriodDialog()">
+              <mat-icon class="float-right-icon"> access_time </mat-icon>
+              <span class="menu-items"> Update Claim Period </span>
+            </button>
+          </mat-menu>
+        </mat-card-title>
+        <mat-card-content>
+          <div *ngIf="sellSideStatusSD; then then1 else else1"></div>
+          <ng-template #then1>
+            <p class="names no-margin-bottom"> Sell Side Status &nbsp;
+              <mat-icon class="icon-tooltip-2" matTooltip="Enables the investors to buy shares from the company.">
+                help_outline
+              </mat-icon>
+            </p>
+            <p class="names no-margin-top-p"> Live </p>
+          </ng-template>
+          <ng-template #else1>
+            <p class="names no-margin-bottom"> Sell Side Status &nbsp;
+              <mat-icon class="icon-tooltip-2" matTooltip="Enables the investors to buy shares from the company.">
+                help_outline
+              </mat-icon>
+            </p>
+            <p class="names no-margin-top-p"> Disabled </p>
+          </ng-template>
+          <div *ngIf="buySideStatusSD; then then2 else else2"></div>
+          <ng-template #then2>
+            <p class="names no-margin-bottom"> Buy Side Status &nbsp;
+              <mat-icon class="icon-tooltip-1" matTooltip="Enables the investors to sell their shares to the company.">
+                help_outline
+              </mat-icon>
+            </p>
+            <p class="names no-margin-top-p"> Live </p>
+          </ng-template>
+          <ng-template #else2>
+            <p class="names no-margin-bottom"> Buy Side Status &nbsp;
+              <mat-icon class="icon-tooltip-1" matTooltip="Enables the investors to sell their shares to the company.">
+                help_outline
+              </mat-icon>
+            </p>
+            <p class="names no-margin-top-p"> Disabled </p>
+          </ng-template>
+          <div *ngIf="pauseStatusSD; then then3 else else3"></div>
+          <ng-template #then3>
+            <p class="names no-margin-bottom"> Contract Status </p>
+            <p class="names no-margin-top-p"> Paused </p>
+          </ng-template>
+          <ng-template #else3>
+            <p class="names no-margin-bottom"> Contract Status </p>
+            <p class="names no-margin-top-p"> Live </p>
+          </ng-template>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="col-4">
+      <mat-card class="mat-elevation-z8 data-card">
+        <mat-card-title>
+          <i class="material-icons"> looks_6 </i> <span class="vertical-align">Contract Details</span>
+          <button *ngIf="MMenabled" mat-icon-button class="float-right" [matMenuTriggerFor]="menu3"
+            aria-label="Settings button.">
+            <i class="material-icons float-right"> settings </i>
+          </button>
+          <mat-menu #menu3="matMenu">
+            <button mat-menu-item>
+              <mat-icon class="float-right-icon"> account_circle </mat-icon>
+              <span class="menu-items" (click)="openChangeOwnerSDDialog()"> Change Owner </span>
+            </button>
+          </mat-menu>
+        </mat-card-title>
+        <mat-card-content>
+          <p class="names no-margin-bottom"> Contract Address </p>
+          <p class="names no-margin-top-p"> <a href="https://rinkeby.etherscan.io/address/{{contractAddressSD}}"
+              target="_blank"> Etherscan
+            </a> </p>
+          <p class="names no-margin-bottom"> Owner Address </p>
+          <p class="names no-margin-top-p"> <a href="https://rinkeby.etherscan.io/address/{{ownerAddressSD}}"
+              target="_blank"> Etherscan
+            </a> </p>
+          <p class="names no-margin-bottom"> Contract Address XCHF </p>
+          <p class="names no-margin-top-p"> <a href="https://rinkeby.etherscan.io/address/{{XCHFAddressSD}}"
+              target="_blank"> Etherscan
+            </a> </p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

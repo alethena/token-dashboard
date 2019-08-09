@@ -104,6 +104,7 @@ export class SharedispenserComponent implements OnInit {
   public contractAddressSD = 'Loading';
   public ownerAddressSD = 'Loading';
   public XCHFAddressSD = 'Loading';
+  public numberOfSharesSet: number;
   public availableSharesSD: number;
   public availableXCHFSD: number;
   public minPriceSD: number;
@@ -173,7 +174,9 @@ export class SharedispenserComponent implements OnInit {
       this.maxPriceSD = parseFloat(newMaxPrice);
     });
     this.dataService.SDslopeObservable.subscribe((newSlope) => {
-      this.slopeSD = parseFloat(newSlope);
+      this.numberOfSharesSet = parseFloat(newSlope);
+      this.slopeSD = (((this.maxPriceSD / 1000000000000000000) - (this.minPriceSD / 1000000000000000000))
+      / (2 * (this.numberOfSharesSet - 1) ));
     });
     this.dataService.SDminVolumeObservable.subscribe((newMinVolume) => {
       this.minVolumeSD = parseFloat(newMinVolume);
