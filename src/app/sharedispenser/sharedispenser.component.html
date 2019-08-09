@@ -80,9 +80,11 @@
           </mat-card-title>
           <mat-card-content>
             <p class="names no-margin-bottom"> Available Shares </p>
-            <p class="names no-margin-top-p"> {{ totalSharesStatus | number}} </p>
+            <p class="names no-margin-top-p"> {{ availableSharesSD }} </p>
             <p class="names no-margin-bottom"> Available XCHF </p>
-            <p class="names no-margin-top-p"> {{ totalSupplyStatus | number }} </p>
+            <p class="names no-margin-top-p"> {{ availableXCHFSD }} </p>
+            <p class="names no-margin-bottom"> Minimum Trade Volume </p>
+            <p class="names no-margin-top-p"> {{ minVolumeSD }} </p>
           </mat-card-content>
         </mat-card>
       </div>
@@ -110,11 +112,11 @@
           </mat-card-title>
           <mat-card-content>
               <p class="names no-margin-bottom"> Minimum Price </p>
-              <p class="names no-margin-top-p"> {{ totalSharesStatus | number}} </p>
+              <p class="names no-margin-top-p"> {{ minPriceSD / 1000000000000000000 | number:'.2' }} CHF</p>
               <p class="names no-margin-bottom"> Maximum Price </p>
-              <p class="names no-margin-top-p"> {{ totalSupplyStatus | number }} </p>
+              <p class="names no-margin-top-p"> {{ maxPriceSD / 1000000000000000000 | number:'.2' }} CHF</p>
               <p class="names no-margin-bottom"> Linear Price Slope </p>
-              <p class="names no-margin-top-p"> {{ totalSupplyStatus | number }} </p>
+              <p class="names no-margin-top-p"> {{ slopeSD | number }} </p>
           </mat-card-content>
         </mat-card>
       </div>
@@ -138,12 +140,12 @@
             </mat-menu>
           </mat-card-title>
           <mat-card-content>
-            <p class="names no-margin-bottom"> Minimum Trade Volume </p>
-            <p class="names no-margin-top-p"> {{ collateralRate/1000000000000000000 | number:'.2' }} Ether </p>
             <p class="names no-margin-bottom"> Buy Side </p>
             <p class="names no-margin-top-p"> {{ preClaimPeriod/3600 | number}}h </p>
             <p class="names no-margin-bottom"> Sell Side </p>
             <p class="names no-margin-top-p"> {{ claimPeriod/86400 | number}} Days </p>
+            <p class="names no-margin-bottom"> Minimum Trade Volume </p>
+            <p class="names no-margin-top-p"> {{ collateralRate/1000000000000000000 | number:'.2' }} Ether </p>
           </mat-card-content>
         </mat-card>
       </div>

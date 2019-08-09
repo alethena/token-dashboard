@@ -103,6 +103,16 @@ export class SharedispenserComponent implements OnInit {
   public symbolStatus = 'Loading';
   public contractAddressSD = 'Loading';
   public ownerAddressSD = 'Loading';
+  public XCHFAddressSD = 'Loading';
+  public availableSharesSD: number;
+  public availableXCHFSD: number;
+  public minPriceSD: number;
+  public maxPriceSD: number;
+  public slopeSD: number;
+  public minVolumeSD: number;
+  public buySideStatusSD = false;
+  public sellSideStatusSD = false;
+  public pauseStatusSD = false;
   public MMenabled = false;
   public ownerAddressHex: any;
   public selected = '0x40A1BE7f167C7f14D7EDE17972bC7c87b91e1D91';
@@ -146,6 +156,36 @@ export class SharedispenserComponent implements OnInit {
     });
     this.dataService.SDownerAddressObservable.subscribe((newOwnerAddressSD) => {
       this.ownerAddressSD = newOwnerAddressSD;
+    });
+    this.dataService.XCHFcontractAddressObservable.subscribe((newXCHFAddressSD) => {
+      this.XCHFAddressSD = newXCHFAddressSD;
+    });
+    this.dataService.SDavailableSharesObservable.subscribe((newAvailableShare) => {
+      this.availableSharesSD = parseFloat(newAvailableShare);
+    });
+    this.dataService.SDavailableXCHFObservable.subscribe((newAvailableXCHF) => {
+      this.availableXCHFSD = parseFloat(newAvailableXCHF);
+    });
+    this.dataService.SDminPriceObservable.subscribe((newMinPrice) => {
+      this.minPriceSD = parseFloat(newMinPrice);
+    });
+    this.dataService.SDmaxPriceObservable.subscribe((newMaxPrice) => {
+      this.maxPriceSD = parseFloat(newMaxPrice);
+    });
+    this.dataService.SDslopeObservable.subscribe((newSlope) => {
+      this.slopeSD = parseFloat(newSlope);
+    });
+    this.dataService.SDminVolumeObservable.subscribe((newMinVolume) => {
+      this.minVolumeSD = parseFloat(newMinVolume);
+    });
+    this.dataService.SDbuySideStatusObservable.subscribe((newBuySideStatus) => {
+      this.buySideStatusSD = newBuySideStatus;
+    });
+    this.dataService.SDsellSideStatusObservable.subscribe((newSellSideStatus) => {
+      this.sellSideStatusSD = newSellSideStatus;
+    });
+    this.dataService.SDpauseStatusObservable.subscribe((newPauseStatusSD) => {
+      this.pauseStatusSD = newPauseStatusSD;
     });
   }
 

@@ -3,7 +3,6 @@ import { Web3Service } from '../services/metamask/web3.service';
 import { AleqService } from '../services/aleq/aleq.service';
 import { DataService } from '../services/data/data.service';
 import { InfuraService } from '../services/infura/infura.service';
-// import { Router } from '@angular/router';
 
 export interface Contract {
   value: string;
@@ -41,7 +40,6 @@ export class SelectorPanelComponent implements OnInit {
    private web3Service: Web3Service,
    private aleqService: AleqService,
    private dataService: DataService,
-   // private router: Router
    ) { }
 
  async ngOnInit() {
@@ -61,14 +59,6 @@ export class SelectorPanelComponent implements OnInit {
    }
  }
  public navigateTo(event: any) {
-  // if (event.source.controlType === 'mat-select' && event.value === 'EQ') {
-  //   this.router.navigate(['/', 'equity']);
-  //   this.dataService.selectedToolObservable.next(event.value);
-  // } else if (event.source.controlType === 'mat-select' && event.value === 'SD') {
-  //   this.router.navigate(['/', 'sharedispenser']);
-  // } else if (event.source.controlType === 'mat-select' && event.value === 'CL') {
-  //   this.router.navigate(['/', 'claim']);
-  // }
   if (event.source.controlType === 'mat-select') {
     this.dataService.selectedToolObservable.next(event.value);
   }

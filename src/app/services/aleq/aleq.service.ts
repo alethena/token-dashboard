@@ -83,6 +83,36 @@ export class AleqService {
       const ownerAddressSD = await this.SDInstance.owner.call();
       this.dataService.SDownerAddressObservable.next(ownerAddressSD);
 
+      const contractAddressXCHF = await this.SDInstance.XCHFContractAddress.call();
+      this.dataService.XCHFcontractAddressObservable.next(contractAddressXCHF);
+
+      const availableSharesSD = await this.SDInstance.getERC20Balance.call(contractAddressSD);
+      this.dataService.SDavailableSharesObservable.next(availableSharesSD);
+
+      const availableXCHFSD = await this.SDInstance.getERC20Balance.call(contractAddressXCHF);
+      this.dataService.SDavailableXCHFObservable.next(availableXCHFSD);
+
+      const minimumPrice = await this.SDInstance.minPriceInXCHF.call();
+      this.dataService.SDminPriceObservable.next(minimumPrice);
+
+      const maximumPrice = await this.SDInstance.maxPriceInXCHF.call();
+      this.dataService.SDmaxPriceObservable.next(maximumPrice);
+
+      const minimumVolume = await this.SDInstance.minVolume.call();
+      this.dataService.SDminVolumeObservable.next(minimumVolume);
+
+      const slope = await this.SDInstance.initialNumberOfShares.call();
+      this.dataService.SDslopeObservable.next(slope);
+
+      const pauseStatusSD = await this.SDInstance.paused.call();
+      this.dataService.SDpauseStatusObservable.next(pauseStatusSD);
+
+      const buyStatusSD = await this.SDInstance.buyEnabled.call();
+      this.dataService.SDbuySideStatusObservable.next(buyStatusSD);
+
+      const sellStatusSD = await this.SDInstance.sellEnabled.call();
+      this.dataService.SDsellSideStatusObservable.next(sellStatusSD);
+
       if (this.web3Service.MM) {
         this.MMenabled = true;
       }

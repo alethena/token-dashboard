@@ -7,7 +7,8 @@
       "ENS": "N/A",
       "ENSLINK": "https://manager.ens.domains/", 
       "URL": "https://manager.ens.domains/",
-      "SD": "0x79f2115C691582282b7947fcD458287b64fe2e37"
+      "SD": "0x79f2115C691582282b7947fcD458287b64fe2e37",
+      "XCHF": "0x84286f1e0aaa59787131da691b5d5cfc2aff289a"
     },
     "0x204B0020923C906D8BF2e1FB2fd8C43e612A68f4": {
       "NAME": "ServiceHunter AG",
@@ -17,7 +18,8 @@
       "ENS": "N/A",
       "ENSLINK": "https://manager.ens.domains/", 
       "URL": "https://manager.ens.domains/",
-      "SD": "0x874f721dD3224491fe936B2a3779148Dcd95774E"
+      "SD": "0x874f721dD3224491fe936B2a3779148Dcd95774E",
+      "XCHF": "0x84286f1e0aaa59787131da691b5d5cfc2aff289a"
     },
     "0x18A4251cD23A4e235987a11d2d36C0138E95fA7c": {
       "NAME": "Equility AG",
@@ -27,6 +29,7 @@
       "ENS": "alethena.eth",
       "ENSLINK": "https://etherscan.io/address/alethena.eth",
       "URL": "https://manager.ens.domains/name/alethena.eth",
-      "SD": "0xD091951A17030Aee1C0ab1319D6876048253bdc3"
+      "SD": "0xD091951A17030Aee1C0ab1319D6876048253bdc3",
+      "XCHF": "0x84286f1e0aaa59787131da691b5d5cfc2aff289a"
     }
   }
