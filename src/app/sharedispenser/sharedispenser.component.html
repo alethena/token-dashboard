@@ -115,7 +115,11 @@
           <p class="names no-margin-top-p"> {{ minPriceSD / 1000000000000000000 | number:'.2' }} CHF</p>
           <p class="names no-margin-bottom"> Maximum Price </p>
           <p class="names no-margin-top-p"> {{ maxPriceSD / 1000000000000000000 | number:'.2' }} CHF</p>
-          <p class="names no-margin-bottom"> Linear Price Slope </p>
+          <p class="names no-margin-bottom"> Linear Price Slope &nbsp; <mat-icon class="icon-tooltip-3"
+              matTooltip="The linear price slope hinges on the initial available supply of shares, set as parameter value in the smart contract.">
+              help_outline
+            </mat-icon>
+          </p>
           <p class="names no-margin-top-p"> {{ slopeSD | number:'.4' }} </p>
         </mat-card-content>
       </mat-card>
