@@ -20,11 +20,11 @@
       <mat-card class="mat-elevation-z8 data-card">
         <mat-card-title>
           <i class="material-icons"> looks_two </i><span class="vertical-align">Token Information</span>
-          <button *ngIf="MMenabled" mat-icon-button class="float-right" [matMenuTriggerFor]="menu4"
+          <button *ngIf="MMenabled" mat-icon-button class="float-right" [matMenuTriggerFor]="menu2"
             aria-label="Settings button.">
             <i class="material-icons float-right"> settings </i>
           </button>
-          <mat-menu #menu4="matMenu">
+          <mat-menu #menu2="matMenu">
             <button mat-menu-item>
               <div *ngIf="pauseStatus; then thenBlock4 else elseBlock4"></div>
               <ng-template #thenBlock4>
