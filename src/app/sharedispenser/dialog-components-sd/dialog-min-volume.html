@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Change Minimum Trading Volume</h1>
+<div mat-dialog-content [formGroup]="orderFormGroup">
+  <p class="no-top-margin">You are about to change the minimum trading volume in the share dispenser contract!</p>
+  <mat-form-field>
+    <input matInput type="number" placeholder="# of shares/trade" [(ngModel)]="data.newVolume"
+    formControlName="numberOfShares">
+  </mat-form-field>
+  <p class="caveat"><em>Enter here the new MINIMUM number of shares per trade. Must be above 0!</em></p>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="setMinTradingVolumeCall()" cdkFocusInitial>UPDATE</button>
+    <button mat-button (click)="noClick()">CLOSE</button>
+</div>

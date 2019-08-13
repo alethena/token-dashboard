@@ -308,6 +308,21 @@ export class AleqService {
     });
   }
 
+  async changeTradeVolume(selectedAddress, newVolume, user) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const SDAbstraction = await this.web3Service.artifactsToContract(SDData);
+        const SDInstance = await SDAbstraction.at(config[selectedAddress].SD);
+        const changeOwnerTx = await SDInstance.setMinVolume
+        .sendTransaction(newVolume, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+        // console.log(changeOwnerTx.tx);
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  }
+
   async changeOwnerSD(selectedAddress, newOwner, user) {
     return new Promise(async (resolve, reject) => {
       try {

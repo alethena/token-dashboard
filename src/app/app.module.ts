@@ -39,7 +39,8 @@ import { SharedispenserComponent,
          DialogFeedSharesComponent,
          DialogFeedXCHFComponent,
          DialogRetrieveSharesComponent,
-         DialogRetrieveXCHFComponent
+         DialogRetrieveXCHFComponent,
+         DialogSetVolumeComponent
         } from './sharedispenser/sharedispenser.component';
 import { ClaimtoolComponent } from './claimtool/claimtool.component';
 import { SelectorPanelComponent } from './selector-panel/selector-panel.component';
@@ -65,6 +66,7 @@ import { SelectorPanelComponent } from './selector-panel/selector-panel.componen
     DialogRetrieveSharesComponent,
     DialogRetrieveXCHFComponent,
     DialogChangeOwnerSDComponent,
+    DialogSetVolumeComponent,
     ClaimtoolComponent,
     SelectorPanelComponent,
   ],
@@ -106,6 +108,7 @@ import { SelectorPanelComponent } from './selector-panel/selector-panel.componen
     DialogFeedXCHFComponent,
     DialogRetrieveSharesComponent,
     DialogRetrieveXCHFComponent,
+    DialogSetVolumeComponent,
     DialogChangeOwnerSDComponent,
   ],
   providers: [],
