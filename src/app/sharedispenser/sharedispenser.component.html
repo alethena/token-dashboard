@@ -136,18 +136,43 @@
       <mat-card class="mat-elevation-z8 data-card">
         <mat-card-title>
           <i class="material-icons"> looks_5 </i> <span class="vertical-align">Dispenser Details</span>
-          <button *ngIf="MMenabled" mat-icon-button class="float-right" [matMenuTriggerFor]="menu2"
+          <button *ngIf="MMenabled" mat-icon-button class="float-right" [matMenuTriggerFor]="menu4"
             aria-label="Settings button.">
             <i class="material-icons float-right"> settings </i>
           </button>
-          <mat-menu #menu2="matMenu">
-            <button mat-menu-item (click)="openCollateralRateDialog()">
-              <mat-icon class="float-right-icon"> attach_money </mat-icon>
-              <span class="menu-items"> Update Collateral Rate </span>
+          <mat-menu #menu4="matMenu">
+            <button mat-menu-item>
+              <div *ngIf="sellSideStatusSD; then then4 else else4"></div>
+              <ng-template #then4>
+                <mat-icon class="float-right-icon"> pause </mat-icon>
+                <span class="menu-items" (click)="openUpdateStatusDialog('sell', true)"> Disable Sell Side </span>
+              </ng-template>
+              <ng-template #else4>
+                <mat-icon class="float-right-icon"> play_arrow </mat-icon>
+                <span class="menu-items" (click)="openUpdateStatusDialog('sell', false)"> Enable Sell Side </span>
+              </ng-template>
             </button>
-            <button mat-menu-item (click)="openClaimPeriodDialog()">
-              <mat-icon class="float-right-icon"> access_time </mat-icon>
-              <span class="menu-items"> Update Claim Period </span>
+            <button mat-menu-item>
+              <div *ngIf="buySideStatusSD; then then5 else else5"></div>
+              <ng-template #then5>
+                <mat-icon class="float-right-icon"> pause_circle_filled </mat-icon>
+                <span class="menu-items" (click)="openUpdateStatusDialog('buy', true)"> Disable Buy Side </span>
+              </ng-template>
+              <ng-template #else5>
+                <mat-icon class="float-right-icon"> play_circle_filled </mat-icon>
+                <span class="menu-items" (click)="openUpdateStatusDialog('buy', false)"> Enable Buy Side </span>
+              </ng-template>
+            </button>
+            <button mat-menu-item>
+              <div *ngIf="pauseStatusSD; then then6 else else6"></div>
+              <ng-template #then6>
+                <mat-icon class="float-right-icon"> play_circle_outline </mat-icon>
+                <span class="menu-items" (click)="openPausingDialog(false)"> Unpausing Contract </span>
+              </ng-template>
+              <ng-template #else6>
+                <mat-icon class="float-right-icon"> pause_circle_outline </mat-icon>
+                <span class="menu-items" (click)="openPausingDialog(true)"> Pausing Contract </span>
+              </ng-template>
             </button>
           </mat-menu>
         </mat-card-title>

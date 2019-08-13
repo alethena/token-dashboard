@@ -7,7 +7,6 @@ import { MatSnackBar } from '@angular/material';
 import { debounceTime } from 'rxjs/operators';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { isAddress } from 'web3-utils';
-
 import { EquityComponent } from '../equity/equity.component';
 
 declare var require: any;
@@ -22,6 +21,360 @@ export interface DialogData {
   retrieveXCHF: number;
   retrieveShares: number;
   newVolume: number;
+}
+
+@Component({
+  selector: 'app-dialog-pausing',
+  templateUrl: './dialog-components-sd/dialog-pausing.html',
+  styleUrls: ['./dialog-components-sd/dialog-pausing.scss'],
+})
+
+export class DialogPausingSDComponent implements OnInit {
+  public web3: any;
+  public txID: any;
+  public selectedAccount: string;
+  public ownerAddress: any;
+
+  constructor(private aleqService: AleqService,
+    private dataService: DataService,
+    private web3Service: Web3Service,
+    public dialog: MatDialog,
+    private matSnackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<DialogPausingSDComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+    async ngOnInit() {
+      await this.web3Service.bootstrapWeb3();
+      await this.bootstrapAccounts();
+      await this.dataService.SDownerAddressObservable.subscribe((newOwnerAddress) => {
+        this.ownerAddress = newOwnerAddress;
+      });
+    }
+
+    async pausingCall() {
+      this.dialogRef.close();
+      const network = await this.web3Service.web3.eth.net.getId();
+      const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
+      if (network === 4 && ownerFlag === true) {
+      this.txID = await this.aleqService.pause(this.data.selectedContract, true, this.selectedAccount[0]);
+      } else if (network !== 4) {
+        this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
+      } else if (ownerFlag === false) {
+      // tslint:disable-next-line: max-line-length
+      this.matSnackBar.open('You are currently not logged in as the owner of the contract. Please connect to the owner address in your Web3 application in order to enable changes.', null, { duration: 6000 });
+      }
+    }
+    async bootstrapAccounts() {
+      try {
+        const accs = await this.web3Service.web3.eth.getAccounts();
+        if (!this.selectedAccount || this.selectedAccount.length !== accs.length || this.selectedAccount[0] !== accs[0]) {
+          this.dataService.accountsObservable.next(accs);
+          this.dataService.accountObservable.next(accs[0]);
+          this.selectedAccount = accs;
+        }
+      } catch (error) {
+      }
+    }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'app-dialog-unpausing',
+  templateUrl: './dialog-components-sd/dialog-unpausing.html',
+  styleUrls: ['./dialog-components-sd/dialog-unpausing.scss'],
+})
+
+export class DialogUnpausingSDComponent implements OnInit {
+  public web3: any;
+  public txID: any;
+  public selectedAccount: string;
+  public ownerAddress: any;
+
+  constructor(private aleqService: AleqService,
+    private dataService: DataService,
+    private web3Service: Web3Service,
+    public dialog: MatDialog,
+    private matSnackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<DialogUnpausingSDComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+    async ngOnInit() {
+      await this.web3Service.bootstrapWeb3();
+      await this.bootstrapAccounts();
+      await this.dataService.SDownerAddressObservable.subscribe((newOwnerAddress) => {
+        this.ownerAddress = newOwnerAddress;
+      });
+    }
+
+    async unpausingCall() {
+      this.dialogRef.close();
+      const network = await this.web3Service.web3.eth.net.getId();
+      const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
+      if (network === 4 && ownerFlag === true) {
+      this.txID = await this.aleqService.pause(this.data.selectedContract, false, this.selectedAccount[0]);
+      } else if (network !== 4) {
+        this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
+      } else if (ownerFlag === false) {
+      // tslint:disable-next-line: max-line-length
+      this.matSnackBar.open('You are currently not logged in as the owner of the contract. Please connect to the owner address in your Web3 application in order to enable changes.', null, { duration: 6000 });
+      }
+    }
+    async bootstrapAccounts() {
+      try {
+        const accs = await this.web3Service.web3.eth.getAccounts();
+        if (!this.selectedAccount || this.selectedAccount.length !== accs.length || this.selectedAccount[0] !== accs[0]) {
+          this.dataService.accountsObservable.next(accs);
+          this.dataService.accountObservable.next(accs[0]);
+          this.selectedAccount = accs;
+        }
+      } catch (error) {
+      }
+    }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'app-dialog-disable-sell',
+  templateUrl: './dialog-components-sd/dialog-disable-sell.html',
+  styleUrls: ['./dialog-components-sd/dialog-disable-sell.scss'],
+})
+
+export class DialogDisableSellComponent implements OnInit {
+  public web3: any;
+  public txID: any;
+  public selectedAccount: string;
+  public ownerAddress: any;
+
+  constructor(private aleqService: AleqService,
+    private dataService: DataService,
+    private web3Service: Web3Service,
+    public dialog: MatDialog,
+    private matSnackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<DialogDisableSellComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+    async ngOnInit() {
+      await this.web3Service.bootstrapWeb3();
+      await this.bootstrapAccounts();
+      await this.dataService.SDownerAddressObservable.subscribe((newOwnerAddress) => {
+        this.ownerAddress = newOwnerAddress;
+      });
+    }
+
+    async updateStatusCall() {
+      this.dialogRef.close();
+      const network = await this.web3Service.web3.eth.net.getId();
+      const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
+      if (network === 4 && ownerFlag === true) {
+      this.txID = await this.aleqService.updateStatus(this.data.selectedContract, 'sell', true, this.selectedAccount[0]);
+      } else if (network !== 4) {
+        this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
+      } else if (ownerFlag === false) {
+      // tslint:disable-next-line: max-line-length
+      this.matSnackBar.open('You are currently not logged in as the owner of the contract. Please connect to the owner address in your Web3 application in order to enable changes.', null, { duration: 6000 });
+      }
+    }
+    async bootstrapAccounts() {
+      try {
+        const accs = await this.web3Service.web3.eth.getAccounts();
+        if (!this.selectedAccount || this.selectedAccount.length !== accs.length || this.selectedAccount[0] !== accs[0]) {
+          this.dataService.accountsObservable.next(accs);
+          this.dataService.accountObservable.next(accs[0]);
+          this.selectedAccount = accs;
+        }
+      } catch (error) {
+      }
+    }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'app-dialog-enable-sell',
+  templateUrl: './dialog-components-sd/dialog-enable-sell.html',
+  styleUrls: ['./dialog-components-sd/dialog-enable-sell.scss'],
+})
+
+export class DialogEnableSellComponent implements OnInit {
+  public web3: any;
+  public txID: any;
+  public selectedAccount: string;
+  public ownerAddress: any;
+
+  constructor(private aleqService: AleqService,
+    private dataService: DataService,
+    private web3Service: Web3Service,
+    public dialog: MatDialog,
+    private matSnackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<DialogEnableSellComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+    async ngOnInit() {
+      await this.web3Service.bootstrapWeb3();
+      await this.bootstrapAccounts();
+      await this.dataService.SDownerAddressObservable.subscribe((newOwnerAddress) => {
+        this.ownerAddress = newOwnerAddress;
+      });
+    }
+
+    async updateStatusCall() {
+      this.dialogRef.close();
+      const network = await this.web3Service.web3.eth.net.getId();
+      const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
+      if (network === 4 && ownerFlag === true) {
+      this.txID = await this.aleqService.updateStatus(this.data.selectedContract, 'sell', false, this.selectedAccount[0]);
+      } else if (network !== 4) {
+        this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
+      } else if (ownerFlag === false) {
+      // tslint:disable-next-line: max-line-length
+      this.matSnackBar.open('You are currently not logged in as the owner of the contract. Please connect to the owner address in your Web3 application in order to enable changes.', null, { duration: 6000 });
+      }
+    }
+    async bootstrapAccounts() {
+      try {
+        const accs = await this.web3Service.web3.eth.getAccounts();
+        if (!this.selectedAccount || this.selectedAccount.length !== accs.length || this.selectedAccount[0] !== accs[0]) {
+          this.dataService.accountsObservable.next(accs);
+          this.dataService.accountObservable.next(accs[0]);
+          this.selectedAccount = accs;
+        }
+      } catch (error) {
+      }
+    }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'app-dialog-disable-buy',
+  templateUrl: './dialog-components-sd/dialog-disable-buy.html',
+  styleUrls: ['./dialog-components-sd/dialog-disable-buy.scss'],
+})
+
+export class DialogDisableBuyComponent implements OnInit {
+  public web3: any;
+  public txID: any;
+  public selectedAccount: string;
+  public ownerAddress: any;
+
+  constructor(private aleqService: AleqService,
+    private dataService: DataService,
+    private web3Service: Web3Service,
+    public dialog: MatDialog,
+    private matSnackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<DialogDisableBuyComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+    async ngOnInit() {
+      await this.web3Service.bootstrapWeb3();
+      await this.bootstrapAccounts();
+      await this.dataService.SDownerAddressObservable.subscribe((newOwnerAddress) => {
+        this.ownerAddress = newOwnerAddress;
+      });
+    }
+
+    async updateStatusCall() {
+      this.dialogRef.close();
+      const network = await this.web3Service.web3.eth.net.getId();
+      const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
+      if (network === 4 && ownerFlag === true) {
+      this.txID = await this.aleqService.updateStatus(this.data.selectedContract, 'buy', true, this.selectedAccount[0]);
+      } else if (network !== 4) {
+        this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
+      } else if (ownerFlag === false) {
+      // tslint:disable-next-line: max-line-length
+      this.matSnackBar.open('You are currently not logged in as the owner of the contract. Please connect to the owner address in your Web3 application in order to enable changes.', null, { duration: 6000 });
+      }
+    }
+    async bootstrapAccounts() {
+      try {
+        const accs = await this.web3Service.web3.eth.getAccounts();
+        if (!this.selectedAccount || this.selectedAccount.length !== accs.length || this.selectedAccount[0] !== accs[0]) {
+          this.dataService.accountsObservable.next(accs);
+          this.dataService.accountObservable.next(accs[0]);
+          this.selectedAccount = accs;
+        }
+      } catch (error) {
+      }
+    }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'app-dialog-enable-buy',
+  templateUrl: './dialog-components-sd/dialog-enable-buy.html',
+  styleUrls: ['./dialog-components-sd/dialog-enable-buy.scss'],
+})
+
+export class DialogEnableBuyComponent implements OnInit {
+  public web3: any;
+  public txID: any;
+  public selectedAccount: string;
+  public ownerAddress: any;
+
+  constructor(private aleqService: AleqService,
+    private dataService: DataService,
+    private web3Service: Web3Service,
+    public dialog: MatDialog,
+    private matSnackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<DialogEnableBuyComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+    async ngOnInit() {
+      await this.web3Service.bootstrapWeb3();
+      await this.bootstrapAccounts();
+      await this.dataService.SDownerAddressObservable.subscribe((newOwnerAddress) => {
+        this.ownerAddress = newOwnerAddress;
+      });
+    }
+
+    async updateStatusCall() {
+      this.dialogRef.close();
+      const network = await this.web3Service.web3.eth.net.getId();
+      const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
+      if (network === 4 && ownerFlag === true) {
+      this.txID = await this.aleqService.updateStatus(this.data.selectedContract, 'buy', false, this.selectedAccount[0]);
+      } else if (network !== 4) {
+        this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
+      } else if (ownerFlag === false) {
+      // tslint:disable-next-line: max-line-length
+      this.matSnackBar.open('You are currently not logged in as the owner of the contract. Please connect to the owner address in your Web3 application in order to enable changes.', null, { duration: 6000 });
+      }
+    }
+    async bootstrapAccounts() {
+      try {
+        const accs = await this.web3Service.web3.eth.getAccounts();
+        if (!this.selectedAccount || this.selectedAccount.length !== accs.length || this.selectedAccount[0] !== accs[0]) {
+          this.dataService.accountsObservable.next(accs);
+          this.dataService.accountObservable.next(accs[0]);
+          this.selectedAccount = accs;
+        }
+      } catch (error) {
+      }
+    }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
 }
 
 @Component({
@@ -71,7 +424,7 @@ export class DialogSetVolumeComponent implements OnInit {
       await this.dataService.SDownerAddressObservable.subscribe((newOwnerAddress) => {
         this.ownerAddress = newOwnerAddress;
       });
-      this.dataService.SDavailableSharesObservable.subscribe((newAvailableShare) => {
+      await this.dataService.SDavailableSharesObservable.subscribe((newAvailableShare) => {
         this.availableSharesSD = parseFloat(newAvailableShare);
       });
     }
@@ -155,10 +508,10 @@ export class DialogRetrieveXCHFComponent implements OnInit {
       await this.dataService.SDownerAddressObservable.subscribe((newOwnerAddress) => {
         this.ownerAddress = newOwnerAddress;
       });
-      this.dataService.SDpauseStatusObservable.subscribe((newPauseStatus) => {
+      await this.dataService.SDpauseStatusObservable.subscribe((newPauseStatus) => {
         this.pauseStatus = newPauseStatus;
       });
-      this.dataService.SDavailableXCHFObservable.subscribe((newAvailableXCHF) => {
+      await this.dataService.SDavailableXCHFObservable.subscribe((newAvailableXCHF) => {
         this.availableXCHFSD = parseFloat(newAvailableXCHF);
       });
     }
@@ -247,10 +600,10 @@ export class DialogRetrieveSharesComponent implements OnInit {
       await this.dataService.SDownerAddressObservable.subscribe((newOwnerAddress) => {
         this.ownerAddress = newOwnerAddress;
       });
-      this.dataService.SDpauseStatusObservable.subscribe((newPauseStatus) => {
+      await this.dataService.SDpauseStatusObservable.subscribe((newPauseStatus) => {
         this.pauseStatus = newPauseStatus;
       });
-      this.dataService.SDavailableSharesObservable.subscribe((newAvailableShare) => {
+      await this.dataService.SDavailableSharesObservable.subscribe((newAvailableShare) => {
         this.availableSharesSD = parseFloat(newAvailableShare);
       });
     }
@@ -335,7 +688,7 @@ export class DialogFeedSharesComponent implements OnInit {
       await this.dataService.SDownerAddressObservable.subscribe((newOwnerAddress) => {
         this.ownerAddress = newOwnerAddress;
       });
-      this.dataService.SDpauseStatusObservable.subscribe((newPauseStatus) => {
+      await this.dataService.SDpauseStatusObservable.subscribe((newPauseStatus) => {
         this.pauseStatus = newPauseStatus;
       });
     }
@@ -419,7 +772,7 @@ export class DialogFeedXCHFComponent implements OnInit {
       await this.dataService.SDownerAddressObservable.subscribe((newOwnerAddress) => {
         this.ownerAddress = newOwnerAddress;
       });
-      this.dataService.SDpauseStatusObservable.subscribe((newPauseStatus) => {
+      await this.dataService.SDpauseStatusObservable.subscribe((newPauseStatus) => {
         this.pauseStatus = newPauseStatus;
       });
     }
@@ -716,6 +1069,70 @@ export class SharedispenserComponent implements OnInit {
     });
   } else {
     this.web3Service.setStatus('Please use MetaMask to enable contract changes.');
+  }
+  }
+
+  openPausingDialog(pausingFlag) {
+  if (pausingFlag === false) {
+    if (this.web3Service.MM) {
+    const dialogRef = this.dialog.open(DialogUnpausingSDComponent, {
+      width: '500px',
+      data: {newVolume: this.newVolume,
+        selectedContract: this.selected }
+    });
+  } else {
+    this.web3Service.setStatus('Please use MetaMask to enable contract changes.');
+  }
+  } else if (pausingFlag === true) {
+    if (this.web3Service.MM) {
+    const dialogRef = this.dialog.open(DialogPausingSDComponent, {
+      width: '500px',
+      data: {newVolume: this.newVolume,
+        selectedContract: this.selected }
+    });
+  } else {
+    this.web3Service.setStatus('Please use MetaMask to enable contract changes.');
+  }
+  }
+  }
+
+  openUpdateStatusDialog(sideFlag, updateFlag) {
+    if (sideFlag === 'buy' && updateFlag === false) {
+    if (this.web3Service.MM) {
+    const dialogRef = this.dialog.open(DialogEnableBuyComponent, {
+      width: '500px',
+      data: {selectedContract: this.selected }
+    });
+  } else {
+    this.web3Service.setStatus('Please use MetaMask to enable contract changes.');
+  }
+  } else if (sideFlag === 'buy' && updateFlag === true) {
+    if (this.web3Service.MM) {
+    const dialogRef = this.dialog.open(DialogDisableBuyComponent, {
+      width: '500px',
+      data: {selectedContract: this.selected }
+    });
+  } else {
+    this.web3Service.setStatus('Please use MetaMask to enable contract changes.');
+  }
+  } else if (sideFlag === 'sell' && updateFlag === false) {
+    if (this.web3Service.MM) {
+    const dialogRef = this.dialog.open(DialogEnableSellComponent, {
+      width: '500px',
+      data: {selectedContract: this.selected }
+    });
+  } else {
+    this.web3Service.setStatus('Please use MetaMask to enable contract changes.');
+  }
+  } else if (sideFlag === 'sell' && updateFlag === true) {
+    if (this.web3Service.MM) {
+    const dialogRef = this.dialog.open(DialogDisableSellComponent, {
+      width: '500px',
+      data: {selectedContract: this.selected }
+    });
+  } else {
+    this.web3Service.setStatus('Please use MetaMask to enable contract changes.');
+  }
   }
   }
 }

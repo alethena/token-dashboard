@@ -323,6 +323,50 @@ export class AleqService {
     });
   }
 
+  async pause(selectedAddress, pausingFlag, user) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const SDAbstraction = await this.web3Service.artifactsToContract(SDData);
+        const SDInstance = await SDAbstraction.at(config[selectedAddress].SD);
+        if (pausingFlag === true) {
+        const changeOwnerTx = await SDInstance.pause.sendTransaction({ from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+        // console.log(changeOwnerTx.tx);
+        } else if (pausingFlag === false) {
+          const changeOwnerTx = await SDInstance.unpause.sendTransaction({ from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+          // console.log(changeOwnerTx.tx);
+        }
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  }
+
+  async updateStatus(selectedAddress, sideFlag, updateFlag, user) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const SDAbstraction = await this.web3Service.artifactsToContract(SDData);
+        const SDInstance = await SDAbstraction.at(config[selectedAddress].SD);
+        if (sideFlag === 'buy' && updateFlag === false) {
+        const changeOwnerTx = await SDInstance.buyStatus(true, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+        // console.log(changeOwnerTx.tx);
+        } else if (sideFlag === 'buy' && updateFlag === true) {
+          const changeOwnerTx = await SDInstance.buyStatus(false, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+          // console.log(changeOwnerTx.tx);
+        } else if (sideFlag === 'sell' && updateFlag === false) {
+          const changeOwnerTx = await SDInstance.sellStatus(true, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+          // console.log(changeOwnerTx.tx);
+        } else if (sideFlag === 'sell' && updateFlag === true) {
+          const changeOwnerTx = await SDInstance.sellStatus(false, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+          // console.log(changeOwnerTx.tx);
+        }
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  }
+
   async changeOwnerSD(selectedAddress, newOwner, user) {
     return new Promise(async (resolve, reject) => {
       try {
