@@ -35,7 +35,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedispenserComponent,
-         DialogChangeOwnerSDComponent
+         DialogChangeOwnerSDComponent,
+         DialogFeedSharesComponent
         } from './sharedispenser/sharedispenser.component';
 import { ClaimtoolComponent } from './claimtool/claimtool.component';
 import { SelectorPanelComponent } from './selector-panel/selector-panel.component';
@@ -56,6 +57,7 @@ import { SelectorPanelComponent } from './selector-panel/selector-panel.componen
     FooterComponent,
     NavigationComponent,
     SharedispenserComponent,
+    DialogFeedSharesComponent,
     DialogChangeOwnerSDComponent,
     ClaimtoolComponent,
     SelectorPanelComponent,
@@ -94,6 +96,7 @@ import { SelectorPanelComponent } from './selector-panel/selector-panel.componen
     DialogClaimPeriodComponent,
     DialogCollateralRateComponent,
     DialogRenounceOwnershipComponent,
+    DialogFeedSharesComponent,
     DialogChangeOwnerSDComponent,
   ],
   providers: [],

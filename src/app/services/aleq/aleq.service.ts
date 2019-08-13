@@ -250,6 +250,21 @@ export class AleqService {
     });
   }
 
+  async feedSharesSD(selectedAddress, amount, user) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const ALEQAbstraction = await this.web3Service.artifactsToContract(ALEQData);
+        const ALEQInstance = await ALEQAbstraction.at(selectedAddress);
+        const changeOwnerTx = await ALEQInstance.transfer
+        .sendTransaction(config[selectedAddress].SD, amount, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+        // console.log(changeOwnerTx.tx);
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  }
+
   async changeOwnerSD(selectedAddress, newOwner, user) {
     return new Promise(async (resolve, reject) => {
       try {

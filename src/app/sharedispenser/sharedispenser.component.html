@@ -65,16 +65,20 @@
           </button>
           <mat-menu #menu5="matMenu">
             <button mat-menu-item>
-              <mat-icon class="float-right-icon"> library_books </mat-icon>
-              <span class="menu-items" (click)="openTotalSharesDialog()"> Set Total Shares </span>
+              <mat-icon class="float-right-icon"> library_add </mat-icon>
+              <span class="menu-items" (click)="openFeedSharesDialog()"> Feed Shares </span>
             </button>
             <button mat-menu-item>
-              <mat-icon class="float-right-icon"> add </mat-icon>
-              <span class="menu-items" (click)="openMintDialog()"> Mint New Tokens </span>
+              <mat-icon class="float-right-icon"> keyboard_backspace </mat-icon>
+              <span class="menu-items" (click)="openMintDialog()"> Retrieve Shares </span>
             </button>
             <button mat-menu-item>
-              <mat-icon class="float-right-icon"> clear </mat-icon>
-              <span class="menu-items" (click)="openUnmintDialog()"> Unmint Tokens </span>
+              <mat-icon class="float-right-icon"> add_circle_outline </mat-icon>
+              <span class="menu-items" (click)="openMintDialog()"> Feed XCHF </span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon class="float-right-icon"> undo </mat-icon>
+              <span class="menu-items" (click)="openMintDialog()"> Retrieve XCHF </span>
             </button>
           </mat-menu>
         </mat-card-title>
