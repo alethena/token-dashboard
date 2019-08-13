@@ -9,13 +9,16 @@ const BN = require('bn.js');
 const bigInt = require('big-integer');
 const ALEQData = require('../../../../helpers/ALEQ.json');
 const SDData = require('../../../../helpers/ShareDispenser.json');
+const XCHFData = require('../../../../helpers/XCHF.json');
 
 @Injectable({ providedIn: 'root' })
 
 export class AleqService {
   ALEQInstance: any;
   SDInstance: any;
+  XCHFInstance: any;
   MMenabled = false;
+  XCHFAddressSD = '0x84286f1e0Aaa59787131DA691b5D5cFC2Aff289A';
 
   constructor(
     private infuraService: InfuraService,
@@ -257,6 +260,22 @@ export class AleqService {
         const ALEQInstance = await ALEQAbstraction.at(selectedAddress);
         const changeOwnerTx = await ALEQInstance.transfer
         .sendTransaction(config[selectedAddress].SD, amount, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+        // console.log(changeOwnerTx.tx);
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  }
+
+  async feedXCHFSD(selectedAddress, amount, user) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const XCHFAbstraction = await this.web3Service.artifactsToContract(XCHFData);
+        const XCHFInstance = await XCHFAbstraction.at(this.XCHFAddressSD);
+        const XCHFamountBN = bigInt(amount);
+        const changeOwnerTx = await XCHFInstance.transfer
+        .sendTransaction(config[selectedAddress].SD, XCHFamountBN.toString(), { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
         // console.log(changeOwnerTx.tx);
       } catch (error) {
         console.log(error);

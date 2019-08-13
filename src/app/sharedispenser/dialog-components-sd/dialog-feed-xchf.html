@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Feed XCHF to the Share Dispenser</h1>
+<div mat-dialog-content [formGroup]="orderFormGroup">
+  <p class="no-top-margin">You are about to send new crypto francs (XCHF) to the share dispenser contract!</p>
+  <mat-form-field>
+    <input matInput type="number" placeholder="# of XCHF" [(ngModel)]="data.XCHFAmount"
+    formControlName="numberOfXCHF">
+  </mat-form-field>
+  <p class="caveat"><em>Must be entered in Wei units (1 XCHF = 10<sup>18</sup>)!</em></p>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="feedXCHFCall()" cdkFocusInitial>FEED</button>
+    <button mat-button (click)="noClick()">CLOSE</button>
+</div>
