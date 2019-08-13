@@ -284,6 +284,30 @@ export class AleqService {
     });
   }
 
+  async retrieveSD(selectedAddress, contractAddress, adminUser, amount, user) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        if (contractAddress === 'XCHF') {
+        const SDAbstraction = await this.web3Service.artifactsToContract(SDData);
+        const SDInstance = await SDAbstraction.at(config[selectedAddress].SD);
+        const amountBN = bigInt(amount);
+        const changeOwnerTx = await SDInstance.retrieveERC20
+        .sendTransaction(this.XCHFAddressSD, adminUser, amountBN.toString(), { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+        // console.log(changeOwnerTx.tx);
+        } else if (contractAddress === 'EQ') {
+        const SDAbstraction = await this.web3Service.artifactsToContract(SDData);
+        const SDInstance = await SDAbstraction.at(config[selectedAddress].SD);
+        const changeOwnerTx = await SDInstance.retrieveERC20
+        .sendTransaction(selectedAddress, adminUser, amount, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+        // console.log(changeOwnerTx.tx);
+        }
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  }
+
   async changeOwnerSD(selectedAddress, newOwner, user) {
     return new Promise(async (resolve, reject) => {
       try {

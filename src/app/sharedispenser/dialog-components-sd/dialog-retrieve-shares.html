@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Retrieve Shares from the Share Dispenser</h1>
+<div mat-dialog-content [formGroup]="orderFormGroup">
+  <p class="no-top-margin">You are about to retrieve share tokens from the share dispenser contract! The share tokens will be directly retrieved to the owner address.</p>
+  <mat-form-field>
+    <input matInput type="number" placeholder="# of shares" [(ngModel)]="data.retrieveShares"
+    formControlName="numberOfShares">
+  </mat-form-field>
+  <p class="caveat"><em>Enter here the number of shares to be retrieved. Must be above 0!</em></p>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="retrieveSharesCall()" cdkFocusInitial>RETRIEVE</button>
+    <button mat-button (click)="noClick()">CLOSE</button>
+</div>

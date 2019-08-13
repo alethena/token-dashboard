@@ -37,7 +37,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { SharedispenserComponent,
          DialogChangeOwnerSDComponent,
          DialogFeedSharesComponent,
-         DialogFeedXCHFComponent
+         DialogFeedXCHFComponent,
+         DialogRetrieveSharesComponent,
+         DialogRetrieveXCHFComponent
         } from './sharedispenser/sharedispenser.component';
 import { ClaimtoolComponent } from './claimtool/claimtool.component';
 import { SelectorPanelComponent } from './selector-panel/selector-panel.component';
@@ -60,6 +62,8 @@ import { SelectorPanelComponent } from './selector-panel/selector-panel.componen
     SharedispenserComponent,
     DialogFeedSharesComponent,
     DialogFeedXCHFComponent,
+    DialogRetrieveSharesComponent,
+    DialogRetrieveXCHFComponent,
     DialogChangeOwnerSDComponent,
     ClaimtoolComponent,
     SelectorPanelComponent,
@@ -100,6 +104,8 @@ import { SelectorPanelComponent } from './selector-panel/selector-panel.componen
     DialogRenounceOwnershipComponent,
     DialogFeedSharesComponent,
     DialogFeedXCHFComponent,
+    DialogRetrieveSharesComponent,
+    DialogRetrieveXCHFComponent,
     DialogChangeOwnerSDComponent,
   ],
   providers: [],

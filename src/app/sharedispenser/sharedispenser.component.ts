@@ -19,6 +19,191 @@ export interface DialogData {
   selectedContract: any;
   sharesAmount: number;
   XCHFAmount: number;
+  retrieveXCHF: number;
+  retrieveShares: number;
+}
+
+@Component({
+  selector: 'app-dialog-retrieve-xchf',
+  templateUrl: './dialog-components-sd/dialog-retrieve-xchf.html',
+  styleUrls: ['./dialog-components-sd/dialog-retrieve-xchf.scss'],
+})
+
+export class DialogRetrieveXCHFComponent implements OnInit {
+  public web3: any;
+  public txID: any;
+  public selectedAccount: string;
+  public ownerAddress: any;
+  public orderFormGroup: FormGroup;
+  public pauseStatus: boolean;
+  public availableXCHFSD: number;
+
+  constructor(private aleqService: AleqService,
+    private dataService: DataService,
+    private web3Service: Web3Service,
+    public dialog: MatDialog,
+    private matSnackBar: MatSnackBar,
+    private _formBuilder: FormBuilder,
+    public dialogRef: MatDialogRef<DialogRetrieveXCHFComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+      this.orderFormGroup = this._formBuilder.group({
+        numberOfXCHF: [0, [Validators.required, Validators.min(1)]],
+      });
+      this.orderFormGroup.get('numberOfXCHF').valueChanges
+        .pipe(debounceTime(250))
+        .subscribe(async numberOfXCHF => {
+          if (this.data.retrieveXCHF !== null) {
+            this.data.retrieveXCHF = numberOfXCHF;
+            if (this.data.retrieveXCHF < 0) {
+              this.orderFormGroup.patchValue({ 'numberOfXCHF': 1 });
+            } else if (this.data.retrieveXCHF > this.availableXCHFSD) {
+              this.orderFormGroup.patchValue({ 'numberOfXCHF': this.availableXCHFSD });
+            } else if (Math.ceil(this.data.retrieveXCHF) !== numberOfXCHF) {
+              this.orderFormGroup.patchValue({ 'numberOfXCHF': Math.ceil(numberOfXCHF) });
+            }
+          }
+        });
+    }
+
+    async ngOnInit() {
+      await this.web3Service.bootstrapWeb3();
+      await this.bootstrapAccounts();
+      await this.dataService.SDownerAddressObservable.subscribe((newOwnerAddress) => {
+        this.ownerAddress = newOwnerAddress;
+      });
+      this.dataService.SDpauseStatusObservable.subscribe((newPauseStatus) => {
+        this.pauseStatus = newPauseStatus;
+      });
+      this.dataService.SDavailableXCHFObservable.subscribe((newAvailableXCHF) => {
+        this.availableXCHFSD = parseFloat(newAvailableXCHF);
+      });
+    }
+
+    async retrieveXCHFCall() {
+      this.dialogRef.close();
+      const network = await this.web3Service.web3.eth.net.getId();
+      const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
+      const XCHFNumberBN = bigInt(this.data.retrieveXCHF);
+      if (network === 4 && ownerFlag === true && this.pauseStatus === true) {
+      this.txID = await this.aleqService.retrieveSD(this.data.selectedContract, 'XCHF',
+      this.selectedAccount[0], XCHFNumberBN, this.selectedAccount[0]);
+      } else if (network !== 4) {
+        this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
+      } else if (ownerFlag === false) {
+      // tslint:disable-next-line: max-line-length
+      this.matSnackBar.open('You are currently not logged in as the owner of the contract. Please connect to the owner address in your Web3 application in order to enable changes.', null, { duration: 6000 });
+      } else if (this.pauseStatus === false) {
+      // tslint:disable-next-line: max-line-length
+      this.matSnackBar.open('You must first pause the Share Dispenser contract prior to proceeding with the requested change.', null, { duration: 6000 });
+    }
+    }
+    async bootstrapAccounts() {
+      try {
+        const accs = await this.web3Service.web3.eth.getAccounts();
+        if (!this.selectedAccount || this.selectedAccount.length !== accs.length || this.selectedAccount[0] !== accs[0]) {
+          this.dataService.accountsObservable.next(accs);
+          this.dataService.accountObservable.next(accs[0]);
+          this.selectedAccount = accs;
+        }
+      } catch (error) {
+      }
+    }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
+}
+
+@Component({
+  selector: 'app-dialog-retrieve-shares',
+  templateUrl: './dialog-components-sd/dialog-retrieve-shares.html',
+  styleUrls: ['./dialog-components-sd/dialog-retrieve-shares.scss'],
+})
+
+export class DialogRetrieveSharesComponent implements OnInit {
+  public web3: any;
+  public txID: any;
+  public selectedAccount: string;
+  public ownerAddress: any;
+  public orderFormGroup: FormGroup;
+  public pauseStatus: boolean;
+  public availableSharesSD: number;
+
+  constructor(private aleqService: AleqService,
+    private dataService: DataService,
+    private web3Service: Web3Service,
+    public dialog: MatDialog,
+    private matSnackBar: MatSnackBar,
+    private _formBuilder: FormBuilder,
+    public dialogRef: MatDialogRef<DialogRetrieveSharesComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+      this.orderFormGroup = this._formBuilder.group({
+        numberOfShares: [0, [Validators.required, Validators.min(1)]],
+      });
+      this.orderFormGroup.get('numberOfShares').valueChanges
+        .pipe(debounceTime(250))
+        .subscribe(async numberOfShares => {
+          if (this.data.retrieveShares !== null) {
+            this.data.retrieveShares = numberOfShares;
+            if (this.data.retrieveShares < 0) {
+              this.orderFormGroup.patchValue({ 'numberOfShares': 1 });
+            } else if (this.data.retrieveShares > this.availableSharesSD) {
+              this.orderFormGroup.patchValue({ 'numberOfShares': this.availableSharesSD });
+            } else if (Math.ceil(this.data.retrieveShares) !== numberOfShares) {
+              this.orderFormGroup.patchValue({ 'numberOfShares': Math.ceil(numberOfShares) });
+            }
+          }
+        });
+    }
+
+    async ngOnInit() {
+      await this.web3Service.bootstrapWeb3();
+      await this.bootstrapAccounts();
+      await this.dataService.SDownerAddressObservable.subscribe((newOwnerAddress) => {
+        this.ownerAddress = newOwnerAddress;
+      });
+      this.dataService.SDpauseStatusObservable.subscribe((newPauseStatus) => {
+        this.pauseStatus = newPauseStatus;
+      });
+      this.dataService.SDavailableSharesObservable.subscribe((newAvailableShare) => {
+        this.availableSharesSD = parseFloat(newAvailableShare);
+      });
+    }
+
+    async retrieveSharesCall() {
+      this.dialogRef.close();
+      const network = await this.web3Service.web3.eth.net.getId();
+      const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
+      if (network === 4 && ownerFlag === true && this.pauseStatus === true) {
+      this.txID = await this.aleqService.retrieveSD(this.data.selectedContract, 'EQ',
+      this.selectedAccount[0], this.data.retrieveShares, this.selectedAccount[0]);
+      } else if (network !== 4) {
+        this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
+      } else if (ownerFlag === false) {
+      // tslint:disable-next-line: max-line-length
+      this.matSnackBar.open('You are currently not logged in as the owner of the contract. Please connect to the owner address in your Web3 application in order to enable changes.', null, { duration: 6000 });
+      } else if (this.pauseStatus === false) {
+      // tslint:disable-next-line: max-line-length
+      this.matSnackBar.open('You must first pause the Share Dispenser contract prior to proceeding with the requested change.', null, { duration: 6000 });
+    }
+    }
+    async bootstrapAccounts() {
+      try {
+        const accs = await this.web3Service.web3.eth.getAccounts();
+        if (!this.selectedAccount || this.selectedAccount.length !== accs.length || this.selectedAccount[0] !== accs[0]) {
+          this.dataService.accountsObservable.next(accs);
+          this.dataService.accountObservable.next(accs[0]);
+          this.selectedAccount = accs;
+        }
+      } catch (error) {
+      }
+    }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
 }
 
 @Component({
@@ -133,11 +318,11 @@ export class DialogFeedXCHFComponent implements OnInit {
       this.orderFormGroup.get('numberOfXCHF').valueChanges
         .pipe(debounceTime(250))
         .subscribe(async numberOfXCHF => {
-          if (this.data.sharesAmount !== null) {
-            this.data.sharesAmount = numberOfXCHF;
-            if (this.data.sharesAmount < 0) {
+          if (this.data.XCHFAmount !== null) {
+            this.data.XCHFAmount = numberOfXCHF;
+            if (this.data.XCHFAmount < 0) {
               this.orderFormGroup.patchValue({ 'numberOfXCHF': 1 });
-            } else if (Math.ceil(this.data.sharesAmount) !== numberOfXCHF) {
+            } else if (Math.ceil(this.data.XCHFAmount) !== numberOfXCHF) {
               this.orderFormGroup.patchValue({ 'numberOfXCHF': Math.ceil(numberOfXCHF) });
             }
           }
@@ -291,6 +476,8 @@ export class SharedispenserComponent implements OnInit {
   public ownerAddressHex: any;
   public sharesAmount: number;
   public XCHFAmount: number;
+  public retrieveShares: number;
+  public retrieveXCHF: number;
   public selected = '0x40A1BE7f167C7f14D7EDE17972bC7c87b91e1D91';
   public selectedTool = 'EQ';
   public companyName = config[this.selected].NAME;
@@ -404,6 +591,30 @@ export class SharedispenserComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogFeedXCHFComponent, {
       width: '500px',
       data: {XCHFAmount: this.XCHFAmount,
+        selectedContract: this.selected }
+    });
+  } else {
+    this.web3Service.setStatus('Please use MetaMask to enable contract changes.');
+  }
+  }
+
+  openRetrieveSharesDialog() {
+    if (this.web3Service.MM) {
+    const dialogRef = this.dialog.open(DialogRetrieveSharesComponent, {
+      width: '500px',
+      data: {retrieveShares: this.retrieveShares,
+        selectedContract: this.selected }
+    });
+  } else {
+    this.web3Service.setStatus('Please use MetaMask to enable contract changes.');
+  }
+  }
+
+  openRetrieveXCHFDialog() {
+    if (this.web3Service.MM) {
+    const dialogRef = this.dialog.open(DialogRetrieveXCHFComponent, {
+      width: '500px',
+      data: {retrieveXCHF: this.retrieveXCHF,
         selectedContract: this.selected }
     });
   } else {

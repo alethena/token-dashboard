@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Retrieve XCHF from the Share Dispenser</h1>
+<div mat-dialog-content [formGroup]="orderFormGroup">
+  <p class="no-top-margin">You are about to retrieve crypto francs (XCHF) from the share dispenser contract! The XCHF tokens will be directly retrieved to the owner address.</p>
+  <mat-form-field>
+    <input matInput type="number" placeholder="# of XCHF" [(ngModel)]="data.retrieveXCHF"
+    formControlName="numberOfXCHF">
+  </mat-form-field>
+  <p class="caveat"><em>Must be entered in Wei units (1 XCHF = 10<sup>18</sup>)!</em></p>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="retrieveXCHFCall()" cdkFocusInitial>RETRIEVE</button>
+    <button mat-button (click)="noClick()">CLOSE</button>
+</div>
