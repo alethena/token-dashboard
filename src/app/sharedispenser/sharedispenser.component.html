@@ -112,9 +112,16 @@
           </button>
           <mat-menu #menu1="matMenu">
             <button mat-menu-item>
-              <mat-icon class="float-right-icon"> update </mat-icon>
-              <span class="menu-items"> <a href="{{ ensUrl }}" target="_blank"> Update
-                  ENS </a> </span>
+              <mat-icon class="float-right-icon"> call_received </mat-icon>
+              <span class="menu-items" (click)="openSetPriceDialog('min')"> Update Min. Price </span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon class="float-right-icon"> call_made </mat-icon>
+              <span class="menu-items" (click)="openSetPriceDialog('max')"> Update Max. Price </span>
+            </button>
+            <button mat-menu-item>
+              <mat-icon class="float-right-icon"> trending_up </mat-icon>
+              <span class="menu-items" (click)="openSetPriceDialog('min')"> Update Slope </span>
             </button>
           </mat-menu>
         </mat-card-title>

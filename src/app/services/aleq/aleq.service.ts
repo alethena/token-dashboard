@@ -367,6 +367,27 @@ export class AleqService {
     });
   }
 
+  async setPrice(selectedAddress, priceFlag, price, user) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const SDAbstraction = await this.web3Service.artifactsToContract(SDData);
+        const SDInstance = await SDAbstraction.at(config[selectedAddress].SD);
+        if (priceFlag === 'min') {
+        const changeOwnerTx = await SDInstance.setminPriceInXCHF.
+        sendTransaction(price, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+        // console.log(changeOwnerTx.tx);
+        } else if (priceFlag === 'max') {
+          const changeOwnerTx = await SDInstance.setmaxPriceInXCHF.
+          sendTransaction(price, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+          // console.log(changeOwnerTx.tx);
+        }
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  }
+
   async changeOwnerSD(selectedAddress, newOwner, user) {
     return new Promise(async (resolve, reject) => {
       try {
