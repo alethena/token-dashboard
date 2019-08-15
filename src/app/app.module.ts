@@ -48,6 +48,7 @@ import { SharedispenserComponent,
          DialogEnableSellComponent,
          DialogDisableSellComponent,
          DialogSetMinPriceComponent,
+         DialogSetMaxPriceComponent,
         } from './sharedispenser/sharedispenser.component';
 import { ClaimtoolComponent } from './claimtool/claimtool.component';
 import { SelectorPanelComponent } from './selector-panel/selector-panel.component';
@@ -81,6 +82,7 @@ import { SelectorPanelComponent } from './selector-panel/selector-panel.componen
     DialogEnableSellComponent,
     DialogDisableSellComponent,
     DialogSetMinPriceComponent,
+    DialogSetMaxPriceComponent,
     ClaimtoolComponent,
     SelectorPanelComponent,
   ],
@@ -130,6 +132,7 @@ import { SelectorPanelComponent } from './selector-panel/selector-panel.componen
     DialogEnableSellComponent,
     DialogDisableSellComponent,
     DialogSetMinPriceComponent,
+    DialogSetMaxPriceComponent,
     DialogChangeOwnerSDComponent,
   ],
   providers: [],

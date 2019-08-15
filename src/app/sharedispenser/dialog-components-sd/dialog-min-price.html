@@ -2,7 +2,7 @@
 <div mat-dialog-content [formGroup]="orderFormGroup">
   <p class="no-top-margin">You are about to change the minimum price set in the share dispenser contract!</p>
   <mat-form-field>
-    <input matInput type="number" placeholder="new XCHF price" [(ngModel)]="data.minPrice"
+    <input matInput type="number" placeholder="New XCHF price" [(ngModel)]="data.minPrice"
     formControlName="priceInXCHF">
   </mat-form-field>
   <p class="caveat"><em>Enter here the NEW minimum price in XCHF. Must be above 0!</em></p>

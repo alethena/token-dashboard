@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Change Maximum Price</h1>
+<div mat-dialog-content [formGroup]="orderFormGroup">
+  <p class="no-top-margin">You are about to change the maximum price set in the share dispenser contract!</p>
+  <mat-form-field>
+    <input matInput type="number" placeholder="New XCHF price" [(ngModel)]="data.maxPrice"
+    formControlName="priceInXCHF">
+  </mat-form-field>
+  <p class="caveat"><em>Enter here the NEW maximum price in XCHF. Must be above 0!</em></p>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="setMaxPriceCall()" cdkFocusInitial>CHANGE</button>
+    <button mat-button (click)="noClick()">CLOSE</button>
+</div>
