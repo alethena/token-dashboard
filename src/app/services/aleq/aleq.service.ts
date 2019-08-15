@@ -32,7 +32,7 @@ export class AleqService {
     this.ALEQInstance = await ALEQAbstraction.at(selectedAddress);
     this.SDInstance = await SDAbstraction.at(config[selectedAddress].SD);
     // console.log(this.ALEQInstance);
-    console.log(this.SDInstance);
+    // console.log(this.SDInstance);
     this.refreshVariables();
     } else {
       const ALEQAbstraction = await this.infuraService.artifactsToContract(ALEQData);
@@ -381,6 +381,21 @@ export class AleqService {
           sendTransaction(price, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
           // console.log(changeOwnerTx.tx);
         }
+      } catch (error) {
+        console.log(error);
+        reject(error);
+      }
+    });
+  }
+
+  async setSlope(selectedAddress, numberOfShares, user) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const SDAbstraction = await this.web3Service.artifactsToContract(SDData);
+        const SDInstance = await SDAbstraction.at(config[selectedAddress].SD);
+        const changeOwnerTx = await SDInstance.setInitialNumberOfShares.
+        sendTransaction(numberOfShares, { from: user, gasPrice: 20 * 10 ** 9, gas: 150000 });
+        // console.log(changeOwnerTx.tx);
       } catch (error) {
         console.log(error);
         reject(error);

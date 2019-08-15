@@ -23,6 +23,102 @@ export interface DialogData {
   newVolume: number;
   minPrice: number;
   maxPrice: number;
+  slope: number;
+}
+
+@Component({
+  selector: 'app-dialog-slope',
+  templateUrl: './dialog-components-sd/dialog-slope.html',
+  styleUrls: ['./dialog-components-sd/dialog-slope.scss'],
+})
+
+export class DialogSetSlopeComponent implements OnInit {
+  public web3: any;
+  public txID: any;
+  public impliedSlope: number;
+  public selectedAccount: string;
+  public ownerAddress: any;
+  public orderFormGroup: FormGroup;
+  public pauseStatus: boolean;
+  public minPriceSD: number;
+  public maxPriceSD: number;
+
+  constructor(private aleqService: AleqService,
+    private dataService: DataService,
+    private web3Service: Web3Service,
+    public dialog: MatDialog,
+    private matSnackBar: MatSnackBar,
+    private _formBuilder: FormBuilder,
+    public dialogRef: MatDialogRef<DialogSetSlopeComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {
+      this.orderFormGroup = this._formBuilder.group({
+        priceSlope: [0, [Validators.required, Validators.min(1)]],
+      });
+      this.orderFormGroup.get('priceSlope').valueChanges
+        .pipe(debounceTime(250))
+        .subscribe(async priceSlope => {
+          if (this.data.slope !== null) {
+            this.data.slope = priceSlope;
+            if (this.data.slope <= 0) {
+              this.orderFormGroup.patchValue({ 'priceSlope': 1 });
+            } else if (Math.ceil(this.data.slope) !== priceSlope) {
+              this.orderFormGroup.patchValue({ 'priceSlope': Math.ceil(priceSlope) });
+            }
+        }
+        this.impliedSlope = (this.maxPriceSD / 1000000000000000000 - this.minPriceSD / 1000000000000000000)
+        / (2 * this.data.slope - 1);
+        });
+    }
+
+    async ngOnInit() {
+      await this.web3Service.bootstrapWeb3();
+      await this.bootstrapAccounts();
+      await this.dataService.SDownerAddressObservable.subscribe((newOwnerAddress) => {
+        this.ownerAddress = newOwnerAddress;
+      });
+      await this.dataService.SDpauseStatusObservable.subscribe((newPauseStatus) => {
+        this.pauseStatus = newPauseStatus;
+      });
+      await this.dataService.SDminPriceObservable.subscribe((newMinPrice) => {
+        this.minPriceSD = parseFloat(newMinPrice);
+      });
+      await this.dataService.SDmaxPriceObservable.subscribe((newMaxPrice) => {
+        this.maxPriceSD = parseFloat(newMaxPrice);
+      });
+    }
+
+    async setPriceSlopeCall() {
+      this.dialogRef.close();
+      const network = await this.web3Service.web3.eth.net.getId();
+      const ownerFlag = await this.selectedAccount[0] === this.ownerAddress;
+      if (network === 4 && ownerFlag === true && this.pauseStatus === true) {
+      this.txID = await this.aleqService.setSlope(this.data.selectedContract, this.data.slope, this.selectedAccount[0]);
+      } else if (network !== 4) {
+        this.matSnackBar.open('Please select the Rinkeby network in MetaMask.', null, { duration: 6000 });
+      } else if (ownerFlag === false) {
+      // tslint:disable-next-line: max-line-length
+      this.matSnackBar.open('You are currently not logged in as the owner of the contract. Please connect to the owner address in your Web3 application in order to enable changes.', null, { duration: 6000 });
+      } else if (this.pauseStatus === false) {
+      // tslint:disable-next-line: max-line-length
+      this.matSnackBar.open('You must first pause the Share Dispenser contract prior to proceeding with the requested change.', null, { duration: 6000 });
+    }
+    }
+    async bootstrapAccounts() {
+      try {
+        const accs = await this.web3Service.web3.eth.getAccounts();
+        if (!this.selectedAccount || this.selectedAccount.length !== accs.length || this.selectedAccount[0] !== accs[0]) {
+          this.dataService.accountsObservable.next(accs);
+          this.dataService.accountObservable.next(accs[0]);
+          this.selectedAccount = accs;
+        }
+      } catch (error) {
+      }
+    }
+
+  async noClick() {
+    this.dialogRef.close();
+  }
+
 }
 
 @Component({
@@ -1096,6 +1192,7 @@ export class SharedispenserComponent implements OnInit {
   public newVolume: number;
   public minPrice: number;
   public maxPrice: number;
+  public slope: number;
   public selected = '0x40A1BE7f167C7f14D7EDE17972bC7c87b91e1D91';
   public selectedTool = 'EQ';
   public companyName = config[this.selected].NAME;
@@ -1337,6 +1434,18 @@ export class SharedispenserComponent implements OnInit {
   } else {
     this.web3Service.setStatus('Please use MetaMask to enable contract changes.');
   }
+  }
+  }
+
+  openSetSlopeDialog() {
+    if (this.web3Service.MM) {
+    const dialogRef = this.dialog.open(DialogSetSlopeComponent, {
+      width: '500px',
+      data: {slope: this.slope,
+        selectedContract: this.selected }
+    });
+  } else {
+    this.web3Service.setStatus('Please use MetaMask to enable contract changes.');
   }
   }
 }

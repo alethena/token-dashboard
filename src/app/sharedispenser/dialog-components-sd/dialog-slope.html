@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Change Price Slope</h1>
+<div mat-dialog-content [formGroup]="orderFormGroup">
+  <p class="no-top-margin">You are about to change the linear price slope set in the share dispenser contract!</p>
+  <mat-form-field>
+    <input matInput type="number" placeholder="# of initial shares" [(ngModel)]="data.slope"
+    formControlName="priceSlope">
+  </mat-form-field> &nbsp; <em>Implied slope: {{ impliedSlope | number:'.4'}}</em>
+  <p class="caveat"><em>Enter here the NEW number of initial available supply of shares. Must be above 0!</em></p>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="setPriceSlopeCall()" cdkFocusInitial>CHANGE</button>
+    <button mat-button (click)="noClick()">CLOSE</button>
+</div>
