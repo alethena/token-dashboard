@@ -137,5 +137,8 @@
       }
     }
   },
-  "defaultProject": "admin-tool"
+  "defaultProject": "admin-tool",
+  "cli": {
+    "analytics": "987bcc1e-622d-4d13-ab4f-de3aeadd208d"
+  }
 }

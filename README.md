@@ -17,7 +17,7 @@ npm install
 npm install --save web3@1.0.0-beta.37
 npm install node-sass --save
 ```
-Note: Probably you need to delete the `websocket` folder after the first `npm install`.
+Note: Probably you need to delete the `websocket` folder after the first `npm install`. Also, make sure you are not working with Node.js >= 12.0.0 as `node-gyp` then will fail. `Version 11.15.0` is the latest working version.
 ### Fixes
 ```
 cd helpers
